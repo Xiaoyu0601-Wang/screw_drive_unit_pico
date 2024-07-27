@@ -46,6 +46,29 @@ UBYTE DEV_Digital_Read(UWORD Pin)
 }
 
 /**
+ * LED
+**/
+void DEV_LED_Config(void)
+{
+    cyw43_arch_init();
+}
+
+void DEV_LED_On(void)
+{
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+}
+
+void DEV_LED_Off(void)
+{
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+}
+
+void DEV_LED_Toggle(void)
+{
+    cyw43_arch_init();
+}
+
+/**
  * SPI
 **/
 void DEV_SPI_WriteByte(uint8_t Value)
@@ -152,7 +175,11 @@ Info:
 ******************************************************************************/
 UBYTE DEV_Module_Init(void)
 {
-    stdio_init_all();   
+    stdio_init_all();
+
+    //LED Config
+    DEV_LED_Config();
+
     // SPI Config
     spi_init(SPI_PORT, 10000 * 1000);
     gpio_set_function(SPI_CLK_PIN, GPIO_FUNC_SPI);

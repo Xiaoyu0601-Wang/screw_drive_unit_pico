@@ -30,6 +30,7 @@
 #define _DEV_CONFIG_H_
 
 #include "pico/stdlib.h"
+#include "pico/cyw43_arch.h"
 #include "hardware/spi.h"
 #include "stdio.h"
 #include "hardware/i2c.h"
@@ -45,6 +46,7 @@
 /**
  * GPIOI config
 **/
+#define LED_PIN  25
 
 #define LCD_RST_PIN  12
 #define LCD_DC_PIN   8
@@ -71,6 +73,9 @@ void DEV_GPIO_Mode(UWORD Pin, UWORD Mode);
 void DEV_KEY_Config(UWORD Pin);
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
 UBYTE DEV_Digital_Read(UWORD Pin);
+
+void DEV_LED_On(void);
+void DEV_LED_Off(void);
 
 void DEV_SPI_WriteByte(UBYTE Value);
 uint8_t DEV_SPI_ReadByte(void);
