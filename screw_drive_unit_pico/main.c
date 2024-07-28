@@ -12,6 +12,14 @@ bool led_timer_callback(struct repeating_timer *t)
     return true;
 }
 
+bool ctrl_timer_callback(struct repeating_timer *t)
+{
+    bool led = DEV_WIFI_LED_Read();
+    DEV_WIFI_LED_Write(true ^ led);
+
+    return true;
+}
+
 int main(void)
 {
     DEV_Delay_ms(100);

@@ -172,6 +172,10 @@ UBYTE DEV_Module_Init(void)
 {
     stdio_init_all();
 
+    // Set the clock frequency to 125 MHz
+    while(!set_sys_clock_khz(125000, true));
+    stdio_init_all();
+
     //LED Config
     DEV_LED_Config();
 

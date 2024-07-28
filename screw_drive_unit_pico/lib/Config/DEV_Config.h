@@ -35,6 +35,10 @@
 #include "stdio.h"
 #include "hardware/i2c.h"
 #include "hardware/pwm.h"
+#include "hardware/pll.h"
+#include "hardware/clocks.h"
+#include "hardware/structs/pll.h"
+#include "hardware/structs/clocks.h"
 
 /**
  * data
