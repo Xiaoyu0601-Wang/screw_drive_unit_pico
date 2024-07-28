@@ -39,7 +39,7 @@ make
 ```
 
 ## Pico-CAN-B from WaveShare
-URL: https://www.waveshare.com/wiki/Pico-CAN-B
+Website: https://www.waveshare.com/wiki/Pico-CAN-B
 
 # Some Thoughts
 Memory usage is different from that of a general microcontroller like Stm32.
