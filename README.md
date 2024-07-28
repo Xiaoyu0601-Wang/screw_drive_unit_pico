@@ -1,7 +1,6 @@
 # [WIP] screw_drive_unit_pico
 Code for Controlling Screw-Drive Unit by Using Raspberry Pi Pico
-![My Image](https://github.com/Xiaoyu0601-Wang/my_robots/blob/main/amphibious_snake_like_robot/amphibious_snake_like_robot_screw_drive_unit.jpg)
-<img src="https://github.com/Xiaoyu0601-Wang/my_robots/blob/main/amphibious_snake_like_robot/amphibious_snake_like_robot_screw_drive_unit.jpg" alt="Screw Drive Mechanism" width="300">
+<img src="https://github.com/Xiaoyu0601-Wang/my_robots/blob/main/amphibious_snake_like_robot/amphibious_snake_like_robot_screw_drive_unit.jpg" alt="Screw Drive Mechanism" width="400">
 
 ## Environment Configuration
 Install build tools
