@@ -2,31 +2,35 @@
 #include "DEV_Config.h"
 #include "Debug.h"
 
+bool led_status = false;
+
 bool led_timer_callback(struct repeating_timer *t)
 {
-    
-    DEV_Delay_ms(500);
+    bool led = DEV_WIFI_LED_Read();
+    DEV_WIFI_LED_Write(true ^ led);
+
     return true;
 }
 
 int main(void)
 {
-    DEV_Delay_ms(500);
+    DEV_Delay_ms(100);
     DEV_Module_Init();
-    DEV_LED_On();
+    DEV_WIFI_LED_Write(led_status);
     // printf("MCP2515_Init\r\n");
     // MCP2515_Init();
     // DEV_Delay_ms(3000);
 
-    // struct repeating_timer timer;
-    // add_repeating_timer_ms(-1000, led_timer_callback, NULL, &timer);
+    struct repeating_timer timer;
+    add_repeating_timer_ms(-500, led_timer_callback, NULL, &timer);
 
     // uint32_t id = 0x123;
     // uint8_t data[8] = {8, 7, 6, 5, 4, 3, 2, 1};
     // uint8_t rdata[8];
     // uint8_t dlc = 8;
 
-    while(1){
+    while(1)
+    {
     //     MCP2515_Receive(id, rdata);
     //     printf("read new data:");
     //     for(uint8_t x=0; x<8; x++)
@@ -36,8 +40,6 @@ int main(void)
     //         printf("get data\r\n");
     //         MCP2515_Send(id, data, dlc);
     //     }
-            
-        DEV_Delay_ms(1000);
     }
     
     return 0;

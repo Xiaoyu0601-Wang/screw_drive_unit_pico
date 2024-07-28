@@ -32,6 +32,7 @@
 #define I2C_PORT spi1
 
 uint slice_num;
+
 /**
  * GPIO read and write
 **/
@@ -53,19 +54,13 @@ void DEV_LED_Config(void)
     cyw43_arch_init();
 }
 
-void DEV_LED_On(void)
+void DEV_WIFI_LED_Write(bool led_status)
 {
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status);
 }
-
-void DEV_LED_Off(void)
+bool DEV_WIFI_LED_Read(void)
 {
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-}
-
-void DEV_LED_Toggle(void)
-{
-    cyw43_arch_init();
+    return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN);
 }
 
 /**
