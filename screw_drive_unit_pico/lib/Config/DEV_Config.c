@@ -185,10 +185,10 @@ UBYTE DEV_Module_Init(void)
     gpio_set_function(SPI_CLK_PIN, GPIO_FUNC_SPI);
     gpio_set_function(SPI_MOSI_PIN, GPIO_FUNC_SPI);
     gpio_set_function(SPI_MISO_PIN, GPIO_FUNC_SPI);
+
     // GPIO Config
     DEV_GPIO_Init();
-    
-    
+
     // PWM Config
     // gpio_set_function(LCD_BL_PIN, GPIO_FUNC_PWM);
     // slice_num = pwm_gpio_to_slice_num(LCD_BL_PIN);
@@ -197,6 +197,21 @@ UBYTE DEV_Module_Init(void)
     // pwm_set_clkdiv(slice_num,50);
     // pwm_set_enabled(slice_num, true);
     
+    // ECS PWM Config
+    gpio_set_function(0, GPIO_FUNC_PWM);// GPIO 0
+    gpio_set_function(1, GPIO_FUNC_PWM);// GPIO 1
+    uint slice_num = pwm_gpio_to_slice_num(0);
+    // uint slice_num1 = pwm_gpio_to_slice_num(1);
+    pwm_set_clkdiv(slice_num, 125.0);// Set 1Mhz PWM frequency
+    pwm_set_wrap(slice_num, 5000);// 5ms
+    // pwm_set_clkdiv(slice_num1, 125.0);// Set 1Mhz PWM frequency
+    // pwm_set_wrap(slice_num1, 5000);// 5ms
+    // Set channel A output high for one cycle before dropping
+    pwm_set_chan_level(slice_num, PWM_CHAN_A, 2500);
+    // Set initial B output high for three cycles before dropping
+    pwm_set_chan_level(slice_num, PWM_CHAN_B, 2500);
+    // Set the PWM running
+    pwm_set_enabled(slice_num, true);
     
     //I2C Config
     // i2c_init(i2c1,300*1000);
