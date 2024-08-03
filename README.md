@@ -46,7 +46,12 @@ Website: https://www.waveshare.com/wiki/Pico-CAN-B
 # CAN Message Frame
 App| msg[0] | msg[1] | msg[2] | msg[3] | msg[4~7]
 ---|---|---|---|---|---
-frame structure | Read(0x01)/Write(0x02) | Register | | Data(uint32_t): msg[4]=H, msg[7]=L
+frame structure | Read(0x01)/Write(0x02) | Register | | | Data(uint32_t): msg[4]=H, msg[7]=L
+
+## Protocol
+R/W | Register | Data
+---|---|---
+R/W | 0x01 | Unit ID: Data(uint16_t): msg[6]=H, msg[7]=L
 
 # Some Thoughts
 Memory usage is different from that of a general microcontroller like Stm32.
