@@ -4,6 +4,9 @@
 #include "DEV_Config.h"
 #include "MCP2515.h"
 
+#define HEAD_UNIT_ID 1
+#define TAIL_UNIT_ID 2
+
 // typedef struct
 // {
 // 	uint32_t StdId;  
@@ -27,7 +30,7 @@
 
 typedef struct _UnitStatus
 {
-  uint16_t unitID; // Unit CAN ID
+  uint32_t unitID; // Unit CAN ID
   uint8_t  CanRxMsg[8];
   uint8_t  CanTxMsg[8];
   // CanTxMsg elmoCAN;  //  elmo报文结构体,用于向elmo写入数据

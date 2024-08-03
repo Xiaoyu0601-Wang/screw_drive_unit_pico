@@ -118,7 +118,8 @@ void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len)
 {
     // uint8_t tempdata = MCP2515_ReadByte(CAN_RD_STATUS);
     uint8_t dly = 0;
-    while((MCP2515_ReadByte(TXB0CTRL)&0x08) && (dly<50)) { 
+    while((MCP2515_ReadByte(TXB0CTRL)&0x08) && (dly<50))
+    { 
         DEV_Delay_ms(1);
         dly++;
     }
@@ -130,7 +131,8 @@ void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len)
     MCP2515_WriteBytes(TXB0EID0, 0);
     MCP2515_WriteBytes(TXB0DLC, len);
 
-    for (uint8_t j = 0; j < len; j++) {
+    for (uint8_t j = 0; j < len; j++)
+    {
         MCP2515_WriteBytes(TXB0D0 + j, Buf[j]);
     }
     MCP2515_WriteBytes(TXB0CTRL, 0x08);
@@ -141,11 +143,14 @@ void MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf)
 	MCP2515_WriteBytes(RXB0SIDH, (Canid>>3)&0XFF);
 	MCP2515_WriteBytes(RXB0SIDL, (Canid&0x07)<<5);
 	// uint8_t CAN_RX_Buf[];
-	while(1){
-		if(MCP2515_ReadByte(CANINTF) & 0x01){
+	while(1)
+    {
+		if(MCP2515_ReadByte(CANINTF) & 0x01)
+        {
 			uint8_t len = MCP2515_ReadByte(RXB0DLC);
 			// printf("len = %d\r\n", len);
-			for(uint8_t i=0; i<len; i++){
+			for(uint8_t i=0; i<len; i++)
+            {
 				CAN_RX_Buf[i] = MCP2515_ReadByte(RXB0D0+i);
 				// printf("rx buf =%d\r\n",CAN_RX_Buf[i]);
 			}
