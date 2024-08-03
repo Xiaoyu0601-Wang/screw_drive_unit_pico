@@ -43,5 +43,12 @@ make
 ## Pico-CAN-B from WaveShare
 Website: https://www.waveshare.com/wiki/Pico-CAN-B
 
+# CAN Message Frame
+App|Description | Link to prebuilt UF2
+---|---|---
+hello_serial | Read(0x01)/Write(0x02) | Register
+hello_usb | The obligatory Hello World program for Pico (Output over USB version) | htt
+blink | Blink an LED on and off. | http
+
 # Some Thoughts
 Memory usage is different from that of a general microcontroller like Stm32.
