@@ -2,21 +2,16 @@
 #include "DEV_Config.h"
 #include "Debug.h"
 
-bool led_status = false;
-
 bool led_timer_callback(struct repeating_timer *t)
 {
-    bool led = DEV_WIFI_LED_Read();
-    DEV_WIFI_LED_Write(true ^ led);
+    led_status = !led_status;
+    DEV_WIFI_LED_Write(led_status);
 
     return true;
 }
 
 bool ctrl_timer_callback(struct repeating_timer *t)
 {
-    bool led = DEV_WIFI_LED_Read();
-    DEV_WIFI_LED_Write(true ^ led);
-
     return true;
 }
 

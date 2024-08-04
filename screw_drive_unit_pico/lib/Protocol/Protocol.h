@@ -37,8 +37,8 @@ typedef struct _UnitStatus
   // tMode    Mode;     //
 } UnitStatus;
 
-UnitStatus unitStatus;
+static UnitStatus unitStatus;
 
-bool protocol_update(struct repeating_timer *t);
+bool protocol_update(void);
 
 #endif

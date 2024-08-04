@@ -32,6 +32,7 @@
 #define I2C_PORT spi1
 
 uint slice_num;
+// static bool led_status = false;
 
 /**
  * GPIO read and write

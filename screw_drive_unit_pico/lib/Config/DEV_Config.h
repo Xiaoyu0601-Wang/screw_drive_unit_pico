@@ -40,6 +40,8 @@
 #include "hardware/structs/pll.h"
 #include "hardware/structs/clocks.h"
 
+static bool led_status = false;
+
 /**
  * data
 **/

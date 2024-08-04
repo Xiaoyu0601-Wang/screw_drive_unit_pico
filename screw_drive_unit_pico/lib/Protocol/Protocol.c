@@ -1,6 +1,6 @@
 #include "Protocol.h"
 
-bool protocol_update(struct repeating_timer *t)
+bool protocol_update(void)
 {
 	MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
 
@@ -20,7 +20,7 @@ bool protocol_update(struct repeating_timer *t)
 			default: break;
 		}
 	}
-	if (unitStatus.CanRxMsg[0] == 0x02) /* Write */
+	else if (unitStatus.CanRxMsg[0] == 0x02) /* Write */
 	{
 		switch(unitStatus.CanRxMsg[1])
 		{
