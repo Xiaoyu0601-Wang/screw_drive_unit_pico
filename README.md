@@ -51,7 +51,14 @@ frame structure | Read(0x01)/Write(0x02) | Register | | | Data(uint32_t): msg[4]
 ## Protocol
 R/W | Register | Data
 ---|---|---
-R/W | 0x01 | Unit CAN ID: Standard ID(uint16_t): msg[6]=H, msg[7]=L
+R/W | 0x01 | Unit CAN ID: Standard ID(uint16_t): msg[6]=High 8 bits, msg[7]=L 3 bits
+
+# Flash Register Address
+Pico has a 2MB flash starting from address 0x10000000.
+R/W | Register | Data
+---|---|---
+R/W | 0x10000000 | Unit CAN ID: High 8 bits
+R/W | 0x10000001 | Unit CAN ID: Low 3 bits
 
 # Some Thoughts
 Memory usage is different from that of a general microcontroller like Stm32.
