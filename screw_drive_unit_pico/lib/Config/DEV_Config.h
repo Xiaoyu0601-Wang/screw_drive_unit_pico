@@ -29,10 +29,13 @@
 #ifndef _DEV_CONFIG_H_
 #define _DEV_CONFIG_H_
 
+#include "stdio.h"
+
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
+#include "pico/unique_id.h"
+
 #include "hardware/spi.h"
-#include "stdio.h"
 #include "hardware/i2c.h"
 #include "hardware/pwm.h"
 #include "hardware/pll.h"
@@ -41,6 +44,7 @@
 #include "hardware/structs/clocks.h"
 
 static bool led_status = false;
+static pico_unique_board_id_t board_id;
 
 /**
  * data

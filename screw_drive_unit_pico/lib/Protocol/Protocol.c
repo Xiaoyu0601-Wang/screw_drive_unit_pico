@@ -40,3 +40,8 @@ bool protocol_update(void)
 		}
 	}
 }
+
+bool protocol_init(void)
+{
+	pico_get_unique_board_id(&board_id);
+}
