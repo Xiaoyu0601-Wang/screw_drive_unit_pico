@@ -38,6 +38,7 @@
 #include "hardware/spi.h"
 #include "hardware/i2c.h"
 #include "hardware/pwm.h"
+#include "hardware/flash.h"
 #include "hardware/pll.h"
 #include "hardware/clocks.h"
 #include "hardware/structs/pll.h"
