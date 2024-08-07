@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+static uint8_t FLASH_CAN_ID[2];
+
 // ## Configuration Registers */
 #define CANSTAT       0x0E
 #define CANCTRL       0x0F

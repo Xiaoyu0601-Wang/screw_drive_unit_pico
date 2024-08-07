@@ -44,6 +44,10 @@
 #include "hardware/structs/pll.h"
 #include "hardware/structs/clocks.h"
 
+#define FLASH_TARGET_OFFSET (64 * 1024)
+
+// const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGET_OFFSET);
+
 static bool led_status = false;
 static pico_unique_board_id_t board_id;
 

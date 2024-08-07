@@ -1,12 +1,19 @@
-﻿#include "MCP2515.h"   //Examples
-#include "DEV_Config.h"
+﻿#include "DEV_Config.h"
 #include "Debug.h"
+
+#include "MCP2515.h"
+#include "Protocol.h"
 
 bool led_timer_callback(struct repeating_timer *t)
 {
     led_status = !led_status;
     DEV_WIFI_LED_Write(led_status);
 
+    return true;
+}
+
+bool protocol_timer_callback(struct repeating_timer *t)
+{
     return true;
 }
 

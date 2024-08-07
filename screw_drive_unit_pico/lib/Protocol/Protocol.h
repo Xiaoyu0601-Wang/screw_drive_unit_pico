@@ -1,6 +1,10 @@
 #ifndef _PROTOCOL_H_
 #define _PROTOCOL_H_
 
+// #include <stdio.h>
+// #include <stdint.h>
+#include "pico/stdlib.h"
+
 #include "DEV_Config.h"
 #include "MCP2515.h"
 
@@ -39,6 +43,6 @@ typedef struct _UnitStatus
 
 static UnitStatus unitStatus;
 
-bool protocol_update(void);
+void protocol_update(void);
 
 #endif
