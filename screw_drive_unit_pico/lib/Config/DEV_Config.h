@@ -44,12 +44,18 @@
 #include "hardware/structs/pll.h"
 #include "hardware/structs/clocks.h"
 
-#define FLASH_TARGET_OFFSET (64 * 1024)
+#define SPI_PORT spi0
+#define I2C_PORT spi1
+
+#define FLASH_TARGET_OFFSET (8 * 1024)
 
 // const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGET_OFFSET);
 
 static bool led_status = false;
+static bool led_enable = true;
 static pico_unique_board_id_t board_id;
+// static uint ecs_slice_num;
+// static uint slice_num;
 
 /**
  * data
@@ -103,6 +109,7 @@ void DEV_I2C_Write(uint8_t addr, uint8_t reg, uint8_t Value);
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len);
 uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg);
 
+bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm);
 void DEV_SET_PWM(uint8_t Value);
 
 UBYTE DEV_Module_Init(void);

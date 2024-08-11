@@ -28,9 +28,7 @@
 ******************************************************************************/
 #include "DEV_Config.h"
 
-#define SPI_PORT spi0
-#define I2C_PORT spi1
-
+uint ecs_slice_num;
 uint slice_num;
 
 /**
@@ -110,7 +108,21 @@ uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg)
 /**
  * ECS PWM
 **/
+bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm)
+{
+    if (motorID == 0)
+    {
+        pwm_set_chan_level(ecs_slice_num, PWM_CHAN_A, 1);
+        return true;
+    }
+    else if (motorID == 1)
+    {
+        pwm_set_chan_level(ecs_slice_num, PWM_CHAN_B, 1);
+        return true;
+    }
 
+    return false;
+}
 
 /**
  * GPIO Mode
@@ -202,17 +214,17 @@ UBYTE DEV_Module_Init(void)
     // ECS PWM Config
     gpio_set_function(0, GPIO_FUNC_PWM);// GPIO 0
     gpio_set_function(1, GPIO_FUNC_PWM);// GPIO 1
-    uint slice_num = pwm_gpio_to_slice_num(0);
+    ecs_slice_num = pwm_gpio_to_slice_num(0);
     // uint slice_num1 = pwm_gpio_to_slice_num(1);
-    pwm_set_clkdiv(slice_num, 1250.0);// Set 1Mhz PWM frequency
-    pwm_set_wrap(slice_num, 2000);// 20ms
+    pwm_set_clkdiv(ecs_slice_num, 1250.0);// Set 1Mhz PWM frequency
+    pwm_set_wrap(ecs_slice_num, 2000);// 20ms
     // pwm_set_clkdiv(slice_num1, 125.0);// Set 1Mhz PWM frequency
     // pwm_set_wrap(slice_num1, 5000);// 5ms
     // Set channel A output high for one cycle before dropping
-    pwm_set_chan_level(slice_num, PWM_CHAN_A, 150);// 1.5ms
+    pwm_set_chan_level(ecs_slice_num, PWM_CHAN_A, 150);// 1.5ms
     // Set initial B output high for three cycles before dropping
-    pwm_set_chan_level(slice_num, PWM_CHAN_B, 150);// 1.5ms
-    pwm_set_enabled(slice_num, true);// Set the PWM running
+    pwm_set_chan_level(ecs_slice_num, PWM_CHAN_B, 150);// 1.5ms
+    pwm_set_enabled(ecs_slice_num, true);// Set the PWM running
     
     //I2C Config
     // i2c_init(i2c1,300*1000);
@@ -225,15 +237,16 @@ UBYTE DEV_Module_Init(void)
     return 0;
 }
 
-void DEV_SET_PWM(uint8_t Value){
-    if(Value<0 || Value >100){
+void DEV_SET_PWM(uint8_t Value)
+{
+    if(Value<0 || Value >100)
+    {
         printf("DEV_SET_PWM Error \r\n");
-    }else {
+    }
+    else
+    {
         pwm_set_chan_level(slice_num, PWM_CHAN_B, Value);
     }
-        
-    
-    
 }
 
 /******************************************************************************
