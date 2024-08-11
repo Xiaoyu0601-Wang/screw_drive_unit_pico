@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#include "DEV_Config.h"
+
 // static uint8_t FLASH_CAN_ID[2];
 
 // ## Configuration Registers */
@@ -408,7 +410,7 @@ function:
 enum RATEBPS {KBPS5 = 0, KBPS10, KBPS20, KBPS50, KBPS100, KBPS125, KBPS250, KBPS500, KBPS800, KBPS1000 };
 void MCP2515_Init(void);
 void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len);
-void MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf);
+bool MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf);
 
 #endif  
 	 

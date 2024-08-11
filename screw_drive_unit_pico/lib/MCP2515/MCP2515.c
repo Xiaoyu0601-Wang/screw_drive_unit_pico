@@ -10,7 +10,6 @@
  * -----------------------------------------------------------------------------
  ******************************************************************************/
 #include "MCP2515.h"
-#include "DEV_Config.h"
 // #include "Log_debug.h"
 
 static void MCP2515_WriteByte(uint8_t Addr)
@@ -74,9 +73,9 @@ void MCP2515_Init(void)
     // # MCP2515_WriteBytes(CNF1, 7)
     // # MCP2515_WriteBytes(CNF2,0x80|PHSEG1_3TQ|PRSEG_1TQ)
     // # MCP2515_WriteBytes(CNF3,PHSEG2_3TQ)
-    MCP2515_WriteBytes(CNF1, CAN_RATE[KBPS125][0]);
-    MCP2515_WriteBytes(CNF2, CAN_RATE[KBPS125][1]);
-    MCP2515_WriteBytes(CNF3, CAN_RATE[KBPS125][2]);
+    MCP2515_WriteBytes(CNF1, CAN_RATE[KBPS250][0]);
+    MCP2515_WriteBytes(CNF2, CAN_RATE[KBPS250][1]);
+    MCP2515_WriteBytes(CNF3, CAN_RATE[KBPS250][2]);
     // MCP2515_WriteBytes
     // MCP2515_WriteBytes
 
@@ -138,29 +137,30 @@ void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len)
     MCP2515_WriteBytes(TXB0CTRL, 0x08);
 }
 
-void MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf)
+bool MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf)
 {
 	MCP2515_WriteBytes(RXB0SIDH, (Canid>>3)&0XFF);
 	MCP2515_WriteBytes(RXB0SIDL, (Canid&0x07)<<5);
 	// uint8_t CAN_RX_Buf[];
-	while(1)
-    {
-		if(MCP2515_ReadByte(CANINTF) & 0x01)
-        {
-			uint8_t len = MCP2515_ReadByte(RXB0DLC);
-			// printf("len = %d\r\n", len);
-			for(uint8_t i=0; i<len; i++)
-            {
-				CAN_RX_Buf[i] = MCP2515_ReadByte(RXB0D0+i);
-				// printf("rx buf =%d\r\n",CAN_RX_Buf[i]);
-			}
-			break;
-		}
-	}
 
-	MCP2515_WriteBytes(CANINTF, 0);
-	MCP2515_WriteBytes(CANINTE,0x01);//enable
-	MCP2515_WriteBytes(RXB0SIDH,0x00);//clean
-	MCP2515_WriteBytes(RXB0SIDL,0x60);
-	// return CAN_RX_Buf
+    if(MCP2515_ReadByte(CANINTF) & 0x01)
+    {
+    	uint8_t len = MCP2515_ReadByte(RXB0DLC);
+    	// printf("len = %d\r\n", len);
+    	for(uint8_t i=0; i<len; i++)
+        {
+    		CAN_RX_Buf[i] = MCP2515_ReadByte(RXB0D0+i);
+    		// printf("rx buf =%d\r\n",CAN_RX_Buf[i]);
+    	}
+
+        MCP2515_WriteBytes(CANINTF, 0);
+        MCP2515_WriteBytes(CANINTE,0x01);//enable
+        MCP2515_WriteBytes(RXB0SIDH,0x00);//clean
+        MCP2515_WriteBytes(RXB0SIDL,0x60);
+
+        return true;
+    }
+
+
+	return false;
 }

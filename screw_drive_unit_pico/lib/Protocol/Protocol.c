@@ -67,6 +67,7 @@ bool Protocol_Init(void)
 	// uint8_t FLASH_CAN_ID[2];
 	// unitStatus.unitID = flash_target_contents[0] << 3
 	// 				  | flash_target_contents[1];
+	unitStatus.unitID = 0x001;
 
 	unitStatus.ledEnable = true;
 	unitStatus.ledStatus = true;
