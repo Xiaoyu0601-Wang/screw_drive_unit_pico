@@ -46,7 +46,7 @@ typedef struct //_UnitStatus
 
 extern UnitStatus unitStatus;
 
-bool protocol_init(void);
-void protocol_update(void);
+bool Protocol_Init(void);
+void Protocol_Update(void);
 
 #endif

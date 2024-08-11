@@ -4,7 +4,7 @@ const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGE
 
 UnitStatus unitStatus;
 
-void protocol_update(void)
+void Protocol_Update(void)
 {
 	MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
 
@@ -62,7 +62,7 @@ void protocol_update(void)
 	}
 }
 
-bool protocol_init(void)
+bool Protocol_Init(void)
 {
 	// uint8_t FLASH_CAN_ID[2];
 	// unitStatus.unitID = flash_target_contents[0] << 3

@@ -17,7 +17,7 @@ bool led_timer_callback(struct repeating_timer *t)
 
 bool can_timer_callback(struct repeating_timer *t)
 {
-    protocol_update();
+    Protocol_Update();
 
     return true;
 }
@@ -31,8 +31,7 @@ int main(void)
 {
     DEV_Delay_ms(100);
     DEV_Module_Init();
-    protocol_init();
-    // printf("MCP2515_Init\r\n");
+    Protocol_Init();
     // MCP2515_Init();
     // DEV_Delay_ms(3000);
 
