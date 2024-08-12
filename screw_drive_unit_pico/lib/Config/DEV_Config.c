@@ -112,12 +112,12 @@ bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm)
 {
     if (motorID == 0)
     {
-        pwm_set_chan_level(ecs_slice_num, PWM_CHAN_A, 1);
+        pwm_set_chan_level(ecs_slice_num, PWM_CHAN_A, 150 + pwm);
         return true;
     }
     else if (motorID == 1)
     {
-        pwm_set_chan_level(ecs_slice_num, PWM_CHAN_B, 1);
+        pwm_set_chan_level(ecs_slice_num, PWM_CHAN_B, 150 + pwm);
         return true;
     }
 

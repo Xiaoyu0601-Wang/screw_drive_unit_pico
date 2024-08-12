@@ -47,7 +47,7 @@
 #define SPI_PORT spi0
 #define I2C_PORT spi1
 
-#define FLASH_TARGET_OFFSET (8 * 1024)
+#define FLASH_TARGET_OFFSET (256 * 1024)
 
 // const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGET_OFFSET);
 

@@ -15,10 +15,8 @@ void Protocol_Update(void)
 			case 0x01: /* Unique Board ID */
 				break;
 			case 0x02: /* Standard CAN ID */
-				// MotorState.desired_rpmVelocity = (CAN_RxMessage.Data[2])
-				// 							   | (CAN_RxMessage.Data[3] << 8)
-				// 							   | (CAN_RxMessage.Data[4] << 16)
-				// 							   | (CAN_RxMessage.Data[5] << 24);
+				// unitStatus.flashData[0] = unitStatus.CanRxMsg[6];
+				// unitStatus.flashData[1] = unitStatus.CanRxMsg[7];
 				break;
 			case 0x03: /* LED Enable */
 				break;
@@ -34,10 +32,10 @@ void Protocol_Update(void)
 		switch(unitStatus.CanRxMsg[1])
 		{
 			case 0x02: /* Standard CAN ID */
-				// FLASH_CAN_ID[0] = ;
-				// FLASH_CAN_ID[1] = ;
-				// flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
-				// flash_range_program(FLASH_TARGET_OFFSET, random_data, FLASH_PAGE_SIZE);
+				unitStatus.flashData[0] = unitStatus.CanRxMsg[6];
+				unitStatus.flashData[1] = unitStatus.CanRxMsg[7];
+				flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
+				flash_range_program(FLASH_TARGET_OFFSET, unitStatus.flashData, FLASH_PAGE_SIZE);
 				break;
 			case 0x03: /* LED Enable */
 					if (unitStatus.CanRxMsg[7] == 1)
@@ -53,7 +51,9 @@ void Protocol_Update(void)
 				break;
 			case 0x04: /* LED Status */
 				break;
-			case 0x05: /* Set Motor Command */
+			case 0x05: /* Set Motor Command: -100 ~ +100 */
+				unitStatus.motorCMD[0] = unitStatus.CanRxMsg[6];
+				unitStatus.motorCMD[1] = unitStatus.CanRxMsg[7];
 				DEV_ECS_SetPWM(0, unitStatus.motorCMD[0]);
 				DEV_ECS_SetPWM(1, unitStatus.motorCMD[1]);
 				break;
@@ -64,10 +64,15 @@ void Protocol_Update(void)
 
 bool Protocol_Init(void)
 {
-	// uint8_t FLASH_CAN_ID[2];
-	// unitStatus.unitID = flash_target_contents[0] << 3
-	// 				  | flash_target_contents[1];
-	unitStatus.unitID = 0x001;
+	// unitStatus.flashData[0] = 0x00;
+	// unitStatus.flashData[1] = 0x01;
+	// flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
+	// flash_range_program(FLASH_TARGET_OFFSET, unitStatus.flashData, FLASH_PAGE_SIZE);
+
+	unitStatus.flashData[0] = flash_target_contents[0];
+	unitStatus.flashData[1] = flash_target_contents[1];
+	unitStatus.unitID = flash_target_contents[0] << 3
+					  | flash_target_contents[1];
 
 	unitStatus.ledEnable = true;
 	unitStatus.ledStatus = true;

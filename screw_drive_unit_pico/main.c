@@ -17,10 +17,8 @@ bool led_timer_callback(struct repeating_timer *t)
 
 bool can_timer_callback(struct repeating_timer *t)
 {
-    // uint32_t id = 0x123;
-    // uint8_t data[8] = {8, 7, 6, 5, 4, 3, 2, 1};
-    // uint8_t dlc = 8;
-    // MCP2515_Send(id, data, dlc);
+    // MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);
+
     MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
     Protocol_Update();
 
@@ -38,12 +36,14 @@ int main(void)
     DEV_Module_Init();
     Protocol_Init();
     MCP2515_Init();
-    // DEV_Delay_ms(3000);
+    DEV_Delay_ms(100);
 
     struct repeating_timer led_timer;
     add_repeating_timer_ms(-500, led_timer_callback, NULL, &led_timer);
     struct repeating_timer can_timer;
-    add_repeating_timer_ms(-15, can_timer_callback, NULL, &can_timer);
+    add_repeating_timer_ms(-1000, can_timer_callback, NULL, &can_timer);
+    // struct repeating_timer ctrl_timer;
+    // add_repeating_timer_ms(-50, ctrl_timer_callback, NULL, &ctrl_timer);
 
     while (1)
         tight_loop_contents();
