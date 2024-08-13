@@ -49,10 +49,14 @@ App| msg[0] | msg[1] | msg[2] | msg[3] | msg[4~7]
 frame structure | Read(0x01)/Write(0x02) | Register | | | Data(uint32_t): msg[4]=H, msg[7]=L
 
 ## Protocol
+Read(0x01)/Write(0x02)
 R/W | Register | Data
 ---|---|---
 R   | 0x01 | unique board ID
 R/W | 0x02 | Unit CAN ID: Standard ID(uint16_t): msg[6]=High 8 bits, msg[7]=L 3 bits
+R/W | 0x03 | LED Enable/Disable
+R/W | 0x04 | LED Status, On: 1, Off: 0
+R/W | 0x05 | Motor Command
 
 # Flash Register Address
 Pico has a 2MB flash starting from address 0x10000000.
