@@ -17,10 +17,10 @@ bool led_timer_callback(struct repeating_timer *t)
 
 bool can_timer_callback(struct repeating_timer *t)
 {
-    // MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);
+    MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);
 
-    MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
-    Protocol_Update();
+    // MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
+    // Protocol_Update();
 
     return true;
 }

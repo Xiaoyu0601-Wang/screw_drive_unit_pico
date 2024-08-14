@@ -47,7 +47,7 @@ void MCP2515_Reset(void)
     DEV_Digital_Write(MCP2515_CS_PIN, 1);
 }
 
-uint8_t CAN_RATE[10][3] = {
+uint8_t CAN_16MHZ_RATE[10][3] = {
     {0xA7, 0XBF, 0x07}, 
     {0x31, 0XA4, 0X04}, 
     {0x18, 0XA4, 0x04}, 
@@ -58,6 +58,8 @@ uint8_t CAN_RATE[10][3] = {
     {0x00, 0x9E, 0x03},
     {0x00, 0x92, 0x02}, 
     {0x00, 0x82, 0x02}};
+
+uint8_t CAN_8MHZ_KBPS250_RATE[3] = {0x00, 0XB1, 0x85};
 
 void MCP2515_Init(void)
 {
@@ -73,11 +75,14 @@ void MCP2515_Init(void)
     // # MCP2515_WriteBytes(CNF1, 7)
     // # MCP2515_WriteBytes(CNF2,0x80|PHSEG1_3TQ|PRSEG_1TQ)
     // # MCP2515_WriteBytes(CNF3,PHSEG2_3TQ)
-    MCP2515_WriteBytes(CNF1, CAN_RATE[KBPS250][0]);
-    MCP2515_WriteBytes(CNF2, CAN_RATE[KBPS250][1]);
-    MCP2515_WriteBytes(CNF3, CAN_RATE[KBPS250][2]);
-    // MCP2515_WriteBytes
-    // MCP2515_WriteBytes
+    // MCP2515_WriteBytes(CNF1, CAN_16MHZ_RATE[KBPS250][0]);
+    // MCP2515_WriteBytes(CNF2, CAN_16MHZ_RATE[KBPS250][1]);
+    // MCP2515_WriteBytes(CNF3, CAN_16MHZ_RATE[KBPS250][2]);
+
+    MCP2515_WriteBytes(CNF1, CAN_8MHZ_KBPS250_RATE[0]);
+    MCP2515_WriteBytes(CNF2, CAN_8MHZ_KBPS250_RATE[1]);
+    MCP2515_WriteBytes(CNF3, CAN_8MHZ_KBPS250_RATE[2]);
+
 
     // #set TXB0,TXB1
     // #<15:5> SID 11bit canid

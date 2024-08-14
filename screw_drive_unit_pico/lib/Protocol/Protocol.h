@@ -38,9 +38,9 @@ typedef struct //_UnitStatus
   uint8_t  CanRxMsg[8];
   uint8_t  CanTxMsg[8];
   uint8_t  flashData[8];
-  // CanTxMsg elmoCAN;  //  elmo报文结构体,用于向elmo写入数据
-  // tMode    Mode;     //
   uint8_t  motorCMD[2];
+  uint8_t  joint1CMD[4];
+  uint8_t  joint2CMD[4];
   bool ledEnable;
   bool ledStatus;
 } UnitStatus;
