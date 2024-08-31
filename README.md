@@ -57,6 +57,9 @@ R/W | 0x02 | Unit CAN ID: Standard ID(uint16_t): msg[6]=High 8 bits, msg[7]=L 3 
 R/W | 0x03 | LED Enable/Disable
 R/W | 0x04 | LED Status, On: 1, Off: 0
 R/W | 0x05 | Motor Command
+R/W | 0x06 | Joint 1 Command
+R/W | 0x07 | Joint 2 Command
+R   | 0x08 | IMU
 
 # Flash Register Address
 Pico has a 2MB flash starting from address 0x10000000.

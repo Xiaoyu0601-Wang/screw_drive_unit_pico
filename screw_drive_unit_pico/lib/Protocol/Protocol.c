@@ -22,7 +22,13 @@ void Protocol_Update(void)
 				break;
 			case 0x04: /* LED Status */
 				break;
-			case 0x05: /* Read Motor Command */
+			case 0x05: /* Read Motor */
+				break;
+			case 0x06: /* Read Joint 1 */
+				break;
+			case 0x07: /* Read Joint 2 */
+				break;
+			case 0x08: /* Read IMU */
 				break;
 			default: break;
 		}
