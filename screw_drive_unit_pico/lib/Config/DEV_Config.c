@@ -182,7 +182,7 @@ function:	Module Initialize, the library and initialize the pins, SPI protocol
 parameter:
 Info:
 ******************************************************************************/
-UBYTE DEV_Module_Init(void)
+UBYTE DEV_Module_Init(void (*uart_rx_irq)(void))
 {
     stdio_init_all();
 
@@ -199,6 +199,22 @@ UBYTE DEV_Module_Init(void)
     gpio_set_function(SPI_CLK_PIN, GPIO_FUNC_SPI);
     gpio_set_function(SPI_MOSI_PIN, GPIO_FUNC_SPI);
     gpio_set_function(SPI_MISO_PIN, GPIO_FUNC_SPI);
+
+    // UART Config
+    uart_init(UART_ID, BAUD_RATE);// Set up our UART with a basic baud rate.
+    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
+    // Set UART flow control CTS/RTS, we don't want these, so turn them off
+    uart_set_hw_flow(UART_ID, false, false);
+    uart_set_format(UART_ID, DATA_BITS, STOP_BITS, PARITY);// Set our data format
+    // Turn off FIFO's - we want to do this character by character
+    uart_set_fifo_enabled(UART_ID, false);
+    // Set up a RX interrupt
+    // Set up and enable the interrupt handlers
+    // irq_set_exclusive_handler(UART_IRQ, uart_rx_irq);
+    // irq_set_enabled(UART_IRQ, true);
+    // // Now enable the UART to send interrupts - RX only
+    // uart_set_irq_enables(UART_ID, true, false);
 
     // GPIO Config
     DEV_GPIO_Init();

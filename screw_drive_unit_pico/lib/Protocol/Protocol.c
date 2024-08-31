@@ -62,16 +62,23 @@ void Protocol_Update(void)
 				unitStatus.joint1CMD[1] = unitStatus.CanRxMsg[5];
 				unitStatus.joint1CMD[2] = unitStatus.CanRxMsg[6];
 				unitStatus.joint1CMD[3] = unitStatus.CanRxMsg[7];
+				;
 				break;
 			case 0x07: /* Set Joint 2 Command */
 				unitStatus.joint2CMD[0] = unitStatus.CanRxMsg[4];
 				unitStatus.joint2CMD[1] = unitStatus.CanRxMsg[5];
 				unitStatus.joint2CMD[2] = unitStatus.CanRxMsg[6];
 				unitStatus.joint2CMD[3] = unitStatus.CanRxMsg[7];
+				;
 				break;
 			default: break;
 		}
 	}
+}
+
+void uart_rx_irq(void)
+{
+    
 }
 
 bool Protocol_Init(void)

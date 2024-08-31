@@ -49,5 +49,6 @@ extern UnitStatus unitStatus;
 
 bool Protocol_Init(void);
 void Protocol_Update(void);
+void uart_rx_irq(void);
 
 #endif

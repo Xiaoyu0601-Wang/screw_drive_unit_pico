@@ -35,6 +35,7 @@
 #include "pico/cyw43_arch.h"
 #include "pico/unique_id.h"
 
+#include "hardware/uart.h"
 #include "hardware/spi.h"
 #include "hardware/i2c.h"
 #include "hardware/pwm.h"
@@ -86,6 +87,15 @@ static pico_unique_board_id_t board_id;
 #define MCP2515_CS0_PIN  5
 #define MCP2515_CS1_PIN  1
 #define MCP2515_CS_PIN  MCP2515_CS0_PIN
+
+#define UART_ID uart0
+#define UART_IRQ UART0_IRQ
+#define BAUD_RATE 115200
+#define DATA_BITS 8
+#define STOP_BITS 1
+#define PARITY    UART_PARITY_NONE
+#define UART_TX_PIN 0
+#define UART_RX_PIN 1
 /*------------------------------------------------------------------------------------------------------*/
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
 UBYTE DEV_Digital_Read(UWORD Pin);
@@ -112,7 +122,7 @@ uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg);
 bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm);
 void DEV_SET_PWM(uint8_t Value);
 
-UBYTE DEV_Module_Init(void);
+UBYTE DEV_Module_Init(void (*uart_rx_irq)(void));
 void DEV_Module_Exit(void);
 
 

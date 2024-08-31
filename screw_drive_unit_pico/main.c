@@ -33,7 +33,7 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 int main(void)
 {
     DEV_Delay_ms(100);
-    DEV_Module_Init();
+    DEV_Module_Init(uart_rx_irq);
     Protocol_Init();
     MCP2515_Init();
     DEV_Delay_ms(100);
