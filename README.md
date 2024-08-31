@@ -68,5 +68,9 @@ R/W | Register | Data
 R/W | 0x10000000 | Unit CAN ID: High 8 bits
 R/W | 0x10000001 | Unit CAN ID: Low 3 bits
 
+# Some Tools for Development
+## Serial Port Assistant
+https://github.com/KangLin/SerialPortAssistant
+
 # Some Thoughts
 Memory usage is different from that of a general microcontroller like Stm32.
