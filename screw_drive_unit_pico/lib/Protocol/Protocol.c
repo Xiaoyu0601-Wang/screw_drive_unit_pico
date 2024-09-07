@@ -91,13 +91,15 @@ bool Protocol_Init(void)
 {
 	unitStatus.flashData[0] = 0x00;
 	unitStatus.flashData[1] = 0x01;
-	flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
-	flash_range_program(FLASH_TARGET_OFFSET, unitStatus.flashData, FLASH_PAGE_SIZE);
+	unitStatus.unitID = unitStatus.flashData[0] << 3
+					  | unitStatus.flashData[1];
 
-	unitStatus.flashData[0] = flash_target_contents[0];
-	unitStatus.flashData[1] = flash_target_contents[1];
-	unitStatus.unitID = flash_target_contents[0] << 3
-					  | flash_target_contents[1];
+	// flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
+	// flash_range_program(FLASH_TARGET_OFFSET, unitStatus.flashData, FLASH_PAGE_SIZE);
+	// unitStatus.flashData[0] = flash_target_contents[0];
+	// unitStatus.flashData[1] = flash_target_contents[1];
+	// unitStatus.unitID = flash_target_contents[0] << 3
+	// 				  | flash_target_contents[1];
 
 	unitStatus.ledEnable = true;
 	unitStatus.ledStatus = true;
