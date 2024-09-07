@@ -12,15 +12,18 @@ bool led_timer_callback(struct repeating_timer *t)
         DEV_WIFI_LED_Write(unitStatus.ledStatus);
     }
 
+    // DEV_UART_WriteByte('A');
+    // uart_putc(UART_ID, 'B');
+
     return true;
 }
 
 bool can_timer_callback(struct repeating_timer *t)
 {
-    MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);
+    // MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);
 
-    // MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
-    // Protocol_Update();
+    MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
+    Protocol_Update();
 
     return true;
 }
@@ -33,6 +36,7 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 int main(void)
 {
     DEV_Delay_ms(100);
+    // DEV_Module_Init();
     DEV_Module_Init(uart_rx_irq);
     Protocol_Init();
     MCP2515_Init();
@@ -40,8 +44,8 @@ int main(void)
 
     struct repeating_timer led_timer;
     add_repeating_timer_ms(-500, led_timer_callback, NULL, &led_timer);
-    struct repeating_timer can_timer;
-    add_repeating_timer_ms(-1000, can_timer_callback, NULL, &can_timer);
+    // struct repeating_timer can_timer;
+    // add_repeating_timer_ms(-1000, can_timer_callback, NULL, &can_timer);
     // struct repeating_timer ctrl_timer;
     // add_repeating_timer_ms(-50, ctrl_timer_callback, NULL, &ctrl_timer);
 

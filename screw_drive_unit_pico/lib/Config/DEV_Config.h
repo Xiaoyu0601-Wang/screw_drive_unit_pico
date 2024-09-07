@@ -85,7 +85,7 @@ static pico_unique_board_id_t board_id;
 #define SPI_MOSI_PIN 7
 #define SPI_MISO_PIN 4
 #define MCP2515_CS0_PIN  5
-#define MCP2515_CS1_PIN  1
+// #define MCP2515_CS1_PIN  1
 #define MCP2515_CS_PIN  MCP2515_CS0_PIN
 
 #define UART_ID uart0
@@ -107,6 +107,10 @@ UBYTE DEV_Digital_Read(UWORD Pin);
 
 void DEV_WIFI_LED_Write(bool led_status);
 bool DEV_WIFI_LED_Read(void);
+
+void DEV_UART_WriteByte(uint8_t Value);
+uint8_t DEV_UART_ReadByte(void);
+void DEV_UART_Write_nByte(uint8_t pData[], uint32_t Len);
 
 void DEV_SPI_WriteByte(UBYTE Value);
 uint8_t DEV_SPI_ReadByte(void);
