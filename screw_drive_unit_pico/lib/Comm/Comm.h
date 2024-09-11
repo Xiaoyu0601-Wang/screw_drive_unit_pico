@@ -1,14 +1,12 @@
-﻿/** @file */
-
-#ifndef _STM32_COMM_H
-#define _STM32_COMM_H
+﻿#ifndef _COMM_H_
+#define _COMM_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include "buffer.h"
-#include "stm32_time.h"
+// #include "stm32_time.h"
 
 /** 
  * \brief Possible communication states
