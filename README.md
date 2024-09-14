@@ -39,6 +39,9 @@ cd build
 cmake .. -DPICO_BOARD=pico_w -DCMAKE_BUILD_TYPE=Release
 make
 ```
+How to load program
+1. Hold down the BOOTSEL button on your Pico-series device while plugging it into your development device using a micro USB cable to force it into USB Mass Storage Mode.
+2. Copy main.uf2 in build folder into the USB Mass Storage Mode.
 
 ## Pico-CAN-B from WaveShare
 Website: https://www.waveshare.com/wiki/Pico-CAN-B
