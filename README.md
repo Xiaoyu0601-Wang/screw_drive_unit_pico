@@ -24,7 +24,7 @@ cd pico-sdk
 git submodule update --init
 ```
 
-Set up the user environment variable
+Set up the user environment variable, and modify $HOME with the path of the repository:
 ```sh
 cd ~
 echo "export PICO_SDK_PATH=$HOME/screw_drive_unit_pico/pico-sdk" >> ~/.bashrc
