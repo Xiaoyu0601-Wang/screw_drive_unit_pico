@@ -13,34 +13,34 @@
 
 // typedef struct
 // {
-// 	uint32_t StdId;  
-// 	uint32_t ExtId;  
-// 	uint8_t IDE;     
-// 	uint8_t RTR;     
-// 	uint8_t DLC;     
-// 	uint8_t Data[8]; 
+// 	uint32_t StdId;
+// 	uint32_t ExtId;
+// 	uint8_t IDE;
+// 	uint8_t RTR;
+// 	uint8_t DLC;
+// 	uint8_t Data[8];
 // } CanTxMsg;
 
 // typedef struct
 // {
-// 	uint32_t StdId;  
-// 	uint32_t ExtId;  
-// 	uint8_t IDE;     
-// 	uint8_t RTR;     
-// 	uint8_t DLC;     
-// 	uint8_t Data[8]; 
-// 	uint8_t FMI;     
+// 	uint32_t StdId;
+// 	uint32_t ExtId;
+// 	uint8_t IDE;
+// 	uint8_t RTR;
+// 	uint8_t DLC;
+// 	uint8_t Data[8];
+// 	uint8_t FMI;
 // } CanRxMsg;
 
 typedef struct //_UnitStatus
 {
   uint32_t unitID; // Unit CAN ID
-  uint8_t  CanRxMsg[8];
-  uint8_t  CanTxMsg[8];
-  uint8_t  flashData[8];
-  uint8_t  motorCMD[2];
-  uint8_t  joint1CMD[4];
-  uint8_t  joint2CMD[4];
+  uint8_t CanRxMsg[8];
+  uint8_t CanTxMsg[8];
+  uint8_t flashData[8];
+  uint8_t motorCMD[2];
+  uint8_t joint1CMD[4];
+  uint8_t joint2CMD[4];
   bool ledEnable;
   bool ledStatus;
 } UnitStatus;

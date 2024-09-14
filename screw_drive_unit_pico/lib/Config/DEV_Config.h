@@ -1,12 +1,12 @@
 /*****************************************************************************
 * | File      	:   DEV_Config.h
-* | Author      :   
+* | Author      :
 * | Function    :   Hardware underlying interface
 * | Info        :
 *----------------
 * |	This version:   V1.0
 * | Date        :   2021-03-16
-* | Info        :   
+* | Info        :
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documnetation files (the "Software"), to deal
@@ -31,26 +31,27 @@
 
 #include "stdio.h"
 
-#include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
+#include "pico/stdlib.h"
 #include "pico/unique_id.h"
 
-#include "hardware/uart.h"
-#include "hardware/spi.h"
-#include "hardware/i2c.h"
-#include "hardware/pwm.h"
-#include "hardware/flash.h"
-#include "hardware/pll.h"
 #include "hardware/clocks.h"
-#include "hardware/structs/pll.h"
+#include "hardware/flash.h"
+#include "hardware/i2c.h"
+#include "hardware/pll.h"
+#include "hardware/pwm.h"
+#include "hardware/spi.h"
 #include "hardware/structs/clocks.h"
+#include "hardware/structs/pll.h"
+#include "hardware/uart.h"
 
 #define SPI_PORT spi0
 #define I2C_PORT spi1
 
 #define FLASH_TARGET_OFFSET (256 * 1024)
 
-// const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGET_OFFSET);
+// const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE +
+// FLASH_TARGET_OFFSET);
 
 static bool led_status = false;
 static bool led_enable = true;
@@ -60,40 +61,40 @@ static pico_unique_board_id_t board_id;
 
 /**
  * data
-**/
-#define UBYTE   uint8_t
-#define UWORD   uint16_t
+ **/
+#define UBYTE uint8_t
+#define UWORD uint16_t
 #define UDOUBLE uint32_t
 
 /**
  * GPIOI config
-**/
-#define LED_PIN  25
+ **/
+#define LED_PIN 25
 
-#define LCD_RST_PIN  12
-#define LCD_DC_PIN   8
-#define LCD_BL_PIN   13
-    
-#define LCD_CS_PIN   9
-#define LCD_CLK_PIN  10
+#define LCD_RST_PIN 12
+#define LCD_DC_PIN 8
+#define LCD_BL_PIN 13
+
+#define LCD_CS_PIN 9
+#define LCD_CLK_PIN 10
 #define LCD_MOSI_PIN 11
-    
-#define LCD_SCL_PIN  7
-#define LCD_SDA_PIN  6
 
-#define SPI_CLK_PIN  6
+#define LCD_SCL_PIN 7
+#define LCD_SDA_PIN 6
+
+#define SPI_CLK_PIN 6
 #define SPI_MOSI_PIN 7
 #define SPI_MISO_PIN 4
-#define MCP2515_CS0_PIN  5
+#define MCP2515_CS0_PIN 5
 // #define MCP2515_CS1_PIN  1
-#define MCP2515_CS_PIN  MCP2515_CS0_PIN
+#define MCP2515_CS_PIN MCP2515_CS0_PIN
 
 #define UART_ID uart0
 #define UART_IRQ UART0_IRQ
 #define BAUD_RATE 115200
 #define DATA_BITS 8
 #define STOP_BITS 1
-#define PARITY    UART_PARITY_NONE
+#define PARITY UART_PARITY_NONE
 #define UART_TX_PIN 0
 #define UART_RX_PIN 1
 /*------------------------------------------------------------------------------------------------------*/
@@ -128,6 +129,5 @@ void DEV_SET_PWM(uint8_t Value);
 
 UBYTE DEV_Module_Init(void (*uart_rx_irq)(void));
 void DEV_Module_Exit(void);
-
 
 #endif
