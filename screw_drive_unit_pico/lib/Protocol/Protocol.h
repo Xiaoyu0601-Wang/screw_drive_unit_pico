@@ -34,15 +34,15 @@
 
 typedef struct //_UnitStatus
 {
-  uint32_t unitID; // Unit CAN ID
-  uint8_t CanRxMsg[8];
-  uint8_t CanTxMsg[8];
-  uint8_t flashData[8];
-  uint8_t motorCMD[2];
-  uint8_t joint1CMD[4];
-  uint8_t joint2CMD[4];
-  bool ledEnable;
-  bool ledStatus;
+    uint32_t unitID; // Unit CAN ID
+    uint8_t CanRxMsg[8];
+    uint8_t CanTxMsg[8];
+    uint8_t flashData[8];
+    uint8_t motorCMD[2];
+    uint8_t joint1CMD[4];
+    uint8_t joint2CMD[4];
+    bool ledEnable;
+    bool ledStatus;
 } UnitStatus;
 
 extern UnitStatus unitStatus;

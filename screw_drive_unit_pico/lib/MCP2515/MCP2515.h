@@ -404,17 +404,18 @@ function:
                         Macro definition variable name
 ********************************************************************************/
 
-enum RATEBPS {
-  KBPS5 = 0,
-  KBPS10,
-  KBPS20,
-  KBPS50,
-  KBPS100,
-  KBPS125,
-  KBPS250,
-  KBPS500,
-  KBPS800,
-  KBPS1000
+enum RATEBPS
+{
+    KBPS5 = 0,
+    KBPS10,
+    KBPS20,
+    KBPS50,
+    KBPS100,
+    KBPS125,
+    KBPS250,
+    KBPS500,
+    KBPS800,
+    KBPS1000
 };
 void MCP2515_Init(void);
 void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len);
