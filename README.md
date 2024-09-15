@@ -6,7 +6,8 @@ Code for Controlling Screw-Drive Unit by Using Raspberry Pi Pico, URL: https://w
 ## Environment Configuration
 Install build tools
 ```sh
-sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
+sudo apt-get install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
+sudo apt-get install pkg-config libusb-1.0-0-dev
 ```
 
 Get the source with the following directory structure:
