@@ -36,7 +36,7 @@ int main(void) {
 
   // use 499 and 9 for avoiding triggering interupt at the same time
   struct repeating_timer led_timer;
-  add_repeating_timer_ms(-499, led_timer_callback, NULL, &led_timer);
+  add_repeating_timer_ms(-199, led_timer_callback, NULL, &led_timer);
   struct repeating_timer can_timer;
   add_repeating_timer_ms(-9, can_timer_callback, NULL, &can_timer);
   struct repeating_timer ctrl_timer;
