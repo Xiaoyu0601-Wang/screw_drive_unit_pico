@@ -3,6 +3,7 @@
 
 #include "MCP2515.h"
 #include "Protocol.h"
+#include "Controller.h"
 
 bool led_timer_callback(struct repeating_timer *t)
 {
@@ -32,12 +33,14 @@ bool ctrl_timer_callback(struct repeating_timer *t) { return true; }
 
 int main(void)
 {
-    DEV_Delay_ms(100);
+    DEV_Delay_ms(200);
     DEV_Module_Init(uart_rx_irq);
     DEV_Delay_ms(10);
     MCP2515_Init();
     Protocol_Init();
     DEV_Delay_ms(10);
+    // Controller_Init();
+    // DEV_Delay_ms(10);
 
     // use 499 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;

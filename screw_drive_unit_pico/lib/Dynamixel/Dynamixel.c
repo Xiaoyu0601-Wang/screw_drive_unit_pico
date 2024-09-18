@@ -10,14 +10,17 @@
 #define GET_LOW_ORDER_BYTE(bytes) ((uint8_t)(((uint16_t)(bytes)) & 0xFF))
 #define GET_HIGH_ORDER_BYTE(bytes) ((uint8_t)((((uint16_t)(bytes)) >> 8) & 0xFF))
 
+uint8_t buffer[BUFFER_LENGTH] = {0};
+volatile uint16_t buffer_index = 0;
+
 uint16_t update_crc(uint16_t crc_accum, uint8_t *data_blk_ptr, uint16_t data_blk_size);
 void dynamixel2_send_packet(uint8_t id, dynamixel2_instruction_t inst, uint8_t *params, uint16_t params_length);
 bool dynamixel2_parse_status_packet(uint8_t *packet, uint32_t packet_length, uint8_t *id, uint8_t *params,
                                     uint16_t *params_length, uint8_t *error, bool *crc_check);
 bool dynamixel2_get_status_packet(uint8_t *packet, uint16_t *packet_length);
 
-extern uint8_t BUFFER[];
-extern uint16_t BUFFER_INDEX;
+// extern uint8_t BUFFER[];
+// extern uint16_t BUFFER_INDEX;
 
 // void max485_send(uint8_t *data, uint32_t length)
 // {

@@ -12,9 +12,15 @@
 
 #include "DEV_Config.h"
 
-#define BUFFER (buffer)
-#define BUFFER_INDEX (buffer_index)
+
+#define DYNA_ID_1 ((uint8_t)1)
+#define DYNA_ID_2 ((uint8_t)2)
+#define DYNA_1_INIT_POS ((uint32_t)2048)
+#define DYNA_2_INIT_POS ((uint32_t)2000)
+
 #define BUFFER_LENGTH (128)
+// #define BUFFER (buffer)
+// #define BUFFER_INDEX (buffer_index)
 
 #define DYNAMIXEL2_BROADCAST_ID ((uint8_t)0xFE)
 
@@ -41,7 +47,7 @@ typedef enum
     fast_bulk_read = 0x9A
 } dynamixel2_instruction_t;
 
-void max485_send(uint8_t *data, uint32_t length);
+// void max485_send(uint8_t *data, uint32_t length);
 
 void dynamixel2_write(uint8_t id, uint16_t address, uint8_t *data, uint16_t data_length);
 bool dynamixel2_read(uint8_t id, uint16_t address, uint16_t data_length, uint8_t *return_data,
