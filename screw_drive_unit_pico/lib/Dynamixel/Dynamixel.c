@@ -112,7 +112,7 @@ void dynamixel2_set_torque_enable(uint8_t id, bool enable)
 
 void dynamixel2_set_goal_position(uint8_t id, int32_t position)
 {
-    uint16_t address = 596;
+    uint16_t address = 116;//596;
     uint8_t data[4];
     data[0] = (uint8_t)(position & 0xFF);
     data[1] = (uint8_t)((position >> 8) & 0xFF);
@@ -124,7 +124,7 @@ void dynamixel2_set_goal_position(uint8_t id, int32_t position)
 
 int32_t dynamixel2_read_present_position(uint8_t id)
 {
-    uint16_t address = 611;
+    uint16_t address = 132;//611;
     uint8_t return_data[4];
     uint16_t return_data_length;
 
