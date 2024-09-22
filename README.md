@@ -50,7 +50,7 @@ Website: https://www.waveshare.com/wiki/Pico-CAN-B
 # CAN Message Frame
 App| msg[0] | msg[1] | msg[2] | msg[3] | msg[4~7]
 ---|---|---|---|---|---
-frame structure | Read(0x01)/Write(0x02) | Register | | | Data(uint32_t): msg[4]=H, msg[7]=L
+frame structure | header | header | Read(0x01)/Write(0x02) | Register | Data(uint32_t): msg[4]=H, msg[7]=L
 
 ## Protocol
 Read(0x01)/Write(0x02)

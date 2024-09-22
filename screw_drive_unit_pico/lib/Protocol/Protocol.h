@@ -41,6 +41,7 @@ typedef struct //_UnitStatus
     uint8_t motorCMD[2];
     uint8_t joint1CMD[4];
     uint8_t joint2CMD[4];
+    bool dynamixelEnable[2];
     bool ledEnable;
     bool ledStatus;
 } UnitStatus;
