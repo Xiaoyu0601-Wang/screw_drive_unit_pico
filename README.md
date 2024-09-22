@@ -50,10 +50,15 @@ Website: https://www.waveshare.com/wiki/Pico-CAN-B
 # CAN Message Frame
 App| msg[0] | msg[1] | msg[2] | msg[3] | msg[4~7]
 ---|---|---|---|---|---
-frame structure | header | header | Read(0x01)/Write(0x02) | Register | Data(uint32_t): msg[4]=H, msg[7]=L
+frame structure | header | header | Instruction | Register | Data(uint32_t): msg[4]=L ~ msg[7]=H
+
+## Instruction
+Value | Insruction | Description
+---|---|---
+0x02 | Read | Instruction to read data from the Device
+0x03 | Write | Instruction to write data on the Device
 
 ## Protocol
-Read(0x01)/Write(0x02)
 R/W | Register | Data
 ---|---|---
 R   | 0x01 | unique board ID
@@ -63,7 +68,8 @@ R/W | 0x04 | LED Status, On: 1, Off: 0
 R/W | 0x05 | Motor Command
 R/W | 0x06 | Joint 1 Command
 R/W | 0x07 | Joint 2 Command
-R   | 0x08 | IMU
+R/W | 0x08 | Joint 1 Torque Enable
+R/W | 0x09 | Joint 2 Torque Enable
 
 # Flash Register Address
 Pico has a 2MB flash starting from address 0x10000000.

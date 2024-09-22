@@ -7,6 +7,7 @@
 
 #include "DEV_Config.h"
 #include "MCP2515.h"
+#include "Dynamixel.h"
 
 #define HEAD_UNIT_ID 1
 #define TAIL_UNIT_ID 2
@@ -49,7 +50,7 @@ typedef struct //_UnitStatus
 extern UnitStatus unitStatus;
 
 bool Protocol_Init(void);
-void Protocol_Update(void);
+bool Protocol_Update(void);
 void uart_rx_irq(void);
 
 #endif
