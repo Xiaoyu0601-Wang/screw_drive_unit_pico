@@ -13,7 +13,7 @@ bool led_timer_callback(struct repeating_timer *t)
         DEV_WIFI_LED_Write(unitStatus.ledStatus);
     }
 
-    // DEV_UART_WriteByte('A');//for test
+    // DEV_UART_Write_nByte("ABC", 3);//for test
 
     return true;
 }
@@ -29,7 +29,12 @@ bool can_timer_callback(struct repeating_timer *t)
     return true;
 }
 
-bool ctrl_timer_callback(struct repeating_timer *t) { return true; }
+bool ctrl_timer_callback(struct repeating_timer *t)
+{
+    Controller_Update();
+
+    return true;
+}
 
 int main(void)
 {
@@ -39,10 +44,10 @@ int main(void)
     MCP2515_Init();
     Protocol_Init();
     DEV_Delay_ms(10);
-    // Controller_Init();
+    Controller_Init();
     // DEV_Delay_ms(10);
 
-    // use 499 and 9 for avoiding triggering interupt at the same time
+    // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;
     add_repeating_timer_ms(-199, led_timer_callback, NULL, &led_timer);
     struct repeating_timer can_timer;

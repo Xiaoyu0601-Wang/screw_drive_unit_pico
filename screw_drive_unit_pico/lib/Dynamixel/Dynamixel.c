@@ -105,7 +105,7 @@ void dynamixel2_reset(uint8_t id)
 
 void dynamixel2_set_torque_enable(uint8_t id, bool enable)
 {
-    uint16_t address = 562;
+    uint16_t address = 64;//562;
     uint8_t data = enable ? 1 : 0;
     dynamixel2_write(id, address, &data, 1);
 }

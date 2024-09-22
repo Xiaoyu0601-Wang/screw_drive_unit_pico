@@ -3,14 +3,14 @@ include(pico_sdk_import.cmake)
 project(screw_drive_unit_pico)
 pico_sdk_init()
 
-#添加编译子目录
+# 添加编译子目录
 add_subdirectory(lib/Config)
 add_subdirectory(lib/MCP2515)
 add_subdirectory(lib/Protocol)
 add_subdirectory(lib/Dynamixel)
 add_subdirectory(lib/Controller)
 
-#添加头文件目录
+# 添加头文件目录
 include_directories(./lib/Config)
 include_directories(./lib/MCP2515)
 include_directories(./lib/Protocol)

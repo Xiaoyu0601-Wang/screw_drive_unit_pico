@@ -55,7 +55,7 @@ uint8_t CAN_8MHZ_KBPS250_RATE[3] = {0x00, 0XB1, 0x85};
 
 void MCP2515_Init(void)
 {
-    printf("MCP2515 Init\r\n");
+    // printf("MCP2515 Init\r\n");
     // LOG_INFO("Reset");
     MCP2515_Reset();
     DEV_Delay_ms(100);
