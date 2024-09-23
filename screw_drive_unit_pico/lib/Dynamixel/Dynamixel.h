@@ -56,6 +56,7 @@ void dynamixel2_reset(uint8_t id);
 int32_t dynamixel2_read_present_position(uint8_t id);
 void dynamixel2_set_goal_position(uint8_t id, int32_t position);
 void dynamixel2_set_torque_enable(uint8_t id, bool enable);
+void dynamixel2_set_led_enable(uint8_t id, bool enable);
 
 void dynamixel2_receive_callback(uint8_t received_data);
 void dynamixel2_clear_receive_buffer(void);

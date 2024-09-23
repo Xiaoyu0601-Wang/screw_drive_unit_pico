@@ -19,24 +19,6 @@ bool dynamixel2_parse_status_packet(uint8_t *packet, uint32_t packet_length, uin
                                     uint16_t *params_length, uint8_t *error, bool *crc_check);
 bool dynamixel2_get_status_packet(uint8_t *packet, uint16_t *packet_length);
 
-// extern uint8_t BUFFER[];
-// extern uint16_t BUFFER_INDEX;
-
-// void max485_send(uint8_t *data, uint32_t length)
-// {
-//   /* Send packet. */
-//   for (uint32_t i = 0; i < length; i++)
-//   {
-//     usart_send_blocking(MAX485_UART, data[i]);
-//   }
-
-//   /* Wait for transmission complete. */
-//   while (!(USART_SR(MAX485_UART) & USART_SR_TC))
-//   {
-//     /* Do nothing. */
-//   }
-// }
-
 void dynamixel2_write(uint8_t id, uint16_t address, uint8_t *data, uint16_t data_length)
 {
     uint32_t params_length = data_length + 2;
@@ -108,6 +90,13 @@ void dynamixel2_set_torque_enable(uint8_t id, bool enable)
     uint16_t address = 64;//562;
     uint8_t data = enable ? 1 : 0;
     dynamixel2_write(id, address, &data, 1);
+}
+
+void dynamixel2_set_led_enable(uint8_t id, bool enable)
+{
+  uint16_t address = 65;
+  uint8_t data = enable ? 1 : 0;
+  dynamixel2_write(id, address, &data, 1);
 }
 
 void dynamixel2_set_goal_position(uint8_t id, int32_t position)
