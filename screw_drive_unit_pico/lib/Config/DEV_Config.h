@@ -45,8 +45,9 @@
 #include "hardware/structs/pll.h"
 #include "hardware/uart.h"
 
+#define UART_PORT uart0
 #define SPI_PORT spi0
-#define I2C_PORT spi1
+#define I2C_PORT i2c1
 
 #define FLASH_TARGET_OFFSET (256 * 1024)
 
@@ -89,7 +90,9 @@ static pico_unique_board_id_t board_id;
 // #define MCP2515_CS1_PIN  1
 #define MCP2515_CS_PIN MCP2515_CS0_PIN
 
-#define UART_ID uart0
+#define ICM42688_SDA_PIN 2
+#define ICM42688_SCL_PIN 3
+
 #define UART_IRQ UART0_IRQ
 #define BAUD_RATE 115200
 #define DATA_BITS 8

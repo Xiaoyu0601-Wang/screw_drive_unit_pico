@@ -8,8 +8,7 @@ bool Protocol_Update(void)
 {
     MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
 
-    if ((unitStatus.CanRxMsg[0] == 0xFF) &&
-        (unitStatus.CanRxMsg[1] == 0xFD))
+    if ((unitStatus.CanRxMsg[0] == 0xFF) && (unitStatus.CanRxMsg[1] == 0xFD))
     {
         return false;
     }
@@ -87,11 +86,11 @@ bool Protocol_Update(void)
             ;
             break;
         case 0x08: /* Joint 1: Enable Torque */
-            unitStatus.dynamixelEnable[DYNA_ID_1 - 1] = (bool) unitStatus.CanRxMsg[4];
+            unitStatus.dynamixelEnable[DYNA_ID_1 - 1] = (bool)unitStatus.CanRxMsg[4];
             dynamixel2_set_torque_enable(DYNA_ID_1, unitStatus.dynamixelEnable[DYNA_ID_1 - 1]);
             break;
         case 0x09: /* Joint 2: Enable Torque */
-            unitStatus.dynamixelEnable[DYNA_ID_2 - 1] = (bool) unitStatus.CanRxMsg[4];
+            unitStatus.dynamixelEnable[DYNA_ID_2 - 1] = (bool)unitStatus.CanRxMsg[4];
             dynamixel2_set_torque_enable(DYNA_ID_2, unitStatus.dynamixelEnable[DYNA_ID_2 - 1]);
             break;
         default:

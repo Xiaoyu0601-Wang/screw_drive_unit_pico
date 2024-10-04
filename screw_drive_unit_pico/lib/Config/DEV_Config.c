@@ -49,11 +49,11 @@ bool DEV_WIFI_LED_Read(void) { return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN)
 /**
  * UART
  **/
-void DEV_UART_WriteByte(uint8_t Value) { uart_putc(UART_ID, Value); }
+void DEV_UART_WriteByte(uint8_t Value) { uart_putc(UART_PORT, Value); }
 
-uint8_t DEV_UART_ReadByte(void) { return uart_getc(UART_ID); }
+uint8_t DEV_UART_ReadByte(void) { return uart_getc(UART_PORT); }
 
-void DEV_UART_Write_nByte(uint8_t *pData, uint32_t Len) { uart_write_blocking(UART_ID, pData, Len); }
+void DEV_UART_Write_nByte(uint8_t *pData, uint32_t Len) { uart_write_blocking(UART_PORT, pData, Len); }
 
 /**
  * SPI
@@ -76,19 +76,19 @@ void DEV_SPI_Write_nByte(uint8_t pData[], uint32_t Len) { spi_write_blocking(SPI
 void DEV_I2C_Write(uint8_t addr, uint8_t reg, uint8_t Value)
 {
     uint8_t data[2] = {reg, Value};
-    i2c_write_blocking(i2c1, addr, data, 2, false);
+    i2c_write_blocking(I2C_PORT, addr, data, 2, false);
 }
 
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len)
 {
-    i2c_write_blocking(i2c1, addr, pData, Len, false);
+    i2c_write_blocking(I2C_PORT, addr, pData, Len, false);
 }
 
 uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg)
 {
     uint8_t buf;
-    i2c_write_blocking(i2c1, addr, &reg, 1, true);
-    i2c_read_blocking(i2c1, addr, &buf, 1, false);
+    i2c_write_blocking(I2C_PORT, addr, &reg, 1, true);
+    i2c_read_blocking(I2C_PORT, addr, &buf, 1, false);
     return buf;
 }
 
@@ -182,20 +182,20 @@ UBYTE DEV_Module_Init(void (*uart_rx_irq)(void))
     gpio_set_function(SPI_MISO_PIN, GPIO_FUNC_SPI);
 
     // UART Config
-    uart_init(UART_ID, BAUD_RATE); // Set up our UART with a basic baud rate.
+    uart_init(UART_PORT, BAUD_RATE); // Set up our UART with a basic baud rate.
     gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
     gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
-    uart_set_hw_flow(UART_ID, false, false);                // Set UART flow control CTS/RTS, we
+    uart_set_hw_flow(UART_PORT, false, false);                // Set UART flow control CTS/RTS, we
                                                             // don't want these, so turn them off
-    uart_set_format(UART_ID, DATA_BITS, STOP_BITS, PARITY); // Set our data format
-    uart_set_fifo_enabled(UART_ID,
+    uart_set_format(UART_PORT, DATA_BITS, STOP_BITS, PARITY); // Set our data format
+    uart_set_fifo_enabled(UART_PORT,
                           false); // Turn off FIFO's - we want to do this character by character
     // Set up a RX interrupt
     // Set up and enable the interrupt handlers
     // irq_set_exclusive_handler(UART_IRQ, uart_rx_irq);
     // irq_set_enabled(UART_IRQ, true);
     // // Now enable the UART to send interrupts - RX only
-    // uart_set_irq_enables(UART_ID, true, false);
+    // uart_set_irq_enables(UART_PORT, true, false);
 
     // GPIO Config
     DEV_GPIO_Init();
@@ -224,11 +224,11 @@ UBYTE DEV_Module_Init(void (*uart_rx_irq)(void))
     // pwm_set_enabled(ecs_slice_num, true);// Set the PWM running
 
     // I2C Config
-    //  i2c_init(i2c1,300*1000);
-    //  gpio_set_function(LCD_SDA_PIN,GPIO_FUNC_I2C);
-    //  gpio_set_function(LCD_SCL_PIN,GPIO_FUNC_I2C);
-    //  gpio_pull_up(LCD_SDA_PIN);
-    //  gpio_pull_up(LCD_SCL_PIN);
+    //  i2c_init(I2C_PORT,400*1000);
+    //  gpio_set_function(ICM42688_SDA_PIN,GPIO_FUNC_I2C);
+    //  gpio_set_function(ICM42688_SCL_PIN,GPIO_FUNC_I2C);
+    //  gpio_pull_up(ICM42688_SDA_PIN);
+    //  gpio_pull_up(ICM42688_SCL_PIN);
 
     // printf("DEV_Module_Init OK \r\n");
     return 0;
