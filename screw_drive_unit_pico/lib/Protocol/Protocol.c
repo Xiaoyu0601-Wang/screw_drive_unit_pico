@@ -6,7 +6,7 @@ UnitStatus unitStatus;
 
 bool Protocol_Update(void)
 {
-    MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
+    // MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
 
     if ((unitStatus.CanRxMsg[0] == 0xFF) && (unitStatus.CanRxMsg[1] == 0xFD))
     {

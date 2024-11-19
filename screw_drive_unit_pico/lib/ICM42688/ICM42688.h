@@ -13,9 +13,9 @@
 
 #include "DEV_Config.h"
 
-#define device_address 0x68 << 1
-#define power_mgmt 0x4E
-#define DEVICE_CONFIG 0x11
+#define ICM42688_ADDRESS 0x68 << 1
+#define REG_POWER_MGMT 0x4E
+#define REG_DEVICE_CONFIG 0x11
 #define DRIVE_CONFIG 0x13
 #define who_am_i 0x75
 #define temp_data1 0x1D
@@ -48,12 +48,11 @@
 #define GYRO_DATA_Z1 0x29
 #define GYRO_DATA_Z0 0x2A
 
-#define FIFO_CONFIG_INIT 0x16
-#define FIFO_CONFIGURATION 0x5F
-#define FIFO_DATA_REG 0x30
+#define REG_FIFO_CONFIG_INIT 0x16
+#define REG_FIFO_CONFIGURATION 0x5F
+#define REG_FIFO_DATA 0x30
 
-void configure_device();
-void icm_initialize();
-void read_values();
+void ICM42688_Init(void);
+void ICM_Read_Sensor(uint16_t *imuRawData);
 
 #endif /* INC_ICM_H_ */

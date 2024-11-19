@@ -5,6 +5,7 @@ pico_sdk_init()
 
 # 添加编译子目录
 add_subdirectory(lib/Config)
+add_subdirectory(lib/ICM42688)
 add_subdirectory(lib/MCP2515)
 add_subdirectory(lib/Protocol)
 add_subdirectory(lib/Dynamixel)
@@ -12,6 +13,7 @@ add_subdirectory(lib/Controller)
 
 # 添加头文件目录
 include_directories(./lib/Config)
+include_directories(./lib/ICM42688)
 include_directories(./lib/MCP2515)
 include_directories(./lib/Protocol)
 include_directories(./lib/Dynamixel)
@@ -29,4 +31,4 @@ pico_enable_stdio_uart(main 1)
 # create map/bin/hex/uf2 file etc.
 pico_add_extra_outputs(main)
 
-target_link_libraries(main pico_stdlib hardware_spi Config MCP2515 Protocol Controller)
+target_link_libraries(main pico_stdlib hardware_spi Config ICM42688 MCP2515 Protocol Controller)
