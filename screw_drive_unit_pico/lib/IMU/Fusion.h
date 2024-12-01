@@ -12,7 +12,8 @@
 // Includes
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include "FusionAhrs.h"

@@ -21,7 +21,8 @@
 /**
  * @brief AHRS algorithm settings.
  */
-typedef struct {
+typedef struct
+{
     FusionConvention convention;
     float gain;
     float gyroscopeRange;
@@ -34,7 +35,8 @@ typedef struct {
  * @brief AHRS algorithm structure.  Structure members are used internally and
  * must not be accessed by the application.
  */
-typedef struct {
+typedef struct
+{
     FusionAhrsSettings settings;
     FusionQuaternion quaternion;
     FusionVector accelerometer;
@@ -55,7 +57,8 @@ typedef struct {
 /**
  * @brief AHRS algorithm internal states.
  */
-typedef struct {
+typedef struct
+{
     float accelerationError;
     bool accelerometerIgnored;
     float accelerationRecoveryTrigger;
@@ -67,7 +70,8 @@ typedef struct {
 /**
  * @brief AHRS algorithm flags.
  */
-typedef struct {
+typedef struct
+{
     bool initialising;
     bool angularRateRecovery;
     bool accelerationRecovery;
@@ -83,11 +87,14 @@ void FusionAhrsReset(FusionAhrs *const ahrs);
 
 void FusionAhrsSetSettings(FusionAhrs *const ahrs, const FusionAhrsSettings *const settings);
 
-void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const FusionVector magnetometer, const float deltaTime);
+void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
+                      const FusionVector magnetometer, const float deltaTime);
 
-void FusionAhrsUpdateNoMagnetometer(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const float deltaTime);
+void FusionAhrsUpdateNoMagnetometer(FusionAhrs *const ahrs, const FusionVector gyroscope,
+                                    const FusionVector accelerometer, const float deltaTime);
 
-void FusionAhrsUpdateExternalHeading(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const float heading, const float deltaTime);
+void FusionAhrsUpdateExternalHeading(FusionAhrs *const ahrs, const FusionVector gyroscope,
+                                     const FusionVector accelerometer, const float heading, const float deltaTime);
 
 FusionQuaternion FusionAhrsGetQuaternion(const FusionAhrs *const ahrs);
 

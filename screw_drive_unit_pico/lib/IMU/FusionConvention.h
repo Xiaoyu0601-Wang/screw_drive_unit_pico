@@ -13,7 +13,8 @@
 /**
  * @brief Earth axes convention.
  */
-typedef enum {
+typedef enum
+{
     FusionConventionNwu, /* North-West-Up */
     FusionConventionEnu, /* East-North-Up */
     FusionConventionNed, /* North-East-Down */

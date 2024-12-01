@@ -20,7 +20,8 @@
  * @brief Gyroscope offset algorithm structure.  Structure members are used
  * internally and must not be accessed by the application.
  */
-typedef struct {
+typedef struct
+{
     float filterCoefficient;
     unsigned int timeout;
     unsigned int timer;
