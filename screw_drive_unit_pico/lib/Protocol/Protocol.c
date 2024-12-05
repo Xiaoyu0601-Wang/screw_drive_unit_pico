@@ -4,24 +4,24 @@ const uint8_t *flash_target_contents = (const uint8_t *)(XIP_BASE + FLASH_TARGET
 
 UnitStatus unitStatus;
 
-bool Protocol_Update(void)
+bool protocol_update(unit_status_t *const unit_status)
 {
-    // MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg);
+    // MCP2515_Receive(unit_status->unitID, unit_status->CanRxMsg);
 
-    if ((unitStatus.CanRxMsg[0] == 0xFF) && (unitStatus.CanRxMsg[1] == 0xFD))
+    if ((unit_status->CanRxMsg[0] == 0xFF) && (unit_status->CanRxMsg[1] == 0xFD))
     {
         return false;
     }
 
-    if (unitStatus.CanRxMsg[2] == 0x02) /* Read */
+    if (unit_status->CanRxMsg[2] == 0x02) /* Read */
     {
-        switch (unitStatus.CanRxMsg[3])
+        switch (unit_status->CanRxMsg[3])
         {
         case 0x01: /* Unique Board ID */
             break;
         case 0x02: /* Standard CAN ID */
-            // unitStatus.flashData[0] = unitStatus.CanRxMsg[6];
-            // unitStatus.flashData[1] = unitStatus.CanRxMsg[7];
+            // unit_status->flashData[0] = unit_status->CanRxMsg[6];
+            // unit_status->flashData[1] = unit_status->CanRxMsg[7];
             break;
         case 0x03: /* LED Enable */
             break;
@@ -41,57 +41,57 @@ bool Protocol_Update(void)
             break;
         }
     }
-    else if (unitStatus.CanRxMsg[2] == 0x03) /* Write */
+    else if (unit_status->CanRxMsg[2] == 0x03) /* Write */
     {
-        switch (unitStatus.CanRxMsg[3])
+        switch (unit_status->CanRxMsg[3])
         {
         case 0x02: /* Set Standard CAN ID */
-            unitStatus.flashData[0] = unitStatus.CanRxMsg[6];
-            unitStatus.flashData[1] = unitStatus.CanRxMsg[7];
+            unit_status->flashData[0] = unit_status->CanRxMsg[6];
+            unit_status->flashData[1] = unit_status->CanRxMsg[7];
             flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
-            flash_range_program(FLASH_TARGET_OFFSET, unitStatus.flashData, FLASH_PAGE_SIZE);
+            flash_range_program(FLASH_TARGET_OFFSET, unit_status->flashData, FLASH_PAGE_SIZE);
             break;
         case 0x03: /* LED: Enable / Disable */
-            if (unitStatus.CanRxMsg[7] == 1)
+            if (unit_status->CanRxMsg[7] == 1)
             {
-                unitStatus.ledEnable = true;
+                unit_status->ledEnable = true;
             }
-            else if (unitStatus.CanRxMsg[7] == 0)
+            else if (unit_status->CanRxMsg[7] == 0)
             {
-                unitStatus.ledEnable = false;
-                unitStatus.ledStatus = true;
+                unit_status->ledEnable = false;
+                unit_status->ledStatus = true;
                 DEV_WIFI_LED_Write(true);
             }
             break;
         case 0x04: /* LED: Set Status */
             break;
         case 0x05: /* Motor: Set Command: -100 ~ +100 */
-            unitStatus.motorCMD[0] = unitStatus.CanRxMsg[6];
-            unitStatus.motorCMD[1] = unitStatus.CanRxMsg[7];
-            DEV_ECS_SetPWM(0, unitStatus.motorCMD[0]);
-            DEV_ECS_SetPWM(1, unitStatus.motorCMD[1]);
+            unit_status->motorCMD[0] = unit_status->CanRxMsg[6];
+            unit_status->motorCMD[1] = unit_status->CanRxMsg[7];
+            DEV_ECS_SetPWM(0, unit_status->motorCMD[0]);
+            DEV_ECS_SetPWM(1, unit_status->motorCMD[1]);
             break;
         case 0x06: /* Joint 1: Set Command */
-            unitStatus.joint1CMD[0] = unitStatus.CanRxMsg[4];
-            unitStatus.joint1CMD[1] = unitStatus.CanRxMsg[5];
-            unitStatus.joint1CMD[2] = unitStatus.CanRxMsg[6];
-            unitStatus.joint1CMD[3] = unitStatus.CanRxMsg[7];
+            unit_status->joint1CMD[0] = unit_status->CanRxMsg[4];
+            unit_status->joint1CMD[1] = unit_status->CanRxMsg[5];
+            unit_status->joint1CMD[2] = unit_status->CanRxMsg[6];
+            unit_status->joint1CMD[3] = unit_status->CanRxMsg[7];
             ;
             break;
         case 0x07: /* Joint 2: Set Command */
-            unitStatus.joint2CMD[0] = unitStatus.CanRxMsg[4];
-            unitStatus.joint2CMD[1] = unitStatus.CanRxMsg[5];
-            unitStatus.joint2CMD[2] = unitStatus.CanRxMsg[6];
-            unitStatus.joint2CMD[3] = unitStatus.CanRxMsg[7];
+            unit_status->joint2CMD[0] = unit_status->CanRxMsg[4];
+            unit_status->joint2CMD[1] = unit_status->CanRxMsg[5];
+            unit_status->joint2CMD[2] = unit_status->CanRxMsg[6];
+            unit_status->joint2CMD[3] = unit_status->CanRxMsg[7];
             ;
             break;
         case 0x08: /* Joint 1: Enable Torque */
-            unitStatus.dynamixelEnable[DYNA_ID_1 - 1] = (bool)unitStatus.CanRxMsg[4];
-            dynamixel2_set_torque_enable(DYNA_ID_1, unitStatus.dynamixelEnable[DYNA_ID_1 - 1]);
+            unit_status->dynamixelEnable[DYNA_ID_1 - 1] = (bool)unit_status->CanRxMsg[4];
+            dynamixel2_set_torque_enable(DYNA_ID_1, unit_status->dynamixelEnable[DYNA_ID_1 - 1]);
             break;
         case 0x09: /* Joint 2: Enable Torque */
-            unitStatus.dynamixelEnable[DYNA_ID_2 - 1] = (bool)unitStatus.CanRxMsg[4];
-            dynamixel2_set_torque_enable(DYNA_ID_2, unitStatus.dynamixelEnable[DYNA_ID_2 - 1]);
+            unit_status->dynamixelEnable[DYNA_ID_2 - 1] = (bool)unit_status->CanRxMsg[4];
+            dynamixel2_set_torque_enable(DYNA_ID_2, unit_status->dynamixelEnable[DYNA_ID_2 - 1]);
             break;
         default:
             break;
@@ -103,25 +103,25 @@ bool Protocol_Update(void)
 
 void uart_rx_irq(void) {}
 
-bool Protocol_Init(void)
+bool protocol_init(unit_status_t *const unit_status)
 {
-    unitStatus.flashData[0] = 0x00;
-    unitStatus.flashData[1] = 0x01;
-    unitStatus.unitID = unitStatus.flashData[0] << 3 | unitStatus.flashData[1];
+    unit_status->flashData[0] = 0x00;
+    unit_status->flashData[1] = 0x01;
+    unit_status->unitID = unit_status->flashData[0] << 3 | unit_status->flashData[1];
 
     // flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
-    // flash_range_program(FLASH_TARGET_OFFSET, unitStatus.flashData,
-    // FLASH_PAGE_SIZE); unitStatus.flashData[0] = flash_target_contents[0];
-    // unitStatus.flashData[1] = flash_target_contents[1];
-    // unitStatus.unitID = flash_target_contents[0] << 3
-    // 				  | flash_target_contents[1];
+    // flash_range_program(FLASH_TARGET_OFFSET, unit_status->flashData,
+    // FLASH_PAGE_SIZE); unit_status->flashData[0] = flash_target_contents[0];
+    // unit_status->flashData[1] = flash_target_contents[1];
+    // unit_status->unitID = flash_target_contents[0] << 3
+    // 				       | flash_target_contents[1];
 
-    unitStatus.ledEnable = true;
-    unitStatus.ledStatus = true;
-    DEV_WIFI_LED_Write(unitStatus.ledStatus);
+    unit_status->ledEnable = true;
+    unit_status->ledStatus = true;
+    DEV_WIFI_LED_Write(unit_status->ledStatus);
 
-    unitStatus.dynamixelEnable[DYNA_ID_1 - 1] = false;
-    unitStatus.dynamixelEnable[DYNA_ID_2 - 1] = false;
+    unit_status->dynamixelEnable[DYNA_ID_1 - 1] = false;
+    unit_status->dynamixelEnable[DYNA_ID_2 - 1] = false;
 
     // pico_unique_board_id_t board_id;
     // pico_get_unique_board_id(&board_id);

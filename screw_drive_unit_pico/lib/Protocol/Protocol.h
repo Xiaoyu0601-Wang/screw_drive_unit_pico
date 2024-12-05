@@ -39,18 +39,18 @@ typedef struct //_UnitStatus
     uint8_t CanRxMsg[8];
     uint8_t CanTxMsg[8];
     uint8_t flashData[8];
+    // gyro;
+    // accel;
     uint8_t motorCMD[2];
     uint8_t joint1CMD[4];
     uint8_t joint2CMD[4];
     bool dynamixelEnable[2];
     bool ledEnable;
     bool ledStatus;
-} UnitStatus;
+} unit_status_t;
 
-extern UnitStatus unitStatus;
-
-bool Protocol_Init(void);
-bool Protocol_Update(void);
+bool protocol_init(unit_status_t *const unit_status);
+bool protocol_update(unit_status_t *const unit_status);
 void uart_rx_irq(void);
 
 #endif

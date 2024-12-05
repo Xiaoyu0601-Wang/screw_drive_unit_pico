@@ -6,6 +6,8 @@
 #include "Protocol.h"
 #include "Controller.h"
 
+unit_status_t unit_status;
+
 bool led_timer_callback(struct repeating_timer *t)
 {
     if (unitStatus.ledEnable == true)
@@ -24,7 +26,7 @@ bool can_timer_callback(struct repeating_timer *t)
     // MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);//for test
     if (MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg))
     {
-        Protocol_Update();
+        protocol_update(&unit_status);
     }
 
     return true;
@@ -53,7 +55,7 @@ int main(void)
     DEV_Delay_ms(10);
     // ICM42688_Init();
     MCP2515_Init();
-    Protocol_Init();
+    protocol_init(&unit_status);
     DEV_Delay_ms(10);
     Controller_Init();
     DEV_Delay_ms(10);
