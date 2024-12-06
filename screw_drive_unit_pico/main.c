@@ -23,8 +23,8 @@ bool led_timer_callback(struct repeating_timer *t)
 
 bool can_timer_callback(struct repeating_timer *t)
 {
-    // MCP2515_Send(unitStatus.unitID, unitStatus.flashData, 8);//for test
-    if (MCP2515_Receive(unitStatus.unitID, unitStatus.CanRxMsg))
+    // mcp2515_send(unitStatus.unitID, unitStatus.flashData, 8);//for test
+    if (mcp2515_receive(unitStatus.unitID, unitStatus.CanRxMsg))
     {
         protocol_update(&unit_status);
     }
@@ -34,14 +34,14 @@ bool can_timer_callback(struct repeating_timer *t)
 
 bool ctrl_timer_callback(struct repeating_timer *t)
 {
-    Controller_Update();
+    controller_update();
 
     return true;
 }
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    // ICM_Read_Sensor(unitStatus.imuRawData);
+    // icm_read_sensor(unitStatus.imuRawData);
 
     return true;
 }
@@ -53,11 +53,11 @@ int main(void)
 
     DEV_Module_Init(uart_rx_irq);
     DEV_Delay_ms(10);
-    // ICM42688_Init();
-    MCP2515_Init();
+    // icm42688_init();
+    mcp2515_init();
     protocol_init(&unit_status);
     DEV_Delay_ms(10);
-    Controller_Init();
+    controller_init();
     DEV_Delay_ms(10);
 
     // use 199 and 9 for avoiding triggering interupt at the same time

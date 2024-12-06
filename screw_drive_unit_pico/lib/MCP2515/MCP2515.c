@@ -53,7 +53,7 @@ uint8_t CAN_16MHZ_RATE[10][3] = {{0xA7, 0XBF, 0x07}, {0x31, 0XA4, 0X04}, {0x18, 
 
 uint8_t CAN_8MHZ_KBPS250_RATE[3] = {0x00, 0XB1, 0x85};
 
-void MCP2515_Init(void)
+void mcp2515_init(void)
 {
     // printf("MCP2515 Init\r\n");
     // LOG_INFO("Reset");
@@ -113,7 +113,7 @@ void MCP2515_Init(void)
     }
 }
 
-void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len)
+void mcp2515_send(uint32_t Canid, uint8_t *Buf, uint8_t len)
 {
     // uint8_t tempdata = MCP2515_ReadByte(CAN_RD_STATUS);
     uint8_t dly = 0;
@@ -137,7 +137,7 @@ void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len)
     MCP2515_WriteBytes(TXB0CTRL, 0x08);
 }
 
-bool MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf)
+bool mcp2515_receive(uint32_t Canid, uint8_t *CAN_RX_Buf)
 {
     MCP2515_WriteBytes(RXB0SIDH, (Canid >> 3) & 0XFF);
     MCP2515_WriteBytes(RXB0SIDL, (Canid & 0x07) << 5);

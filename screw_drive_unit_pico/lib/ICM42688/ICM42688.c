@@ -32,7 +32,7 @@ uint8_t gyro_data_Z1;
 uint8_t gyro_data_Z0;
 extern uint16_t gyro_data_Z;
 
-void ICM42688_Init(void)
+void icm42688_init(void)
 {
     uint8_t configure_reset = 0x01;
     uint8_t fifo_conf_data = 0x03;
@@ -51,7 +51,7 @@ void ICM42688_Init(void)
     DEV_Delay_ms(100);
 }
 
-void ICM_Read_Sensor(uint16_t *imuRawData)
+void icm_read_sensor(uint16_t *imuRawData)
 {
     DEV_I2C_Read_nByte(ICM42688_ADDRESS, REG_FIFO_DATA, fifo_data, 16);
 

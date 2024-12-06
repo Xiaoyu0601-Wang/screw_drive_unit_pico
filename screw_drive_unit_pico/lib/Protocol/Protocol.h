@@ -39,8 +39,8 @@ typedef struct //_UnitStatus
     uint8_t CanRxMsg[8];
     uint8_t CanTxMsg[8];
     uint8_t flashData[8];
-    // gyro;
-    // accel;
+    sensor_t gyro;
+    sensor_t accel;
     uint8_t motorCMD[2];
     uint8_t joint1CMD[4];
     uint8_t joint2CMD[4];

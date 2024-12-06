@@ -6,7 +6,7 @@
 #include "DEV_Config.h"
 #include "Dynamixel.h"
 
-void Controller_Update(void);
-bool Controller_Init(void);
+void controller_update(void);
+bool controller_init(void);
 
 #endif

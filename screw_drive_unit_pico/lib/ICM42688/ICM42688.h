@@ -59,7 +59,7 @@ typedef struct
 #define REG_FIFO_CONFIGURATION 0x5F
 #define REG_FIFO_DATA 0x30
 
-void ICM42688_Init(void);
-void ICM_Read_Sensor(uint16_t *imuRawData);
+void icm42688_init(void);
+void icm_read_sensor(uint16_t *imuRawData);
 
 #endif /* INC_ICM_H_ */

@@ -417,8 +417,8 @@ enum RATEBPS
     KBPS800,
     KBPS1000
 };
-void MCP2515_Init(void);
-void MCP2515_Send(uint32_t Canid, uint8_t *Buf, uint8_t len);
-bool MCP2515_Receive(uint32_t Canid, uint8_t *CAN_RX_Buf);
+void mcp2515_init(void);
+void mcp2515_send(uint32_t Canid, uint8_t *Buf, uint8_t len);
+bool mcp2515_receive(uint32_t Canid, uint8_t *CAN_RX_Buf);
 
 #endif

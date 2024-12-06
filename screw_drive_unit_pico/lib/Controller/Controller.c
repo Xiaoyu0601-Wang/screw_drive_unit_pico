@@ -1,8 +1,8 @@
 #include "Controller.h"
 
-void Controller_Update(void) {}
+void controller_update(void) {}
 
-bool Controller_Init(void)
+bool controller_init(void)
 {
     // dynamixel2_set_torque_enable(DYNA_ID_1, true);
     // DEV_Delay_ms(2);
