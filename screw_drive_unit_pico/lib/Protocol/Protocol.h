@@ -35,18 +35,18 @@
 
 typedef struct //_UnitStatus
 {
-    uint32_t unitID; // Unit CAN ID
-    uint8_t CanRxMsg[8];
-    uint8_t CanTxMsg[8];
+    uint32_t unit_id; // Unit CAN ID
+    uint8_t msg_can_tx[8];
+    uint8_t msg_can_rx[8];
     uint8_t flashData[8];
     sensor_t gyro;
     sensor_t accel;
-    uint8_t motorCMD[2];
-    uint8_t joint1CMD[4];
-    uint8_t joint2CMD[4];
-    bool dynamixelEnable[2];
-    bool ledEnable;
-    bool ledStatus;
+    uint8_t cmd_motor[2];
+    uint8_t cmd_joint1[4];
+    uint8_t cmd_joint2[4];
+    bool dynamixel_enable[2];
+    bool led_enable;
+    bool led_status;
 } unit_status_t;
 
 bool protocol_init(unit_status_t *const unit_status);

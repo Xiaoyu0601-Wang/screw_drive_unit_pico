@@ -10,10 +10,10 @@ unit_status_t unit_status;
 
 bool led_timer_callback(struct repeating_timer *t)
 {
-    if (unitStatus.ledEnable == true)
+    if (unit_status.led_enable == true)
     {
-        unitStatus.ledStatus = !unitStatus.ledStatus;
-        DEV_WIFI_LED_Write(unitStatus.ledStatus);
+        unit_status.led_status = !unit_status.led_status;
+        DEV_WIFI_LED_Write(unit_status.led_status);
     }
 
     // DEV_UART_Write_nByte("ABC", 3);//for test
@@ -23,8 +23,8 @@ bool led_timer_callback(struct repeating_timer *t)
 
 bool can_timer_callback(struct repeating_timer *t)
 {
-    // mcp2515_send(unitStatus.unitID, unitStatus.flashData, 8);//for test
-    if (mcp2515_receive(unitStatus.unitID, unitStatus.CanRxMsg))
+    // mcp2515_send(unit_status.unitID, unit_status.flashData, 8);//for test
+    if (mcp2515_receive(unit_status.unit_id, unit_status.msg_can_rx))
     {
         protocol_update(&unit_status);
     }
@@ -41,7 +41,7 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    // icm_read_sensor(unitStatus.imuRawData);
+    // icm_read_sensor(unit_status.imuRawData);
 
     return true;
 }
