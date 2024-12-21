@@ -58,7 +58,7 @@ void mcp2515_init(void)
     // printf("MCP2515 Init\r\n");
     // LOG_INFO("Reset");
     MCP2515_Reset();
-    DEV_Delay_ms(100);
+    dev_delay_ms(100);
 
     // #set baud rate 125Kbps
     // #<7:6>SJW=00(1TQ)
@@ -119,7 +119,7 @@ void mcp2515_send(uint32_t Canid, uint8_t *Buf, uint8_t len)
     uint8_t dly = 0;
     while ((MCP2515_ReadByte(TXB0CTRL) & 0x08) && (dly < 50))
     {
-        DEV_Delay_ms(1);
+        dev_delay_ms(1);
         dly++;
     }
 

@@ -62,7 +62,7 @@ void fusion_ahrs_init(fusion_ahrs_t *const ahrs)
  * algorithm while maintaining the current settings.
  * @param ahrs AHRS algorithm structure.
  */
-void fusion_ahrs_reset(FusionAhrs *const ahrs)
+void fusion_ahrs_reset(fusion_ahrs_t *const ahrs)
 {
     ahrs->quaternion = FUSION_IDENTITY_QUATERNION;
     ahrs->accelerometer = FUSION_VECTOR_ZERO;

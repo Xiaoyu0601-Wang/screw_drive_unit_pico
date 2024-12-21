@@ -5,6 +5,7 @@
 #include "MCP2515.h"
 #include "Protocol.h"
 #include "Controller.h"
+#include "Fusion.h"
 
 #define LED_PERIOD_MS 199
 #define CAN_PERIOD_MS 9

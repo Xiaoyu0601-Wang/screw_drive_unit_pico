@@ -41,14 +41,14 @@ void icm42688_init(void)
 
     // DEV_I2C_WriteByte(uint8_t addr, uint8_t reg, uint8_t Value);
     DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_DEVICE_CONFIG, configure_reset);
-    DEV_Delay_ms(100);
+    dev_delay_ms(100);
 
     DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_POWER_MGMT, buffer);
-    DEV_Delay_ms(100);
+    dev_delay_ms(100);
 
     DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_FIFO_CONFIG_INIT, fifo_init);
     DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_FIFO_CONFIGURATION, fifo_conf_data);
-    DEV_Delay_ms(100);
+    dev_delay_ms(100);
 }
 
 void icm_read_sensor(uint16_t *imuRawData)
