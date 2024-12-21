@@ -87,8 +87,8 @@ void fusion_ahrs_reset(fusion_ahrs_t *const ahrs);
 
 void FusionAhrsSetSettings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *const settings);
 
-void FusionAhrsUpdate(fusion_ahrs_t *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
-                      const FusionVector magnetometer, const float deltaTime);
+void fusion_ahrs_update(fusion_ahrs_t *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
+                        const FusionVector magnetometer, const float deltaTime);
 
 void FusionAhrsUpdateNoMagnetometer(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,
                                     const FusionVector accelerometer, const float deltaTime);

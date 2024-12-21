@@ -57,15 +57,17 @@ int main(void)
 {
     // Wait external device to startup
     dev_delay_ms(200);
-
     DEV_Module_Init(uart_rx_irq);
     dev_delay_ms(10);
     // icm42688_init();
     mcp2515_init();
+
     protocol_init(&unit_status);
-    dev_delay_ms(10);
+    dev_delay_ms(5);
     controller_init();
-    dev_delay_ms(10);
+    dev_delay_ms(5);
+    FusionAhrsInitialise(&ahrs);
+    dev_delay_ms(5);
 
     // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;

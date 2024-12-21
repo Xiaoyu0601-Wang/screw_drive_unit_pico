@@ -120,8 +120,8 @@ void FusionAhrsSetSettings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *
  * @param magnetometer Magnetometer measurement in arbitrary units.
  * @param deltaTime Delta time in seconds.
  */
-void FusionAhrsUpdate(fusion_ahrs_t *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
-                      const FusionVector magnetometer, const float deltaTime)
+void fusion_ahrs_update(fusion_ahrs_t *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
+                        const FusionVector magnetometer, const float deltaTime)
 {
 #define Q ahrs->quaternion.element
 
