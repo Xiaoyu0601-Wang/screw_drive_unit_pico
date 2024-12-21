@@ -4,8 +4,8 @@
  * @brief Earth axes convention.
  */
 
-#ifndef FUSION_CONVENTION_H
-#define FUSION_CONVENTION_H
+#ifndef _FUSION_CONVENTION_H_
+#define _FUSION_CONVENTION_H_
 
 //------------------------------------------------------------------------------
 // Definitions

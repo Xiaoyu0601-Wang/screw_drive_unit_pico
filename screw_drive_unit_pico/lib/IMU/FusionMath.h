@@ -4,8 +4,8 @@
  * @brief Math library.
  */
 
-#ifndef FUSION_MATH_H
-#define FUSION_MATH_H
+#ifndef _FUSION_MATH_H_
+#define _FUSION_MATH_H_
 
 //------------------------------------------------------------------------------
 // Includes

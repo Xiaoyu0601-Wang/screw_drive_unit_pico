@@ -6,14 +6,20 @@
 #include "Protocol.h"
 #include "Controller.h"
 
+#define LED_PERIOD_MS 199
+#define CAN_PERIOD_MS 9
+#define CTRL_PERIOD_MS 19
+#define IMU_PERIOD_MS 20
+
 unit_status_t unit_status;
+fusion_ahrs_t ahrs;
 
 bool led_timer_callback(struct repeating_timer *t)
 {
     if (unit_status.led_enable == true)
     {
         unit_status.led_status = !unit_status.led_status;
-        DEV_WIFI_LED_Write(unit_status.led_status);
+        dev_wifi_led_write(unit_status.led_status);
     }
 
     // DEV_UART_Write_nByte("ABC", 3);//for test
@@ -49,26 +55,26 @@ bool imu_timer_callback(struct repeating_timer *t)
 int main(void)
 {
     // Wait external device to startup
-    DEV_Delay_ms(200);
+    dev_delay_ms(200);
 
     DEV_Module_Init(uart_rx_irq);
-    DEV_Delay_ms(10);
+    dev_delay_ms(10);
     // icm42688_init();
     mcp2515_init();
     protocol_init(&unit_status);
-    DEV_Delay_ms(10);
+    dev_delay_ms(10);
     controller_init();
-    DEV_Delay_ms(10);
+    dev_delay_ms(10);
 
     // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;
-    add_repeating_timer_ms(-199, led_timer_callback, NULL, &led_timer);
+    add_repeating_timer_ms(-LED_PERIOD_MS, led_timer_callback, NULL, &led_timer);
     struct repeating_timer can_timer;
-    add_repeating_timer_ms(-9, can_timer_callback, NULL, &can_timer);
+    add_repeating_timer_ms(-CAN_PERIOD_MS, can_timer_callback, NULL, &can_timer);
     struct repeating_timer ctrl_timer;
-    add_repeating_timer_ms(-19, ctrl_timer_callback, NULL, &ctrl_timer);
+    add_repeating_timer_ms(-CTRL_PERIOD_MS, ctrl_timer_callback, NULL, &ctrl_timer);
     // struct repeating_timer imu_timer;
-    // add_repeating_timer_ms(-20, imu_timer_callback, NULL, &imu_timer);
+    // add_repeating_timer_ms(-IMU_PERIOD_MS, imu_timer_callback, NULL, &imu_timer);
 
     while (1)
         tight_loop_contents();

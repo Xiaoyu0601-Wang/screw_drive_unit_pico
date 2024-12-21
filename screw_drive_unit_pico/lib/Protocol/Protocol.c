@@ -60,7 +60,7 @@ bool protocol_update(unit_status_t *const unit_status)
             {
                 unit_status->led_enable = false;
                 unit_status->led_status = true;
-                DEV_WIFI_LED_Write(true);
+                dev_wifi_led_write(true);
             }
             break;
         case 0x04: /* LED: Set Status */
@@ -118,7 +118,7 @@ bool protocol_init(unit_status_t *const unit_status)
 
     unit_status->ledEnable = true;
     unit_status->ledStatus = true;
-    DEV_WIFI_LED_Write(unit_status->ledStatus);
+    dev_wifi_led_write(unit_status->ledStatus);
 
     unit_status->dynamixelEnable[DYNA_ID_1 - 1] = false;
     unit_status->dynamixelEnable[DYNA_ID_2 - 1] = false;

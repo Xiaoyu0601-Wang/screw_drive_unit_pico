@@ -5,8 +5,8 @@
  * gyroscope offset.
  */
 
-#ifndef FUSION_OFFSET_H
-#define FUSION_OFFSET_H
+#ifndef _FUSION_OFFSET_H_
+#define _FUSION_OFFSET_H_
 
 //------------------------------------------------------------------------------
 // Includes

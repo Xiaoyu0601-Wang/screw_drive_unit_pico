@@ -5,8 +5,8 @@
  * accelerometer and magnetometer measurements.
  */
 
-#ifndef FUSION_COMPASS_H
-#define FUSION_COMPASS_H
+#ifndef _FUSION_COMPASS_H_
+#define _FUSION_COMPASS_H_
 
 //------------------------------------------------------------------------------
 // Includes

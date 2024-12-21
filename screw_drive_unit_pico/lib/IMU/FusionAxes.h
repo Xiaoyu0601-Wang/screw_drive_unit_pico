@@ -4,8 +4,8 @@
  * @brief Swaps sensor axes for alignment with the body axes.
  */
 
-#ifndef FUSION_AXES_H
-#define FUSION_AXES_H
+#ifndef _FUSION_AXES_H_
+#define _FUSION_AXES_H_
 
 //------------------------------------------------------------------------------
 // Includes

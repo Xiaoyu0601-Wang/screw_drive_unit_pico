@@ -120,8 +120,8 @@ void DEV_KEY_Config(UWORD Pin);
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
 UBYTE DEV_Digital_Read(UWORD Pin);
 
-void DEV_WIFI_LED_Write(bool led_status);
-bool DEV_WIFI_LED_Read(void);
+void dev_wifi_led_write(bool led_status);
+bool dev_wifi_led_read(void);
 
 void DEV_UART_WriteByte(uint8_t Value);
 uint8_t DEV_UART_ReadByte(void);
@@ -131,7 +131,7 @@ void DEV_SPI_WriteByte(UBYTE Value);
 uint8_t DEV_SPI_ReadByte(void);
 void DEV_SPI_Write_nByte(uint8_t *pData, uint32_t Len);
 
-void DEV_Delay_ms(UDOUBLE xms);
+void dev_delay_ms(UDOUBLE xms);
 void DEV_Delay_us(UDOUBLE xus);
 
 void DEV_I2C_WriteByte(uint8_t addr, uint8_t reg, uint8_t Value);

@@ -43,8 +43,8 @@ UBYTE DEV_Digital_Read(UWORD Pin) { return gpio_get(Pin); }
  **/
 void DEV_LED_Config(void) { cyw43_arch_init(); }
 
-void DEV_WIFI_LED_Write(bool led_status) { cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status); }
-bool DEV_WIFI_LED_Read(void) { return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN); }
+void dev_wifi_led_write(bool led_status) { cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status); }
+bool dev_wifi_led_read(void) { return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN); }
 
 /**
  * UART
@@ -146,7 +146,7 @@ void DEV_KEY_Config(UWORD Pin)
 /**
  * delay x ms
  **/
-void DEV_Delay_ms(UDOUBLE xms) { sleep_ms(xms); }
+void dev_delay_ms(UDOUBLE xms) { sleep_ms(xms); }
 
 void DEV_Delay_us(UDOUBLE xus) { sleep_us(xus); }
 

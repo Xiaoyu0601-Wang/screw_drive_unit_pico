@@ -4,8 +4,8 @@
  * @brief Gyroscope, accelerometer, and magnetometer calibration models.
  */
 
-#ifndef FUSION_CALIBRATION_H
-#define FUSION_CALIBRATION_H
+#ifndef _FUSION_CALIBRATION_H_
+#define _FUSION_CALIBRATION_H_
 
 //------------------------------------------------------------------------------
 // Includes
