@@ -66,7 +66,7 @@ int main(void)
     dev_delay_ms(5);
     controller_init();
     dev_delay_ms(5);
-    FusionAhrsInitialise(&ahrs);
+    fusion_ahrs_init(&ahrs);
     dev_delay_ms(5);
 
     // use 199 and 9 for avoiding triggering interupt at the same time

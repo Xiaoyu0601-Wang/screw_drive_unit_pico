@@ -381,7 +381,7 @@ void FusionAhrsUpdateNoMagnetometer(fusion_ahrs_t *const ahrs, const FusionVecto
 {
 
     // Update AHRS algorithm
-    FusionAhrsUpdate(ahrs, gyroscope, accelerometer, FUSION_VECTOR_ZERO, deltaTime);
+    fusion_ahrs_update(ahrs, gyroscope, accelerometer, FUSION_VECTOR_ZERO, deltaTime);
 
     // Zero heading during initialisation
     if (ahrs->initialising)
@@ -417,7 +417,7 @@ void FusionAhrsUpdateExternalHeading(fusion_ahrs_t *const ahrs, const FusionVect
                                        }};
 
     // Update AHRS algorithm
-    FusionAhrsUpdate(ahrs, gyroscope, accelerometer, magnetometer, deltaTime);
+    fusion_ahrs_update(ahrs, gyroscope, accelerometer, magnetometer, deltaTime);
 #undef Q
 }
 

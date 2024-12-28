@@ -101,16 +101,16 @@ typedef union
 // #define MCP2515_CS1_PIN  1
 #define MCP2515_CS_PIN MCP2515_CS0_PIN
 
-#define ICM42688_SDA_PIN 2
-#define ICM42688_SCL_PIN 3
+#define ICM42688_SDA_PIN 16
+#define ICM42688_SCL_PIN 17
 
-#define UART_IRQ UART0_IRQ
+#define UART_IRQ UART1_IRQ
 #define BAUD_RATE 115200
 #define DATA_BITS 8
 #define STOP_BITS 1
 #define PARITY UART_PARITY_NONE
-#define UART_TX_PIN 0
-#define UART_RX_PIN 1
+#define UART_TX_PIN 8
+#define UART_RX_PIN 9
 /*------------------------------------------------------------------------------------------------------*/
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
 UBYTE DEV_Digital_Read(UWORD Pin);
