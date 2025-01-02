@@ -18,7 +18,7 @@ typedef struct
     data16 x;
     data16 y;
     data16 z;
-} sensor_t;
+} sensor_imu_t;
 
 #define ICM42688_ADDRESS 0x68 << 1
 #define REG_POWER_MGMT 0x4E
