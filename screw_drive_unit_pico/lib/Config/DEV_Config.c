@@ -203,6 +203,16 @@ UBYTE DEV_Module_Init(void (*uart_rx_irq)(void))
     // // Now enable the UART to send interrupts - RX only
     // uart_set_irq_enables(UART_PORT, true, false);
 
+    // UART Debug Config
+    uart_init(UART_DEBUG_PORT, BAUD_RATE); // Set up our UART with a basic baud rate.
+    gpio_set_function(UART_DEBUG_TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(UART_DEBUG_RX_PIN, GPIO_FUNC_UART);
+    uart_set_hw_flow(UART_DEBUG_PORT, false, false);                // Set UART flow control CTS/RTS, we
+                                                            // don't want these, so turn them off
+    uart_set_format(UART_DEBUG_PORT, DATA_BITS, STOP_BITS, PARITY); // Set our data format
+    uart_set_fifo_enabled(UART_DEBUG_PORT,
+                          false); // Turn off FIFO's - we want to do this character by character
+
     // GPIO Config
     DEV_GPIO_Init();
 

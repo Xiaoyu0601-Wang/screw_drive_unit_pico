@@ -45,7 +45,8 @@
 #include "hardware/structs/pll.h"
 #include "hardware/uart.h"
 
-#define UART_PORT uart0
+#define UART_DEBUG_PORT uart0
+#define UART_PORT uart1
 #define SPI_PORT spi0
 #define I2C_PORT i2c1
 
@@ -111,6 +112,10 @@ typedef union
 #define PARITY UART_PARITY_NONE
 #define UART_TX_PIN 8
 #define UART_RX_PIN 9
+
+#define UART_DEBUG_TX_PIN 0
+#define UART_DEBUG_RX_PIN 1
+
 /*------------------------------------------------------------------------------------------------------*/
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
 UBYTE DEV_Digital_Read(UWORD Pin);
