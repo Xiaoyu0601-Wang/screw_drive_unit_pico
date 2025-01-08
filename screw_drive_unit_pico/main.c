@@ -48,7 +48,7 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    // icm_read_sensor(unit_status.imuRawData);
+    icm_read_sensor(&unit_status.imu_raw_data);
 
     return true;
 }

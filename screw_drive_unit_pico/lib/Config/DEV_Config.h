@@ -139,10 +139,10 @@ void DEV_SPI_Write_nByte(uint8_t *pData, uint32_t Len);
 void dev_delay_ms(UDOUBLE xms);
 void DEV_Delay_us(UDOUBLE xus);
 
-void DEV_I2C_WriteByte(uint8_t addr, uint8_t reg, uint8_t Value);
+void dev_i2c_write_byte(uint8_t addr, uint8_t reg, uint8_t Value);
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len);
 uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg);
-void DEV_I2C_Read_nByte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len);
+void dev_i2c_read_nbyte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len);
 
 bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm);
 void DEV_SET_PWM(uint8_t Value);

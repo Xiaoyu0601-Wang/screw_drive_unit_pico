@@ -18,6 +18,12 @@ typedef struct
     data16 x;
     data16 y;
     data16 z;
+} sensor_axis_t;
+
+typedef struct
+{
+    sensor_axis_t gyro;
+    sensor_axis_t accel;
 } sensor_imu_t;
 
 #define ICM42688_ADDRESS 0x68 << 1
@@ -27,11 +33,11 @@ typedef struct
 #define who_am_i 0x75
 #define temp_data1 0x1D
 #define temp_data0 0x1E
-#define GYRO_CONFIG0 0x4F
-#define ACCEL_CONFIG0 0x50
-#define GYRO_CONFIG1 0x51
+#define REG_GYRO_CONFIG0 0x4F
+#define REG_ACCEL_CONFIG0 0x50
+#define REG_GYRO_CONFIG1 0x51
 #define GYRO_ACCEL_CONFIG0 0x52
-#define ACCEL_CONFIG1 0x53
+#define REG_ACCEL_CONFIG1 0x53
 #define XA_ST_DATA 0x3B
 #define YA_ST_DATA 0x3C
 #define ZA_ST_DATA 0x3D
@@ -60,6 +66,6 @@ typedef struct
 #define REG_FIFO_DATA 0x30
 
 void icm42688_init(void);
-void icm_read_sensor(uint16_t *imuRawData);
+void icm_read_sensor(sensor_imu_t *const imu_raw_data);
 
 #endif /* INC_ICM_H_ */

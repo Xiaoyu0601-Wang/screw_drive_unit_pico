@@ -73,7 +73,7 @@ void DEV_SPI_Write_nByte(uint8_t pData[], uint32_t Len) { spi_write_blocking(SPI
 /**
  * I2C
  **/
-void DEV_I2C_WriteByte(uint8_t addr, uint8_t reg, uint8_t Value)
+void dev_i2c_write_byte(uint8_t addr, uint8_t reg, uint8_t Value)
 {
     uint8_t data[2] = {reg, Value};
     i2c_write_blocking(I2C_PORT, addr, data, 2, false);
@@ -92,7 +92,7 @@ uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg)
     return buf;
 }
 
-void DEV_I2C_Read_nByte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len)
+void dev_i2c_read_nbyte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len)
 {
     i2c_write_blocking(I2C_PORT, addr, &reg, 1, true);
     i2c_read_blocking(I2C_PORT, addr, pData, Len, false);

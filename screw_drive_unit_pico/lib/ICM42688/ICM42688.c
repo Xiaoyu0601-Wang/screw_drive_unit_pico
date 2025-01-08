@@ -35,25 +35,29 @@ extern uint16_t gyro_data_Z;
 void icm42688_init(void)
 {
     uint8_t configure_reset = 0x01;
-    uint8_t fifo_conf_data = 0x03;
+    uint8_t fifo_conf_data = 0x07;
     uint8_t buffer = 0x1F; //  temperature sensor enabled. RC oscillator is on, gyro and accelerometer low noise mode,
     uint8_t fifo_init = 0x40;
+    uint8_t gyro_conf0 = 0x66;
+    uint8_t accel_conf0 = 0x66;
 
-    // DEV_I2C_WriteByte(uint8_t addr, uint8_t reg, uint8_t Value);
-    DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_DEVICE_CONFIG, configure_reset);
+    // dev_i2c_write_byte(uint8_t addr, uint8_t reg, uint8_t Value);
+    dev_i2c_write_byte(ICM42688_ADDRESS, REG_DEVICE_CONFIG, configure_reset);
     dev_delay_ms(100);
 
-    DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_POWER_MGMT, buffer);
+    dev_i2c_write_byte(ICM42688_ADDRESS, REG_POWER_MGMT, buffer);
     dev_delay_ms(100);
 
-    DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_FIFO_CONFIG_INIT, fifo_init);
-    DEV_I2C_WriteByte(ICM42688_ADDRESS, REG_FIFO_CONFIGURATION, fifo_conf_data);
+    dev_i2c_write_byte(ICM42688_ADDRESS, REG_GYRO_CONFIG0, gyro_conf0);
+    dev_i2c_write_byte(ICM42688_ADDRESS, REG_ACCEL_CONFIG0, accel_conf0);
+    dev_i2c_write_byte(ICM42688_ADDRESS, REG_FIFO_CONFIG_INIT, fifo_init);
+    dev_i2c_write_byte(ICM42688_ADDRESS, REG_FIFO_CONFIGURATION, fifo_conf_data);
     dev_delay_ms(100);
 }
 
-void icm_read_sensor(uint16_t *imuRawData)
+void icm_read_sensor(sensor_imu_t *const imu_raw_data)
 {
-    DEV_I2C_Read_nByte(ICM42688_ADDRESS, REG_FIFO_DATA, fifo_data, 16);
+    dev_i2c_read_nbyte(ICM42688_ADDRESS, REG_FIFO_DATA, fifo_data, 16);
 
     acc_data_X1 = fifo_data[1];
     acc_data_X0 = fifo_data[2];
