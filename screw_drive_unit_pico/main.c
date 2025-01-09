@@ -48,7 +48,7 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    icm_read_sensor(&unit_status.imu_raw_data);
+    // icm_read_sensor(&unit_status.imu_raw_data);
 
     return true;
 }
@@ -57,7 +57,7 @@ int main(void)
 {
     // Wait external device to startup
     dev_delay_ms(200);
-    DEV_Module_Init(uart_rx_irq);
+    dev_module_init(uart_rx_irq);
     dev_delay_ms(10);
     // icm42688_init();
     mcp2515_init();

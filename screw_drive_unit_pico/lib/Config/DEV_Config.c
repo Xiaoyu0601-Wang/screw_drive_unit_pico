@@ -168,7 +168,7 @@ void DEV_GPIO_Init(void)
 function:	Module Initialize, the library and initialize the pins, SPI
 protocol parameter: Info:
 ******************************************************************************/
-UBYTE DEV_Module_Init(void (*uart_rx_irq)(void))
+UBYTE dev_module_init(void (*uart_rx_irq)(void))
 {
     stdio_init_all();
 
@@ -246,7 +246,7 @@ UBYTE DEV_Module_Init(void (*uart_rx_irq)(void))
     //  gpio_pull_up(ICM42688_SDA_PIN);
     //  gpio_pull_up(ICM42688_SCL_PIN);
 
-    // printf("DEV_Module_Init OK \r\n");
+    // printf("dev_module_init OK \r\n");
     return 0;
 }
 

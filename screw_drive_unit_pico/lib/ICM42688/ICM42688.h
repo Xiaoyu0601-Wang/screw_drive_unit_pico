@@ -24,6 +24,7 @@ typedef struct
 {
     sensor_axis_t gyro;
     sensor_axis_t accel;
+    uint8_t temperature;
 } sensor_imu_t;
 
 #define ICM42688_ADDRESS 0x68 << 1
@@ -66,6 +67,6 @@ typedef struct
 #define REG_FIFO_DATA 0x30
 
 void icm42688_init(void);
-void icm_read_sensor(sensor_imu_t *const imu_raw_data);
+void icm_read_sensor(sensor_imu_t *imu_raw_data);
 
 #endif /* INC_ICM_H_ */

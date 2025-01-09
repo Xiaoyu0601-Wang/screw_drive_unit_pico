@@ -76,7 +76,7 @@ typedef union
     {
         uint8_t lsb;  // Lower 8 bits
         uint8_t msb; // Higher 8 bits
-    };
+    } element;
 } data16;
 
 /**
@@ -147,7 +147,7 @@ void dev_i2c_read_nbyte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len)
 bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm);
 void DEV_SET_PWM(uint8_t Value);
 
-UBYTE DEV_Module_Init(void (*uart_rx_irq)(void));
+UBYTE dev_module_init(void (*uart_rx_irq)(void));
 void DEV_Module_Exit(void);
 
 #endif
