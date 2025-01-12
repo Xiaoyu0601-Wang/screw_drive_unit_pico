@@ -1,5 +1,5 @@
-#ifndef _LOW_PASS_FILTER_H_
-#define _LOW_PASS_FILTER_H_
+#ifndef _FIRST_ORDER_FILTER_H_
+#define _FIRST_ORDER_FILTER_H_
 
 /* Includes ---------------------------------------------------*/
 /* math includes */

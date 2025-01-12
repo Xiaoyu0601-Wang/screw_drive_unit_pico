@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 #include "dev_config.h"
-#include "low_pass_filter.h"
+#include "first_order_filter.h"
 
 typedef struct
 {

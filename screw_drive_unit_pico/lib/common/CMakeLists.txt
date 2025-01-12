@@ -5,5 +5,5 @@ aux_source_directory(. DIR_common_SRCS)
 include_directories(../config)
 
 # 生成链接库
-add_library(low_pass_filter low_pass_filter.c)
-target_link_libraries(low_pass_filter PUBLIC config)
+add_library(first_order_filter first_order_filter.c)
+target_link_libraries(first_order_filter PUBLIC config)

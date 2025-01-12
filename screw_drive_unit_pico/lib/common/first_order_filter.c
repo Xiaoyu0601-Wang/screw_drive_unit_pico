@@ -1,4 +1,4 @@
-#include "low_pass_filter.h"
+#include "first_order_filter.h"
 
 void lpf_init(low_pass_filter_object_t *lpf)
 {

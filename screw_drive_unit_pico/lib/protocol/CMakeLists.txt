@@ -10,4 +10,4 @@ include_directories(../icm42688)
 
 # 生成链接库
 add_library(protocol ${DIR_protocol_SRCS})
-target_link_libraries(protocol PUBLIC pico_stdlib config mcp2515 dynamixel icm42688 low_pass_filter)
+target_link_libraries(protocol PUBLIC pico_stdlib config mcp2515 dynamixel icm42688 first_order_filter)

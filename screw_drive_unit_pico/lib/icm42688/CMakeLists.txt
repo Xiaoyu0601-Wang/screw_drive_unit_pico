@@ -7,4 +7,4 @@ include_directories(../common)
 
 # 生成链接库
 add_library(icm42688 ${DIR_icm42688_SRCS})
-target_link_libraries(icm42688 PUBLIC config low_pass_filter)
+target_link_libraries(icm42688 PUBLIC config first_order_filter)
