@@ -30,10 +30,10 @@ typedef struct
 
 typedef struct
 {
-    low_pass_filter_object_t accel[3];
-    low_pass_filter_object_t gyro[3];
-    low_pass_filter_object_t temperature[3];
-} low_pass_filter_t;
+    first_order_filter_object_t accel[3];
+    first_order_filter_object_t gyro[3];
+    first_order_filter_object_t temperature[3];
+} imu_filter_t;
 
 #define ICM42688_ADDRESS 0x68 << 1
 #define REG_POWER_MGMT 0x4E
