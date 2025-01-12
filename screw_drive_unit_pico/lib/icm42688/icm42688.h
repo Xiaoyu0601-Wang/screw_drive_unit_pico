@@ -32,8 +32,23 @@ typedef struct
 {
     first_order_filter_object_t accel[3];
     first_order_filter_object_t gyro[3];
-    first_order_filter_object_t temperature[3];
+    first_order_filter_object_t temp;
 } imu_filter_t;
+
+#define ACCEL_X_LOWPASS_TAU         0.15f
+#define ACCEL_X_LOWPASS_SAMPLE_TIME 0.005f
+#define ACCEL_Y_LOWPASS_TAU         0.15f
+#define ACCEL_Y_LOWPASS_SAMPLE_TIME 0.005f
+#define ACCEL_Z_LOWPASS_TAU         0.15f
+#define ACCEL_Z_LOWPASS_SAMPLE_TIME 0.005f
+#define GYRO_X_LOWPASS_TAU          0.15f
+#define GYRO_X_LOWPASS_SAMPLE_TIME  0.005f
+#define GYRO_Y_LOWPASS_TAU          0.15f
+#define GYRO_Y_LOWPASS_SAMPLE_TIME  0.005f
+#define GYRO_Z_LOWPASS_TAU          0.15f
+#define GYRO_Z_LOWPASS_SAMPLE_TIME  0.005f
+#define TEMP_LOWPASS_TAU            0.15f
+#define TEMP_LOWPASS_SAMPLE_TIME    0.005f
 
 #define ICM42688_ADDRESS 0x68 << 1
 #define REG_POWER_MGMT 0x4E
@@ -76,5 +91,7 @@ typedef struct
 
 void icm42688_init(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
+void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
+                            sensor_imu_t *imu_filtered_data);
 
 #endif /* INC_ICM_H_ */
