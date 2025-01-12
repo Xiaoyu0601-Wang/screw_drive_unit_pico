@@ -5,7 +5,7 @@
  * @remark Ref: https://emanual.robotis.com/docs/en/dxl/protocol2/
  */
 
-#include "Dynamixel.h"
+#include "dynamixel.h"
 
 #define GET_LOW_ORDER_BYTE(bytes) ((uint8_t)(((uint16_t)(bytes)) & 0xFF))
 #define GET_HIGH_ORDER_BYTE(bytes) ((uint8_t)((((uint16_t)(bytes)) >> 8) & 0xFF))

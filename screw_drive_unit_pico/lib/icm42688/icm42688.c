@@ -4,7 +4,7 @@
  *  Created on: Dec 22, 2020
  *      Author: Mert Kilic
  */
-#include "ICM42688.h"
+#include "icm42688.h"
 
 void icm42688_init(void)
 {

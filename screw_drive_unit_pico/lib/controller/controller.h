@@ -4,7 +4,7 @@
 #include "pico/stdlib.h"
 
 #include "DEV_Config.h"
-#include "Dynamixel.h"
+#include "dynamixel.h"
 
 void controller_update(void);
 bool controller_init(void);

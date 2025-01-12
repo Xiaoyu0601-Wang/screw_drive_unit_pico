@@ -6,9 +6,9 @@
 #include "pico/stdlib.h"
 
 #include "DEV_Config.h"
-#include "Dynamixel.h"
-#include "MCP2515.h"
-#include "ICM42688.h"
+#include "dynamixel.h"
+#include "mcp2515.h"
+#include "icm42688.h"
 
 #define HEAD_UNIT_ID 1
 #define TAIL_UNIT_ID 2

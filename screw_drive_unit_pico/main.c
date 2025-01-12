@@ -1,10 +1,10 @@
 ﻿// #include "DEV_Config.h"
 #include "Debug.h"
 
-#include "ICM42688.h"
-#include "MCP2515.h"
-#include "Protocol.h"
-#include "Controller.h"
+#include "icm42688.h"
+#include "mcp2515.h"
+#include "protocol.h"
+#include "controller.h"
 #include "Fusion.h"
 
 #define LED_PERIOD_MS 199
@@ -49,6 +49,13 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 bool imu_timer_callback(struct repeating_timer *t)
 {
     // icm_read_sensor(&unit_status.imu_raw_data);
+    // FusionVector gyroscope = {.axis = { .x = ,
+    //                                     .y = ,
+    //                                     .z = ,}};
+    // FusionVector accelerometer = {.axis = { .x = ,
+    //                                         .y = ,
+    //                                         .z = ,}};
+    // fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, SAMPLE_PERIOD);
 
     return true;
 }

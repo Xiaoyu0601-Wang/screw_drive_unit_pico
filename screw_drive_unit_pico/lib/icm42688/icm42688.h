@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 #include "DEV_Config.h"
+#include "low_pass_filter.h"
 
 typedef struct
 {
@@ -26,6 +27,13 @@ typedef struct
     sensor_axis_t accel;
     uint8_t temperature;
 } sensor_imu_t;
+
+typedef struct
+{
+    low_pass_filter_object_t accel[3];
+    low_pass_filter_object_t gyro[3];
+    low_pass_filter_object_t temperature[3];
+} low_pass_filter_t;
 
 #define ICM42688_ADDRESS 0x68 << 1
 #define REG_POWER_MGMT 0x4E

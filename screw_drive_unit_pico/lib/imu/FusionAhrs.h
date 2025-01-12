@@ -90,7 +90,7 @@ void FusionAhrsSetSettings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *
 void fusion_ahrs_update(fusion_ahrs_t *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
                         const FusionVector magnetometer, const float deltaTime);
 
-void FusionAhrsUpdateNoMagnetometer(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,
+void fusion_ahrs_update_no_magnetometer(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,
                                     const FusionVector accelerometer, const float deltaTime);
 
 void FusionAhrsUpdateExternalHeading(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,

@@ -1,4 +1,4 @@
-#include "Protocol.h"
+#include "protocol.h"
 
 const uint8_t *flash_target_contents = (const uint8_t *)(XIP_BASE + FLASH_TARGET_OFFSET);
 

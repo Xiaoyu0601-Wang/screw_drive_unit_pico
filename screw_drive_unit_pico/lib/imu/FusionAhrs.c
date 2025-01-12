@@ -376,8 +376,8 @@ static inline int Clamp(const int value, const int min, const int max)
  * @param accelerometer Accelerometer measurement in g.
  * @param deltaTime Delta time in seconds.
  */
-void FusionAhrsUpdateNoMagnetometer(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,
-                                    const FusionVector accelerometer, const float deltaTime)
+void fusion_ahrs_update_no_magnetometer(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,
+                                        const FusionVector accelerometer, const float deltaTime)
 {
 
     // Update AHRS algorithm
