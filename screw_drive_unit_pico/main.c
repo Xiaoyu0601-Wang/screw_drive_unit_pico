@@ -1,5 +1,5 @@
-﻿// #include "DEV_Config.h"
-#include "Debug.h"
+﻿// #include "dev_config.h"
+#include "debug.h"
 
 #include "icm42688.h"
 #include "mcp2515.h"

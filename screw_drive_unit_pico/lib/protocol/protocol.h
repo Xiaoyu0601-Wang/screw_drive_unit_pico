@@ -5,7 +5,7 @@
 // #include <stdint.h>
 #include "pico/stdlib.h"
 
-#include "DEV_Config.h"
+#include "dev_config.h"
 #include "dynamixel.h"
 #include "mcp2515.h"
 #include "icm42688.h"

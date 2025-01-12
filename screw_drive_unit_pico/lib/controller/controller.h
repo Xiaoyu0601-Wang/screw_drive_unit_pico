@@ -3,7 +3,7 @@
 
 #include "pico/stdlib.h"
 
-#include "DEV_Config.h"
+#include "dev_config.h"
 #include "dynamixel.h"
 
 void controller_update(void);

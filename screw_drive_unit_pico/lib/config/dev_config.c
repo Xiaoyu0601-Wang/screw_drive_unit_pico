@@ -26,7 +26,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ******************************************************************************/
-#include "DEV_Config.h"
+#include "dev_config.h"
 
 uint ecs_slice_num;
 uint slice_num;

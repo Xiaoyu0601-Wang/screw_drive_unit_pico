@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "DEV_Config.h"
+#include "dev_config.h"
 
 // static uint8_t FLASH_CAN_ID[2];
 

@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "DEV_Config.h"
+#include "dev_config.h"
 #include "low_pass_filter.h"
 
 typedef struct

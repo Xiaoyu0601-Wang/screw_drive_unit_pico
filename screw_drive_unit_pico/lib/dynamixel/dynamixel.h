@@ -10,7 +10,7 @@
 
 #include "pico/stdlib.h"
 
-#include "DEV_Config.h"
+#include "dev_config.h"
 
 #define DYNA_ID_1 ((uint8_t)1)
 #define DYNA_ID_2 ((uint8_t)2)
