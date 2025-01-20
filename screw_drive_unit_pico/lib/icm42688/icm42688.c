@@ -65,12 +65,13 @@ void icm_read_sensor(sensor_imu_t *imu_raw_data)
     imu_raw_data->gyro.y.element.lsb = fifo_data[10];
     imu_raw_data->gyro.z.element.msb = fifo_data[11];
     imu_raw_data->gyro.z.element.lsb = fifo_data[12];
-
+    
     imu_raw_data->temperature = fifo_data[13];
 }
 
-void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
+/*void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
                             sensor_imu_t *imu_filtered_data)
 {
 
 }
+*/
