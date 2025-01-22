@@ -48,7 +48,7 @@
 #define UART_DEBUG_PORT uart0
 #define UART_PORT uart1
 #define SPI_PORT spi0
-#define I2C_PORT i2c1
+#define I2C_PORT i2c0
 
 #define FLASH_TARGET_OFFSET (256 * 1024)
 

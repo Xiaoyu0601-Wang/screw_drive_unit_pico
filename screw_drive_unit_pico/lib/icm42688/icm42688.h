@@ -50,7 +50,7 @@ typedef struct
 #define TEMP_LOWPASS_TAU            0.15f
 #define TEMP_LOWPASS_SAMPLE_TIME    0.005f
 
-#define ICM42688_ADDRESS 0x68 << 1
+#define ICM42688_ADDRESS 0x68 //AP_AD0 = 0
 #define REG_POWER_MGMT 0x4E
 #define REG_DEVICE_CONFIG 0x11
 #define DRIVE_CONFIG 0x13

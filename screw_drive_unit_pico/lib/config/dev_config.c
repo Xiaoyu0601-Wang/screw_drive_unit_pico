@@ -240,13 +240,13 @@ UBYTE dev_module_init(void (*uart_rx_irq)(void))
     // pwm_set_enabled(ecs_slice_num, true);// Set the PWM running
 
     // I2C Config
-    //  i2c_init(I2C_PORT,400*1000);
-    //  gpio_set_function(ICM42688_SDA_PIN,GPIO_FUNC_I2C);
-    //  gpio_set_function(ICM42688_SCL_PIN,GPIO_FUNC_I2C);
-    //  gpio_pull_up(ICM42688_SDA_PIN);
-    //  gpio_pull_up(ICM42688_SCL_PIN);
+    i2c_init(I2C_PORT,400*1000);
+    gpio_set_function(ICM42688_SDA_PIN,GPIO_FUNC_I2C);
+    gpio_set_function(ICM42688_SCL_PIN,GPIO_FUNC_I2C);
+    gpio_pull_up(ICM42688_SDA_PIN);
+    gpio_pull_up(ICM42688_SCL_PIN);
 
-    // printf("dev_module_init OK \r\n");
+    printf("dev_module_init is finished \r\n");
     return 0;
 }
 
