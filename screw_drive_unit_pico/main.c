@@ -10,7 +10,7 @@
 #define LED_PERIOD_MS 199
 #define CAN_PERIOD_MS 9
 #define CTRL_PERIOD_MS 19
-#define IMU_PERIOD_MS 20
+#define IMU_PERIOD_MS 1000
 
 unit_status_t unit_status;
 fusion_ahrs_t ahrs;
@@ -48,7 +48,7 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    // icm_read_sensor(&unit_status.imu_raw_data);
+    icm_read_sensor(&unit_status.imu_raw_data);
     // icm_filter_sensor_data(&unit_status.imu_raw_data,
     //                        &unit_status.imu_filtered_data);
     // FusionVector gyroscope = {.axis = { .x = ,
@@ -68,25 +68,25 @@ int main(void)
     dev_delay_ms(200);
     dev_module_init(uart_rx_irq);
     dev_delay_ms(10);
-    // icm42688_init();
-    mcp2515_init();
+    icm42688_init();
+    // mcp2515_init();
 
     protocol_init(&unit_status);
     dev_delay_ms(5);
-    controller_init();
-    dev_delay_ms(5);
-    fusion_ahrs_init(&ahrs);
-    dev_delay_ms(5);
+    // controller_init();
+    // dev_delay_ms(5);
+    // fusion_ahrs_init(&ahrs);
+    // dev_delay_ms(5);
 
     // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;
     add_repeating_timer_ms(-LED_PERIOD_MS, led_timer_callback, NULL, &led_timer);
-    struct repeating_timer can_timer;
-    add_repeating_timer_ms(-CAN_PERIOD_MS, can_timer_callback, NULL, &can_timer);
-    struct repeating_timer ctrl_timer;
-    add_repeating_timer_ms(-CTRL_PERIOD_MS, ctrl_timer_callback, NULL, &ctrl_timer);
-    // struct repeating_timer imu_timer;
-    // add_repeating_timer_ms(-IMU_PERIOD_MS, imu_timer_callback, NULL, &imu_timer);
+    // struct repeating_timer can_timer;
+    // add_repeating_timer_ms(-CAN_PERIOD_MS, can_timer_callback, NULL, &can_timer);
+    // struct repeating_timer ctrl_timer;
+    // add_repeating_timer_ms(-CTRL_PERIOD_MS, ctrl_timer_callback, NULL, &ctrl_timer);
+    struct repeating_timer imu_timer;
+    add_repeating_timer_ms(-IMU_PERIOD_MS, imu_timer_callback, NULL, &imu_timer);
 
     while (1)
         tight_loop_contents();

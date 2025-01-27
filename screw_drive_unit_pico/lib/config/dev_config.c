@@ -58,7 +58,10 @@ void DEV_UART_Write_nByte(uint8_t *pData, uint32_t Len) { uart_write_blocking(UA
 /**
  * SPI
  **/
-void DEV_SPI_WriteByte(uint8_t Value) { spi_write_blocking(SPI_PORT, &Value, 1); }
+void DEV_SPI_WriteByte(uint8_t Value)
+{
+    spi_write_blocking(SPI_PORT, &Value, 1);
+}
 
 uint8_t DEV_SPI_ReadByte(void)
 {
@@ -68,15 +71,28 @@ uint8_t DEV_SPI_ReadByte(void)
     return buf[0];
 }
 
+void dev_spi_write_byte(spi_inst_t *spi_port, uint8_t *data, uint16_t length)
+{
+    spi_write_blocking(spi_port, data, length);
+}
+
+uint8_t dev_spi_read_byte(spi_inst_t *spi_port)
+{
+    uint8_t buf[1];
+    // buf[0] = Value;
+    spi_read_blocking(spi_port, 0, buf, 1);
+    return buf[0];
+}
+
 void DEV_SPI_Write_nByte(uint8_t pData[], uint32_t Len) { spi_write_blocking(SPI_PORT, pData, Len); }
 
 /**
  * I2C
  **/
-void dev_i2c_write_byte(uint8_t addr, uint8_t reg, uint8_t Value)
+void dev_i2c_write_byte(i2c_inst_t *i2c_port, uint8_t addr, uint8_t reg, uint8_t data)
 {
-    uint8_t data[2] = {reg, Value};
-    i2c_write_blocking(I2C_PORT, addr, data, 2, false);
+    uint8_t value[2] = {reg, data};
+    i2c_write_blocking(i2c_port, addr, value, 2, false);
 }
 
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len)
@@ -92,10 +108,16 @@ uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg)
     return buf;
 }
 
-void dev_i2c_read_nbyte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len)
+void dev_i2c_read_byte(i2c_inst_t *i2c_port, uint8_t addr, uint8_t reg, uint8_t *data)
 {
-    i2c_write_blocking(I2C_PORT, addr, &reg, 1, true);
-    i2c_read_blocking(I2C_PORT, addr, pData, Len, false);
+    i2c_write_blocking(i2c_port, addr, &reg, 1, true);
+    i2c_read_blocking(i2c_port, addr, data, 1, false);
+}
+
+void dev_i2c_read_nbyte(i2c_inst_t *i2c_port, uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len)
+{
+    i2c_write_blocking(i2c_port, addr, &reg, 1, true);
+    i2c_read_blocking(i2c_port, addr, pData, Len, false);
 }
 
 /**
@@ -152,7 +174,8 @@ void DEV_Delay_us(UDOUBLE xus) { sleep_us(xus); }
 
 void DEV_GPIO_Init(void)
 {
-    DEV_GPIO_Mode(MCP2515_CS_PIN, 1);
+    DEV_GPIO_Mode(CAN_CS_PIN, 1);
+    DEV_GPIO_Mode(IMU_CS_PIN, 1);
     // DEV_GPIO_Mode(LCD_DC_PIN, 1);
     // DEV_GPIO_Mode(LCD_CS_PIN, 1);
     // DEV_GPIO_Mode(LCD_BL_PIN, 1);
@@ -160,7 +183,8 @@ void DEV_GPIO_Init(void)
     // DEV_GPIO_Mode(LCD_CS_PIN, 1);
     // DEV_GPIO_Mode(LCD_BL_PIN, 1);
 
-    DEV_Digital_Write(MCP2515_CS_PIN, 1);
+    DEV_Digital_Write(CAN_CS_PIN, 1);
+    DEV_Digital_Write(IMU_CS_PIN, 1);
     // DEV_Digital_Write(LCD_DC_PIN, 0);
     // DEV_Digital_Write(LCD_BL_PIN, 1);
 }
@@ -182,10 +206,15 @@ UBYTE dev_module_init(void (*uart_rx_irq)(void))
     DEV_LED_Config();
 
     // SPI Config
-    spi_init(SPI_PORT, 10000 * 1000);
-    gpio_set_function(SPI_CLK_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_MOSI_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_MISO_PIN, GPIO_FUNC_SPI);
+    spi_init(SPI_PORT, 10000 * 1000); // 10MHz
+    gpio_set_function(SPI_CAN_CLK_PIN, GPIO_FUNC_SPI);
+    gpio_set_function(SPI_CAN_MOSI_PIN, GPIO_FUNC_SPI);
+    gpio_set_function(SPI_CAN_MISO_PIN, GPIO_FUNC_SPI);
+
+    spi_init(SPI_IMU_PORT, 20000 * 1000); // 20MHz
+    gpio_set_function(SPI_IMU_CLK_PIN, GPIO_FUNC_SPI);
+    gpio_set_function(SPI_IMU_MOSI_PIN, GPIO_FUNC_SPI);
+    gpio_set_function(SPI_IMU_MISO_PIN, GPIO_FUNC_SPI);
 
     // UART Config
     uart_init(UART_PORT, BAUD_RATE); // Set up our UART with a basic baud rate.
@@ -240,7 +269,7 @@ UBYTE dev_module_init(void (*uart_rx_irq)(void))
     // pwm_set_enabled(ecs_slice_num, true);// Set the PWM running
 
     // I2C Config
-    i2c_init(I2C_PORT,400*1000);
+    i2c_init(I2C_IMU_PORT,500*1000);
     gpio_set_function(ICM42688_SDA_PIN,GPIO_FUNC_I2C);
     gpio_set_function(ICM42688_SCL_PIN,GPIO_FUNC_I2C);
     gpio_pull_up(ICM42688_SDA_PIN);

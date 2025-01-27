@@ -48,7 +48,9 @@
 #define UART_DEBUG_PORT uart0
 #define UART_PORT uart1
 #define SPI_PORT spi0
+#define SPI_IMU_PORT spi1
 #define I2C_PORT i2c0
+#define I2C_IMU_PORT i2c0
 
 #define FLASH_TARGET_OFFSET (256 * 1024)
 
@@ -70,7 +72,7 @@ static pico_unique_board_id_t board_id;
 
 typedef union
 {
-    uint16_t data;  // 16-bit value
+    int16_t data;  // 16-bit value
     
     struct
     {
@@ -95,12 +97,17 @@ typedef union
 #define LCD_SCL_PIN 7
 #define LCD_SDA_PIN 6
 
-#define SPI_CLK_PIN 6
-#define SPI_MOSI_PIN 7
-#define SPI_MISO_PIN 4
-#define MCP2515_CS0_PIN 5
-// #define MCP2515_CS1_PIN  1
-#define MCP2515_CS_PIN MCP2515_CS0_PIN
+#define SPI_CAN_CLK_PIN 6
+#define SPI_CAN_MOSI_PIN 7
+#define SPI_CAN_MISO_PIN 4
+#define MCP2515_CS_PIN 5
+#define CAN_CS_PIN MCP2515_CS_PIN
+
+#define SPI_IMU_CLK_PIN 10
+#define SPI_IMU_MOSI_PIN 11
+#define SPI_IMU_MISO_PIN 12
+#define ICM42688_CS_PIN 13
+#define IMU_CS_PIN ICM42688_CS_PIN
 
 #define ICM42688_SDA_PIN 16
 #define ICM42688_SCL_PIN 17
@@ -139,10 +146,11 @@ void DEV_SPI_Write_nByte(uint8_t *pData, uint32_t Len);
 void dev_delay_ms(UDOUBLE xms);
 void DEV_Delay_us(UDOUBLE xus);
 
-void dev_i2c_write_byte(uint8_t addr, uint8_t reg, uint8_t Value);
+void dev_i2c_write_byte(i2c_inst_t *i2c_port, uint8_t addr, uint8_t reg, uint8_t Value);
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len);
 uint8_t DEV_I2C_ReadByte(uint8_t addr, uint8_t reg);
-void dev_i2c_read_nbyte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len);
+void dev_i2c_read_byte(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint8_t *data);
+void dev_i2c_read_nbyte(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len);
 
 bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm);
 void DEV_SET_PWM(uint8_t Value);
