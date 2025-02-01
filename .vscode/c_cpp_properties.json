@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/pico-sdk/src/common/pico_stdlib_headers/include",
+                "${workspaceFolder}/pico-sdk/src/rp2_common/pico_cyw43_arch/include",
+                "${workspaceFolder}/pico-sdk/src/common/pico_base_headers/include",
+                "${workspaceFolder}/screw_drive_unit_pico/build/generated/pico_base"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
