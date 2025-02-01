@@ -12,10 +12,10 @@ sudo apt-get install pkg-config libusb-1.0-0-dev
 
 Get the source with the following directory structure:
 ```sh
-~/screw_drive_unit_pico/
-  pico-sdk/
-  pico-examples/
-  screw_drive_unit_pico/
+screw_drive_unit_pico/
+  |->pico-sdk/
+  |->pico-examples/
+  |->screw_drive_unit_pico/
 ```
 
 Update submodules
@@ -28,7 +28,7 @@ git submodule update --init
 Set up the user environment variable, and modify $HOME with the path of the repository:
 ```sh
 cd ~
-echo "export PICO_SDK_PATH=$HOME/screw_drive_unit_pico/pico-sdk" >> ~/.bashrc
+echo "export PICO_SDK_PATH=$HOME/(to your directory path)/screw_drive_unit_pico/pico-sdk" >> ~/.bashrc
 . ~/.bashrc
 ```
 
