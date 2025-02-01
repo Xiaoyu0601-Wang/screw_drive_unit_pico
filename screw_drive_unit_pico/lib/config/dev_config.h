@@ -70,17 +70,6 @@ static pico_unique_board_id_t board_id;
 #define UWORD uint16_t
 #define UDOUBLE uint32_t
 
-typedef union
-{
-    int16_t data;  // 16-bit value
-    
-    struct
-    {
-        uint8_t lsb;  // Lower 8 bits
-        uint8_t msb; // Higher 8 bits
-    } element;
-} data16;
-
 /**
  * GPIOI config
  **/

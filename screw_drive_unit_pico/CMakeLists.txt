@@ -16,6 +16,7 @@ add_subdirectory(lib/imu)
 # 添加头文件目录
 include_directories(./lib/common)
 include_directories(./lib/config)
+include_directories(.)
 include_directories(./lib/icm42688)
 include_directories(./lib/mcp2515)
 include_directories(./lib/protocol)

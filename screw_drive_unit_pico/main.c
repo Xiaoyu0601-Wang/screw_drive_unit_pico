@@ -1,5 +1,6 @@
-﻿// #include "dev_config.h"
-#include "debug.h"
+﻿#include "debug.h"
+
+#include "robot_config.h"
 
 #include "icm42688.h"
 #include "mcp2515.h"
@@ -49,8 +50,8 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 bool imu_timer_callback(struct repeating_timer *t)
 {
     icm_read_sensor(&unit_status.imu_raw_data);
-    // icm_filter_sensor_data(&unit_status.imu_raw_data,
-    //                        &unit_status.imu_filtered_data);
+    icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filtered_data,
+                           &unit_status.imu_filter);
     // FusionVector gyroscope = {.axis = { .x = ,
     //                                     .y = ,
     //                                     .z = ,}};
@@ -68,7 +69,7 @@ int main(void)
     dev_delay_ms(200);
     dev_module_init(uart_rx_irq);
     dev_delay_ms(10);
-    icm42688_init();
+    icm42688_init(&unit_status);
     // mcp2515_init();
 
     protocol_init(&unit_status);

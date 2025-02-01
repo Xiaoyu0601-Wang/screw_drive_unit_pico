@@ -1,10 +1,3 @@
-/*
- * icm.h
- *
- *  Created on: Dec 22, 2020
- *      Author: Mert Kilic
- */
-
 #ifndef _ICM42688_H_
 #define _ICM42688_H_
 
@@ -12,28 +5,9 @@
 #include <stdio.h>
 
 #include "dev_config.h"
+#include "robot_config.h"
+
 #include "first_order_filter.h"
-
-typedef struct
-{
-    data16 x;
-    data16 y;
-    data16 z;
-} sensor_axis_t;
-
-typedef struct
-{
-    sensor_axis_t gyro;
-    sensor_axis_t accel;
-    uint8_t temperature;
-} sensor_imu_t;
-
-typedef struct
-{
-    first_order_filter_object_t accel[3];
-    first_order_filter_object_t gyro[3];
-    first_order_filter_object_t temp;
-} imu_filter_t;
 
 #define ACCEL_X_LOWPASS_TAU         0.15f
 #define ACCEL_X_LOWPASS_SAMPLE_TIME 0.005f
@@ -85,10 +59,11 @@ typedef struct
 #define REG_FIFO_CONFIGURATION 0x5F
 #define REG_FIFO_DATA 0x30
 
-void icm42688_init(void);
+void icm42688_init(unit_status_t *const unit_status);
 void icm_who_am_i(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
 void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
-                            sensor_imu_t *imu_filtered_data);
+                            sensor_imu_t *imu_filtered_data,
+                            imu_filter_t *imu_filter);
 
 #endif /* INC_ICM_H_ */

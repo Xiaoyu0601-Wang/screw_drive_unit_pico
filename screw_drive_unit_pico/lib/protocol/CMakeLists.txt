@@ -4,6 +4,7 @@ aux_source_directory(. DIR_protocol_SRCS)
 
 include_directories(../common)
 include_directories(../config)
+include_directories(../../.)
 include_directories(../mcp2515)
 include_directories(../dynamixel)
 include_directories(../icm42688)

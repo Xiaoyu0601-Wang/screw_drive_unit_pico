@@ -11,19 +11,7 @@
 #include "pico/stdlib.h"
 
 /* Robot Lib */
-// #include "RobotConfig.h"
-
-typedef struct
-{
-    float previous_input;
-    float previous_output;
-    float first_order_tau;
-    float first_order_sample_time;
-    float gain;
-    float gx1;
-    float gx2;
-    float gx3;
-} first_order_filter_object_t;
+#include "robot_config.h"
 
 void low_pass_filter_init(first_order_filter_object_t *lpf);
 bool low_pass_filter_calc(float input, first_order_filter_object_t *lpf);
