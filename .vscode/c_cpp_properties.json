@@ -4,8 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/pico-sdk/**",
-                "${workspaceFolder}/pico-sdk/lib/mbedtls/include/mbedtls/**"
+                "${workspaceFolder}/pico-sdk/src/common/pico_stdlib_headers/include",
+                "${workspaceFolder}/pico-sdk/src/rp2_common/pico_cyw43_arch/include",
+                "${workspaceFolder}/pico-sdk/src/common/pico_base_headers/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
