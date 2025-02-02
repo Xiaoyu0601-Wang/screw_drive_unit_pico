@@ -468,7 +468,7 @@ FusionVector FusionAhrsGetLinearAcceleration(const fusion_ahrs_t *const ahrs)
     case FusionConventionNwu:
     case FusionConventionEnu:
     {
-        return FusionVectorSubtract(ahrs->accelerometer, FusionAhrsGetGravity(ahrs));
+        return fusion_vector_subtract(ahrs->accelerometer, FusionAhrsGetGravity(ahrs));
     }
     case FusionConventionNed:
     {

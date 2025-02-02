@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionMath.h"
+#include "math_utils.h"
 
 //------------------------------------------------------------------------------
 // Inline functions
@@ -27,7 +27,7 @@ static inline FusionVector FusionCalibrationInertial(const FusionVector uncalibr
                                                      const FusionVector sensitivity, const FusionVector offset)
 {
     return FusionMatrixMultiplyVector(
-        misalignment, FusionVectorHadamardProduct(FusionVectorSubtract(uncalibrated, offset), sensitivity));
+        misalignment, FusionVectorHadamardProduct(fusion_vector_subtract(uncalibrated, offset), sensitivity));
 }
 
 /**
@@ -40,7 +40,7 @@ static inline FusionVector FusionCalibrationInertial(const FusionVector uncalibr
 static inline FusionVector FusionCalibrationMagnetic(const FusionVector uncalibrated, const FusionMatrix softIronMatrix,
                                                      const FusionVector hardIronOffset)
 {
-    return FusionMatrixMultiplyVector(softIronMatrix, FusionVectorSubtract(uncalibrated, hardIronOffset));
+    return FusionMatrixMultiplyVector(softIronMatrix, fusion_vector_subtract(uncalibrated, hardIronOffset));
 }
 
 #endif

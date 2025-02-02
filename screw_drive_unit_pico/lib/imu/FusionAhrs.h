@@ -12,7 +12,7 @@
 // Includes
 
 #include "FusionConvention.h"
-#include "FusionMath.h"
+#include "math_utils.h"
 #include <stdbool.h>
 
 //------------------------------------------------------------------------------
