@@ -26,7 +26,7 @@ void low_pass_filter_init(first_order_filter_object_t *lpf)
 	lpf->gx3 = ((1.0f - lpf->gain) / (1.0f + lpf->gain));
 }
 
-bool low_pass_filter_calc(float input, first_order_filter_object_t *lpf)
+float low_pass_filter_calc(float input, first_order_filter_object_t *lpf)
 {
 	lpf->previous_output = lpf->gx1 * input +
             			   lpf->gx2 * lpf->previous_input -
@@ -34,7 +34,7 @@ bool low_pass_filter_calc(float input, first_order_filter_object_t *lpf)
 
     lpf->previous_input  = input;
 
-	return true;
+	return lpf->previous_output;
 }
 
 

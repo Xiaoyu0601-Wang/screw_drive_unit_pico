@@ -86,13 +86,16 @@ void icm_read_sensor(sensor_imu_t *imu_raw_data)
 }
 
 void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
-                            sensor_imu_t *imu_filtered_data,
+                            sensor_imu_float_t *imu_filtered_data,
                             imu_filter_t *imu_filter)
 {
     for (uint8_t i = 0; i < 3; i++)
     {
-        low_pass_filter_calc(imu_raw_data->accel[i].data, &imu_filter->accel[i]);
-        low_pass_filter_calc(imu_raw_data->gyro[i].data, &imu_filter->gyro[i]);
+        imu_filtered_data->accel[i] = 
+            low_pass_filter_calc((float) imu_raw_data->accel[i].data, &imu_filter->accel[i]);
+        imu_filtered_data->gyro[i] = 
+            low_pass_filter_calc((float) imu_raw_data->gyro[i].data, &imu_filter->gyro[i]);
     }
-    low_pass_filter_calc(imu_raw_data->temperature, &imu_filter->temperature);
+    imu_filtered_data->temperature = 
+        low_pass_filter_calc((float) imu_raw_data->temperature, &imu_filter->temperature);
 }

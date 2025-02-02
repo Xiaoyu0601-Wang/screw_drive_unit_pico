@@ -63,7 +63,7 @@ void icm42688_init(unit_status_t *const unit_status);
 void icm_who_am_i(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
 void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
-                            sensor_imu_t *imu_filtered_data,
+                            sensor_imu_float_t *imu_filtered_data,
                             imu_filter_t *imu_filter);
 
 #endif /* INC_ICM_H_ */

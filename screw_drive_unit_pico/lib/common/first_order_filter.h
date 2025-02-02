@@ -14,6 +14,6 @@
 #include "robot_config.h"
 
 void low_pass_filter_init(first_order_filter_object_t *lpf);
-bool low_pass_filter_calc(float input, first_order_filter_object_t *lpf);
+float low_pass_filter_calc(float input, first_order_filter_object_t *lpf);
 
 #endif
