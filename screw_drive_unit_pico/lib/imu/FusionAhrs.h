@@ -10,10 +10,12 @@
 
 //------------------------------------------------------------------------------
 // Includes
-
-#include "FusionConvention.h"
-#include "math_utils.h"
 #include <stdbool.h>
+#include "math_utils.h"
+#include "FusionConvention.h"
+#include "fusion_offset.h"
+
+
 
 //------------------------------------------------------------------------------
 // Definitions
@@ -37,7 +39,9 @@ typedef struct
  */
 typedef struct
 {
+    uint16_t sample_rate;
     FusionAhrsSettings settings;
+    fusion_offset_t offset;
     FusionQuaternion quaternion;
     FusionVector accelerometer;
     bool initialising;

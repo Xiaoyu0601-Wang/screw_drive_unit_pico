@@ -45,6 +45,7 @@ static inline int Clamp(const int value, const int min, const int max);
  */
 void fusion_ahrs_init(fusion_ahrs_t *const ahrs)
 {
+    fusion_offset_init(&ahrs->offset, ahrs->sample_rate);
     const FusionAhrsSettings settings = {
         .convention = FusionConventionNwu,
         .gain = 0.5f,

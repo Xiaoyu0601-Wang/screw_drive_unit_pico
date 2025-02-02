@@ -16,7 +16,7 @@
 #include "FusionCompass.h"
 #include "FusionConvention.h"
 #include "math_utils.h"
-#include "FusionOffset.h"
+#include "fusion_offset.h"
 
 #endif
 //------------------------------------------------------------------------------
