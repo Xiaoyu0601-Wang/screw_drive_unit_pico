@@ -17,6 +17,8 @@
 unit_status_t unit_status;
 fusion_ahrs_t ahrs;
 
+const FusionVector gyro_offset = {0.0f, 0.0f, 0.0f};
+
 bool led_timer_callback(struct repeating_timer *t)
 {
     if (unit_status.led_enable == true)
@@ -50,15 +52,20 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
+    // read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filtered_data,
                            &unit_status.imu_filter);
+    // convert data type
     FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
                                         .y = unit_status.imu_filtered_data.gyro[1],
                                         .z = unit_status.imu_filtered_data.gyro[2],}};
     FusionVector accelerometer = {.axis = { .x = unit_status.imu_filtered_data.accel[0],
                                             .y = unit_status.imu_filtered_data.accel[1],
                                             .z = unit_status.imu_filtered_data.accel[2],}};
+
+    // sensor fusion
+    
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_FLOAT_S);
 
     return true;

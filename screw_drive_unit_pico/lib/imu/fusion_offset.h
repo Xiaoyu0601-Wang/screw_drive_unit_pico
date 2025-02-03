@@ -1,10 +1,3 @@
-/**
- * @file fusion_offset.h
- * @author Seb Madgwick
- * @brief Gyroscope offset correction algorithm for run-time calibration of the
- * gyroscope offset.
- */
-
 #ifndef _FUSION_OFFSET_H_
 #define _FUSION_OFFSET_H_
 
