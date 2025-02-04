@@ -6,7 +6,7 @@
 #include "mcp2515.h"
 #include "protocol.h"
 #include "controller.h"
-#include "Fusion.h"
+#include "fusion.h"
 
 #define LED_SAMPLE_RATE  6
 #define CAN_SAMPLE_RATE  99
@@ -65,7 +65,7 @@ bool imu_timer_callback(struct repeating_timer *t)
                                             .z = unit_status.imu_filtered_data.accel[2],}};
 
     // sensor fusion
-    
+    fusion_offset_update(&ahrs.offset, &gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
 
     return true;
