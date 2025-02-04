@@ -8,11 +8,11 @@
 #include "controller.h"
 #include "Fusion.h"
 
-#define LED_PERIOD_MS 199
-#define CAN_PERIOD_MS 9
-#define CTRL_PERIOD_MS 19
-#define IMU_PERIOD_MS 1000
-#define IMU_PERIOD_FLOAT_S (float) IMU_PERIOD_MS / 1000.0f
+#define LED_SAMPLE_RATE  6
+#define CAN_SAMPLE_RATE  99
+#define CTRL_SAMPLE_RATE 51
+#define IMU_SAMPLE_RATE  200
+#define IMU_PERIOD_SECOND 1000.0f / IMU_SAMPLE_RATE
 
 unit_status_t unit_status;
 fusion_ahrs_t ahrs;
@@ -66,7 +66,7 @@ bool imu_timer_callback(struct repeating_timer *t)
 
     // sensor fusion
     
-    fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_FLOAT_S);
+    fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
 
     return true;
 }
@@ -89,13 +89,13 @@ int main(void)
 
     // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;
-    add_repeating_timer_ms(-LED_PERIOD_MS, led_timer_callback, NULL, &led_timer);
+    add_repeating_timer_ms(-1000 / LED_SAMPLE_RATE, led_timer_callback, NULL, &led_timer);
     // struct repeating_timer can_timer;
-    // add_repeating_timer_ms(-CAN_PERIOD_MS, can_timer_callback, NULL, &can_timer);
+    // add_repeating_timer_ms(-1000 / CAN_SAMPLE_RATE, can_timer_callback, NULL, &can_timer);
     // struct repeating_timer ctrl_timer;
-    // add_repeating_timer_ms(-CTRL_PERIOD_MS, ctrl_timer_callback, NULL, &ctrl_timer);
+    // add_repeating_timer_ms(-1000 / CTRL_SAMPLE_RATE, ctrl_timer_callback, NULL, &ctrl_timer);
     struct repeating_timer imu_timer;
-    add_repeating_timer_ms(-IMU_PERIOD_MS, imu_timer_callback, NULL, &imu_timer);
+    add_repeating_timer_ms(-1000 / IMU_SAMPLE_RATE, imu_timer_callback, NULL, &imu_timer);
 
     while (1)
         tight_loop_contents();
