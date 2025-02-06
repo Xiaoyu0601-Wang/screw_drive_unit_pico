@@ -8,11 +8,11 @@
 #include "controller.h"
 #include "fusion.h"
 
-#define LED_SAMPLE_RATE  6
-#define CAN_SAMPLE_RATE  99
-#define CTRL_SAMPLE_RATE 51
-#define IMU_SAMPLE_RATE  200
-#define IMU_PERIOD_SECOND 1000.0f / IMU_SAMPLE_RATE
+#define LED_SAMPLE_HZ  6
+#define CAN_SAMPLE_HZ  99
+#define CTRL_SAMPLE_HZ 51
+#define IMU_SAMPLE_HZ  200
+#define IMU_PERIOD_SECOND 1.0f / IMU_SAMPLE_HZ
 
 unit_status_t unit_status;
 fusion_ahrs_t ahrs;
@@ -54,8 +54,8 @@ bool imu_timer_callback(struct repeating_timer *t)
 {
     // read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
-    icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filtered_data,
-                           &unit_status.imu_filter);
+    icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
+
     // convert data type
     FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
                                         .y = unit_status.imu_filtered_data.gyro[1],
@@ -65,7 +65,7 @@ bool imu_timer_callback(struct repeating_timer *t)
                                             .z = unit_status.imu_filtered_data.accel[2],}};
 
     // sensor fusion
-    fusion_offset_update(&ahrs.offset, &gyroscope);
+    gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
 
     return true;
@@ -77,7 +77,7 @@ int main(void)
     dev_delay_ms(200);
     dev_module_init(uart_rx_irq);
     dev_delay_ms(10);
-    icm42688_init(&unit_status);
+    icm42688_init(&unit_status.imu_filter);
     // mcp2515_init();
 
     protocol_init(&unit_status);
@@ -89,13 +89,13 @@ int main(void)
 
     // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;
-    add_repeating_timer_ms(-1000 / LED_SAMPLE_RATE, led_timer_callback, NULL, &led_timer);
+    add_repeating_timer_ms(-1000 / LED_SAMPLE_HZ, led_timer_callback, NULL, &led_timer);
     // struct repeating_timer can_timer;
-    // add_repeating_timer_ms(-1000 / CAN_SAMPLE_RATE, can_timer_callback, NULL, &can_timer);
+    // add_repeating_timer_ms(-1000 / CAN_SAMPLE_HZ, can_timer_callback, NULL, &can_timer);
     // struct repeating_timer ctrl_timer;
-    // add_repeating_timer_ms(-1000 / CTRL_SAMPLE_RATE, ctrl_timer_callback, NULL, &ctrl_timer);
+    // add_repeating_timer_ms(-1000 / CTRL_SAMPLE_HZ, ctrl_timer_callback, NULL, &ctrl_timer);
     struct repeating_timer imu_timer;
-    add_repeating_timer_ms(-1000 / IMU_SAMPLE_RATE, imu_timer_callback, NULL, &imu_timer);
+    add_repeating_timer_ms(-1000 / IMU_SAMPLE_HZ, imu_timer_callback, NULL, &imu_timer);
 
     while (1)
         tight_loop_contents();

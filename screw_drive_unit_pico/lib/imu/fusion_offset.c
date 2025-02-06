@@ -52,7 +52,7 @@ void fusion_offset_init(fusion_offset_t *const offset, const uint16_t sampleRate
  * @param gyroscope Gyroscope measurement in degrees per second.
  * @return Corrected gyroscope measurement in degrees per second.
  */
-void fusion_offset_update(fusion_offset_t *const offset, FusionVector *gyroscope)
+FusionVector fusion_offset_update(fusion_offset_t *const offset, FusionVector gyroscope)
 {
 
     // Subtract offset from gyroscope measurement
@@ -76,7 +76,7 @@ void fusion_offset_update(fusion_offset_t *const offset, FusionVector *gyroscope
     // // Adjust offset if timer has elapsed
     // offset->gyroscopeOffset =
     //     FusionVectorAdd(offset->gyroscopeOffset, FusionVectorMultiplyScalar(gyroscope, offset->filterCoefficient));
-    // return gyroscope;
+    return gyroscope;
 }
 
 //------------------------------------------------------------------------------

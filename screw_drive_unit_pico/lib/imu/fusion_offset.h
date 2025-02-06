@@ -25,8 +25,7 @@ typedef struct
 // Function declarations
 
 void fusion_offset_init(fusion_offset_t *const offset, const uint16_t sampleRate);
-
-void fusion_offset_update(fusion_offset_t *const offset, FusionVector gyroscope);
+FusionVector fusion_offset_update(fusion_offset_t *const offset, FusionVector gyroscope);
 
 #endif
 

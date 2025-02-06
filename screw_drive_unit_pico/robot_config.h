@@ -3,49 +3,10 @@
 
 #include "pico/stdlib.h"
 
-typedef union
-{
-    int16_t data;  // 16-bit value
-    
-    struct
-    {
-        uint8_t lsb;  // Lower 8 bits
-        uint8_t msb; // Higher 8 bits
-    } element;
-} data16_t;
+#include "common_utils.h"
+#include "first_order_filter.h"
 
-typedef struct
-{
-    data16_t gyro[3];
-    data16_t accel[3];
-    uint8_t temperature;
-} sensor_imu_t;
-
-typedef struct
-{
-    float gyro[3];
-    float accel[3];
-    float temperature;
-} sensor_imu_float_t;
-
-typedef struct
-{
-    float previous_input;
-    float previous_output;
-    float first_order_tau;
-    float first_order_sample_time;
-    float gain;
-    float gx1;
-    float gx2;
-    float gx3;
-} first_order_filter_object_t;
-
-typedef struct
-{
-    first_order_filter_object_t accel[3];
-    first_order_filter_object_t gyro[3];
-    first_order_filter_object_t temperature;
-} imu_filter_t;
+#include "icm42688.h"
 
 typedef struct //_UnitStatus
 {
