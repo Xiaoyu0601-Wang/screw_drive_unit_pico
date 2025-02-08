@@ -43,18 +43,20 @@ static inline int Clamp(const int value, const int min, const int max);
  * @brief Initialises the AHRS algorithm structure.
  * @param ahrs AHRS algorithm structure.
  */
-void fusion_ahrs_init(fusion_ahrs_t *const ahrs)
+void fusion_ahrs_init(fusion_ahrs_t *const ahrs, uint16_t sample_rate)
 {
-    fusion_offset_init(&ahrs->offset, ahrs->sample_rate);
+    fusion_offset_init(&ahrs->offset, sample_rate);
     const FusionAhrsSettings settings = {
         .convention = FusionConventionNwu,
+        .sample_rate = sample_rate,
+        .sample_period = 1.0f / (float) sample_rate,
         .gain = 0.5f,
         .gyroscopeRange = 0.0f,
         .accelerationRejection = 90.0f,
         .magneticRejection = 90.0f,
         .recoveryTriggerPeriod = 0,
     };
-    FusionAhrsSetSettings(ahrs, &settings);
+    fusionAhrs_set_settings(ahrs, &settings);
     fusion_ahrs_reset(ahrs);
 }
 
@@ -85,9 +87,10 @@ void fusion_ahrs_reset(fusion_ahrs_t *const ahrs)
  * @param ahrs AHRS algorithm structure.
  * @param settings Settings.
  */
-void FusionAhrsSetSettings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *const settings)
+void fusionAhrs_set_settings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *const settings)
 {
     ahrs->settings.convention = settings->convention;
+     ahrs->settings.sample_rate = settings->sample_rate;
     ahrs->settings.gain = settings->gain;
     ahrs->settings.gyroscopeRange = settings->gyroscopeRange == 0.0f ? FLT_MAX : 0.98f * settings->gyroscopeRange;
     ahrs->settings.accelerationRejection =

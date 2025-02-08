@@ -8,11 +8,11 @@
 #include "controller.h"
 #include "fusion.h"
 
-#define LED_SAMPLE_HZ  6
+#define LED_SAMPLE_HZ  3
 #define CAN_SAMPLE_HZ  99
 #define CTRL_SAMPLE_HZ 51
 #define IMU_SAMPLE_HZ  200
-#define IMU_PERIOD_SECOND 1.0f / IMU_SAMPLE_HZ
+#define IMU_PERIOD_SECOND 1.0f / (float) IMU_SAMPLE_HZ
 
 unit_status_t unit_status;
 fusion_ahrs_t ahrs;
@@ -26,8 +26,6 @@ bool led_timer_callback(struct repeating_timer *t)
         unit_status.led_status = !unit_status.led_status;
         dev_wifi_led_write(unit_status.led_status);
     }
-
-    // DEV_UART_Write_nByte("ABC", 3);//for test
 
     return true;
 }
@@ -55,6 +53,7 @@ bool imu_timer_callback(struct repeating_timer *t)
     // read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
+    icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
     // convert data type
     FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
@@ -82,10 +81,10 @@ int main(void)
 
     protocol_init(&unit_status);
     dev_delay_ms(5);
-    // controller_init();
-    // dev_delay_ms(5);
-    // fusion_ahrs_init(&ahrs);
-    // dev_delay_ms(5);
+    controller_init();
+    dev_delay_ms(5);
+    fusion_ahrs_init(&ahrs, IMU_SAMPLE_HZ);
+    dev_delay_ms(5);
 
     // use 199 and 9 for avoiding triggering interupt at the same time
     struct repeating_timer led_timer;

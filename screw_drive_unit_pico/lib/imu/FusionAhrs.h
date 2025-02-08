@@ -26,6 +26,8 @@
 typedef struct
 {
     FusionConvention convention;
+    uint16_t sample_rate;
+    float sample_period;
     float gain;
     float gyroscopeRange;
     float accelerationRejection;
@@ -85,11 +87,11 @@ typedef struct
 //------------------------------------------------------------------------------
 // Function declarations
 
-void fusion_ahrs_init(fusion_ahrs_t *const ahrs);
+void fusion_ahrs_init(fusion_ahrs_t *const ahrs, uint16_t sample_rate);
 
 void fusion_ahrs_reset(fusion_ahrs_t *const ahrs);
 
-void FusionAhrsSetSettings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *const settings);
+void fusionAhrs_set_settings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *const settings);
 
 void fusion_ahrs_update(fusion_ahrs_t *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer,
                         const FusionVector magnetometer, const float deltaTime);

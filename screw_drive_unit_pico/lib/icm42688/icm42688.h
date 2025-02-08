@@ -24,10 +24,13 @@
 #define TEMP_LOWPASS_TAU          150
 #define TEMP_LOWPASS_SAMPLE_HZ    200
 
+#define ACCEL_FULL_SCALE_RANGE 250.0// [dps]
+#define GYRO_FULL_SCALE_RANGE 2.0// [g]
+
 #define ICM42688_ADDRESS 0x68 //AP_AD0 grounded
 
 #define REG_DEVICE_CONFIG 0x11
-#define DRIVE_CONFIG 0x13
+#define REG_DRIVE_CONFIG 0x13
 #define temp_data1 0x1D
 #define temp_data0 0x1E
 #define REG_POWER_MGMT 0x4E
@@ -84,6 +87,6 @@ void icm42688_init(imu_filter_t *imu_filter);
 void icm_who_am_i(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
 void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data, imu_filter_t *imu_filter);
-void icm_filtered_data_to_float(imu_filter_t *imu_filter, sensor_imu_float_t imu_filtered_data);
+void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu_filtered_data);
 
 #endif
