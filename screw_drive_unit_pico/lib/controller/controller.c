@@ -2,14 +2,14 @@
 
 void controller_update(void) {}
 
-bool controller_init(void)
+bool controller_init(unit_status_t * unit_status)
 {
     // dynamixel2_set_torque_enable(DYNA_ID_1, true);
     // DEV_Delay_ms(2);
     // dynamixel2_set_torque_enable(DYNA_ID_2, true);
     // DEV_Delay_ms(2);
 
-    // dynamixel2_set_goal_position(DYNA_ID_1, DYNA_1_INIT_POS);
+    // dynamixel2_set_goal_position(DYNA_ID_1, unit_status->DYNA_1_INIT_POS);
     // DEV_Delay_ms(10);
     // dynamixel2_set_goal_position(DYNA_ID_2, goal_position);
     // DEV_Delay_ms(10);

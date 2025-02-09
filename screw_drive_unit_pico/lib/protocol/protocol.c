@@ -101,7 +101,7 @@ bool protocol_update(unit_status_t *const unit_status)
 
 void uart_rx_irq(void) {}
 
-bool protocol_init(unit_status_t *const unit_status)
+bool protocol_init(unit_status_t * unit_status)
 {
     unit_status->flashData[0] = 0x00;
     unit_status->flashData[1] = 0x01;
@@ -113,13 +113,6 @@ bool protocol_init(unit_status_t *const unit_status)
     // unit_status->flashData[1] = flash_target_contents[1];
     // unit_status->unitID = flash_target_contents[0] << 3
     // 				       | flash_target_contents[1];
-
-    unit_status->led_enable = true;
-    unit_status->led_status = true;
-    dev_wifi_led_write(unit_status->led_status);
-
-    unit_status->dynamixel_enable[DYNA_ID_1 - 1] = false;
-    unit_status->dynamixel_enable[DYNA_ID_2 - 1] = false;
 
     // pico_unique_board_id_t board_id;
     // pico_get_unique_board_id(&board_id);

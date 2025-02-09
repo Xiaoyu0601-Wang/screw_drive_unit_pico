@@ -2,6 +2,7 @@
 
 #include "robot_config.h"
 
+#include "dynamixel.h"
 #include "icm42688.h"
 #include "mcp2515.h"
 #include "protocol.h"
@@ -14,7 +15,12 @@
 #define IMU_SAMPLE_HZ  200
 #define IMU_PERIOD_SECOND 1.0f / (float) IMU_SAMPLE_HZ
 
-unit_status_t unit_status;
+unit_status_t unit_status = {
+    .led_enable = true,
+    .led_status = false,
+    .dynamixel_enable[DYNA_ID_1] = false,
+    .dynamixel_enable[DYNA_ID_2] = false,
+};
 fusion_ahrs_t ahrs;
 
 const FusionVector gyro_offset = {0.0f, 0.0f, 0.0f};
@@ -81,7 +87,7 @@ int main(void)
 
     protocol_init(&unit_status);
     dev_delay_ms(5);
-    controller_init();
+    controller_init(&unit_status);
     dev_delay_ms(5);
     fusion_ahrs_init(&ahrs, IMU_SAMPLE_HZ);
     dev_delay_ms(5);

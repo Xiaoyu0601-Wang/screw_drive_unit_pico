@@ -2,6 +2,9 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "fusion.h": "c",
-        "fusion_offset.h": "c"
+        "fusion_offset.h": "c",
+        "protocol.h": "c",
+        "controller.h": "c",
+        "stdlib.h": "c"
     }
 }

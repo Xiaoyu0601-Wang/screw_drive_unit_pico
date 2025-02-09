@@ -14,7 +14,7 @@
 #define HEAD_UNIT_ID 1
 #define TAIL_UNIT_ID 2
 
-bool protocol_init(unit_status_t *const unit_status);
+bool protocol_init(unit_status_t * unit_status);
 bool protocol_update(unit_status_t *const unit_status);
 void uart_rx_irq(void);
 
