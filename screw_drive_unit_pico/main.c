@@ -18,8 +18,8 @@
 unit_status_t unit_status = {
     .led_enable = true,
     .led_status = false,
-    .dynamixel_enable[DYNA_ID_1] = false,
-    .dynamixel_enable[DYNA_ID_2] = false,
+    .dynamixel_enable[DXL_1] = false,
+    .dynamixel_enable[DXL_2] = false,
 };
 fusion_ahrs_t ahrs;
 

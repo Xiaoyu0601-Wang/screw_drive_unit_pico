@@ -12,8 +12,12 @@
 
 #include "dev_config.h"
 
-#define DYNA_ID_1 0
-#define DYNA_ID_2 1
+typedef enum
+{
+    DXL_1 = 0,
+    DXL_2 = 1,
+    DXL_3 = 2,
+} DXL_ID;
 
 #define BUFFER_LENGTH (128)
 // #define BUFFER (buffer)

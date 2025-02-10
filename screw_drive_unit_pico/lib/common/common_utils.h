@@ -12,4 +12,10 @@ typedef union
     } element;
 } data16_t;
 
+typedef union
+{
+    float f;
+    int32_t i;
+} union32_t;
+
 #endif
