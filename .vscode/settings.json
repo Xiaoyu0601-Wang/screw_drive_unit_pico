@@ -5,6 +5,7 @@
         "fusion_offset.h": "c",
         "protocol.h": "c",
         "controller.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "robot_config.h": "c"
     }
 }

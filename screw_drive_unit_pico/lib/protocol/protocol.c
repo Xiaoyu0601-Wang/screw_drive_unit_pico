@@ -84,11 +84,11 @@ bool protocol_update(unit_status_t *const unit_status)
             ;
             break;
         case 0x08: /* Joint 1: Enable Torque */
-            unit_status->dynamixel_enable[DXL_1 - 1] = (bool)unit_status->msg_can_rx[4];
+            unit_status->dynamixel_enable[DXL_1] = (bool)unit_status->msg_can_rx[4];
             dynamixel2_set_torque_enable(DXL_1, unit_status->dynamixel_enable[DXL_1 - 1]);
             break;
         case 0x09: /* Joint 2: Enable Torque */
-            unit_status->dynamixel_enable[DXL_2 - 1] = (bool)unit_status->msg_can_rx[4];
+            unit_status->dynamixel_enable[DXL_2] = (bool)unit_status->msg_can_rx[4];
             dynamixel2_set_torque_enable(DXL_2, unit_status->dynamixel_enable[DXL_2 - 1]);
             break;
         default:

@@ -1,6 +1,7 @@
 ﻿#include "debug.h"
 
 #include "robot_config.h"
+#include "robot_parameters.h"
 
 #include "dynamixel.h"
 #include "icm42688.h"
