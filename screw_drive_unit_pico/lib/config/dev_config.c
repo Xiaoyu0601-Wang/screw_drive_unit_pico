@@ -41,10 +41,15 @@ UBYTE DEV_Digital_Read(UWORD Pin) { return gpio_get(Pin); }
 /**
  * LED
  **/
-void DEV_LED_Config(void) { cyw43_arch_init(); }
-
 void dev_wifi_led_write(bool led_status) { cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status); }
+
 bool dev_wifi_led_read(void) { return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN); }
+
+void DEV_LED_Config(void)
+{
+    cyw43_arch_init();
+    dev_wifi_led_write(false);
+}
 
 /**
  * UART

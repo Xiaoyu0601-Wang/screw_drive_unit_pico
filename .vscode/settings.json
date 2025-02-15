@@ -6,6 +6,8 @@
         "protocol.h": "c",
         "controller.h": "c",
         "stdlib.h": "c",
-        "robot_config.h": "c"
+        "robot_config.h": "c",
+        "mcp2515.h": "c",
+        "dev_config.h": "c"
     }
 }
