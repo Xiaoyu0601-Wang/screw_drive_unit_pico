@@ -40,4 +40,4 @@ pico_enable_stdio_uart(main 1)
 # create map/bin/hex/uf2 file etc.
 pico_add_extra_outputs(main)
 
-target_link_libraries(main pico_stdlib hardware_spi config icm42688 mcp2515 protocol controller fusion_ahrs)
+target_link_libraries(main pico_stdlib config icm42688 mcp2515 protocol controller fusion_ahrs)
