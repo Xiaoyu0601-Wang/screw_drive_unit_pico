@@ -62,37 +62,37 @@ bool led_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    // read imu data
-    // 检查是否超时
-    // if (absolute_time_diff_us(sys_status.start_time, get_absolute_time()) >= 60000000) {
-    //     printf("60s timeout, stopping IMU.\n");
-    //     sys_status.imu_running = false;
-    //     return false;  // 停止定时器
-    // }
-
     icm_read_sensor(&unit_status.imu_raw_data);
-    // icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
-    // icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
+    icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
+    icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
-    // // convert data type
-    // FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
-    //                                     .y = unit_status.imu_filtered_data.gyro[1],
-    //                                     .z = unit_status.imu_filtered_data.gyro[2],}};
-    // FusionVector accelerometer = {.axis = { .x = unit_status.imu_filtered_data.accel[0],
-    //                                         .y = unit_status.imu_filtered_data.accel[1],
-    //                                         .z = unit_status.imu_filtered_data.accel[2],}};
+    // convert data type
+    FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
+                                        .y = unit_status.imu_filtered_data.gyro[1],
+                                        .z = unit_status.imu_filtered_data.gyro[2],}};
+    FusionVector accelerometer = {.axis = { .x = unit_status.imu_filtered_data.accel[0],
+                                            .y = unit_status.imu_filtered_data.accel[1],
+                                            .z = unit_status.imu_filtered_data.accel[2],}};
 
     // sensor fusion
-    // gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
-    // fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-    printf("%d,%d,%d,%d,%d,%d,%d\n",
-        unit_status.imu_raw_data.accel[0].data,
-        unit_status.imu_raw_data.accel[1].data,
-        unit_status.imu_raw_data.accel[2].data,
-        unit_status.imu_raw_data.gyro[0].data,
-        unit_status.imu_raw_data.gyro[1].data,
-        unit_status.imu_raw_data.gyro[2].data,
-        unit_status.imu_raw_data.temperature );
+    gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
+    fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
+     printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+        accelerometer.axis.x,
+        accelerometer.axis.y,
+        accelerometer.axis.z,
+        gyroscope.axis.x,
+        gyroscope.axis.y,
+        gyroscope.axis.z,
+        unit_status.imu_filter.temperature );                                        
+    // printf("%d,%d,%d,%d,%d,%d,%d\n",
+    //     unit_status.imu_raw_data.accel[0].data,
+    //     unit_status.imu_raw_data.accel[1].data,
+    //     unit_status.imu_raw_data.accel[2].data,
+    //     unit_status.imu_raw_data.gyro[0].data,
+    //     unit_status.imu_raw_data.gyro[1].data,
+    //     unit_status.imu_raw_data.gyro[2].data,
+    //     unit_status.imu_raw_data.temperature );
     return true;
 }
 

@@ -1,8 +1,8 @@
 #include "first_order_filter.h"
 
 ////////////////////////////////////////
-// TAU = Filter Time Constant
-// T   = Filter Sample Time
+// TAU = 100
+// T   = 5
 // A   = 2 * TAU / T
 
 // Low Pass:
@@ -20,11 +20,16 @@ void low_pass_filter_init(first_order_filter_object_t *lpf)
 {
 	lpf->previous_input = 0;
 	lpf->previous_output = 0;
-	lpf->gain = 2 * lpf->first_order_tau * lpf->first_order_sample_hz;
+	lpf->first_order_tau = 100;
+	lpf->first_order_sample_hz = 5;
+	lpf->gain = 2 * lpf->first_order_tau / lpf->first_order_sample_hz;
+	lpf->gx1 = 1000 / (1000 + lpf->gain);
+    lpf->gx2 = lpf->gx1;
+    lpf->gx3 = (1000 - lpf->gain) / (1000 + lpf->gain);
 	// / (1000 + lpf->gain)
 	// lpf->gx1 = 1000;
 	// lpf->gx2 = 1000;
-	lpf->gx3 = 1000 - lpf->gain;
+	// lpf->gx3 = 1000 - lpf->gain;
 
 	// lpf->previous_input = 0.0f;
 	// lpf->previous_output = 0.0f;
