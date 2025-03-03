@@ -76,23 +76,26 @@ bool imu_timer_callback(struct repeating_timer *t)
 
     // sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
-    fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-     printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+    fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND); 
+    FusionQuaternion q = ahrs.quaternion;                                       
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+        (float)unit_status.imu_raw_data.accel[0].data*ACCEL_FULL_SCALE_RANGE / 32768.0,
+        (float)unit_status.imu_raw_data.accel[1].data*ACCEL_FULL_SCALE_RANGE / 32768.0,
+        (float)unit_status.imu_raw_data.accel[2].data*ACCEL_FULL_SCALE_RANGE / 32768.0,
+        (float)unit_status.imu_raw_data.gyro[0].data*GYRO_FULL_SCALE_RANGE / 32768.0,
+        (float)unit_status.imu_raw_data.gyro[1].data*GYRO_FULL_SCALE_RANGE / 32768.0,
+        (float)unit_status.imu_raw_data.gyro[2].data*GYRO_FULL_SCALE_RANGE / 32768.0,
+        unit_status.imu_raw_data.temperature);
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
         accelerometer.axis.x,
         accelerometer.axis.y,
         accelerometer.axis.z,
         gyroscope.axis.x,
         gyroscope.axis.y,
         gyroscope.axis.z,
-        unit_status.imu_filter.temperature );                                        
-    // printf("%d,%d,%d,%d,%d,%d,%d\n",
-    //     unit_status.imu_raw_data.accel[0].data,
-    //     unit_status.imu_raw_data.accel[1].data,
-    //     unit_status.imu_raw_data.accel[2].data,
-    //     unit_status.imu_raw_data.gyro[0].data,
-    //     unit_status.imu_raw_data.gyro[1].data,
-    //     unit_status.imu_raw_data.gyro[2].data,
-    //     unit_status.imu_raw_data.temperature );
+        unit_status.imu_filter.temperature );
+    printf("Quaternion: w=%.3f, x=%.3f, y=%.3f, z=%.3f\n",
+       q.element.w, q.element.x, q.element.y, q.element.z);
     return true;
 }
 

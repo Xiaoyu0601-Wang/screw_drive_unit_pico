@@ -100,11 +100,11 @@ void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu
     for (int8_t i = 0; i < 3; i++)
     {
         imu_filtered_data->accel[i] = (float)imu_filter->accel[i].previous_output *
-                                      ACCEL_FULL_SCALE_RANGE / 2 / 32768.0;
+                                      ACCEL_FULL_SCALE_RANGE / 32768.0;
     }
     for (int8_t i = 0; i < 3; i++)
     {
         imu_filtered_data->gyro[i] = (float)imu_filter->gyro[i].previous_output *
-                                     GYRO_FULL_SCALE_RANGE / 2 / 32768.0;
+                                     GYRO_FULL_SCALE_RANGE / 32768.0;
     }
 }
