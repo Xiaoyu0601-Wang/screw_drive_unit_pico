@@ -1,8 +1,8 @@
 #include "first_order_filter.h"
 
 ////////////////////////////////////////
-// TAU = 100
-// T   = 5
+// TAU = Filter Time Constant
+// T   = Filter Sample Time
 // A   = 2 * TAU / T
 
 // Low Pass:
