@@ -160,12 +160,12 @@ void fusion_ahrs_update(fusion_ahrs_t *const ahrs, const FusionVector gyroscope,
 
     // Calculate accelerometer feedback
     FusionVector halfAccelerometerFeedback = FUSION_VECTOR_ZERO;
-    ahrs->accelerometerIgnored = true;
+    ahrs->accelerometerIgnored = false;
     if (FusionVectorIsZero(accelerometer) == false)
     {
 
         // Calculate accelerometer feedback scaled by 0.5
-        ahrs->halfAccelerometerFeedback = Feedback(FusionVectorNormalise(accelerometer), halfGravity);
+        ahrs->halfAccelerometerFeedback = Feedback(halfGravity, FusionVectorNormalise(accelerometer));
 
         // Don't ignore accelerometer if acceleration error below threshold
         if (ahrs->initialising ||
