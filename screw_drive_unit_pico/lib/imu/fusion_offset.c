@@ -1,5 +1,5 @@
 /**
- * @file FusionOffset.c
+ * @file fusion_offset.c
  * @author Seb Madgwick
  * @brief Gyroscope offset correction algorithm for run-time calibration of the
  * gyroscope offset.
@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionOffset.h"
+#include "fusion_offset.h"
 #include <math.h> // fabsf
 
 //------------------------------------------------------------------------------
@@ -37,7 +37,7 @@
  * @param offset Gyroscope offset algorithm structure.
  * @param sampleRate Sample rate in Hz.
  */
-void FusionOffsetInitialise(FusionOffset *const offset, const unsigned int sampleRate)
+void fusion_offset_init(fusion_offset_t *const offset, const uint16_t sampleRate)
 {
     offset->filterCoefficient = 2.0f * (float)M_PI * CUTOFF_FREQUENCY * (1.0f / (float)sampleRate);
     offset->timeout = TIMEOUT * sampleRate;
@@ -52,11 +52,11 @@ void FusionOffsetInitialise(FusionOffset *const offset, const unsigned int sampl
  * @param gyroscope Gyroscope measurement in degrees per second.
  * @return Corrected gyroscope measurement in degrees per second.
  */
-FusionVector FusionOffsetUpdate(FusionOffset *const offset, FusionVector gyroscope)
+FusionVector fusion_offset_update(fusion_offset_t *const offset, FusionVector gyroscope)
 {
 
     // Subtract offset from gyroscope measurement
-    gyroscope = FusionVectorSubtract(gyroscope, offset->gyroscopeOffset);
+    gyroscope = fusion_vector_subtract(gyroscope, offset->gyroscopeOffset);
 
     // Reset timer if gyroscope not stationary
     if ((fabsf(gyroscope.axis.x) > THRESHOLD) || (fabsf(gyroscope.axis.y) > THRESHOLD) ||

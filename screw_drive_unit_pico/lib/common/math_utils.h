@@ -1,11 +1,5 @@
-/**
- * @file FusionMath.h
- * @author Seb Madgwick
- * @brief Math library.
- */
-
-#ifndef _FUSION_MATH_H_
-#define _FUSION_MATH_H_
+#ifndef _MATH_UTILS_H_
+#define _MATH_UTILS_H_
 
 //------------------------------------------------------------------------------
 // Includes
@@ -224,7 +218,7 @@ static inline FusionVector FusionVectorAdd(const FusionVector vectorA, const Fus
  * @param vectorB Vector B.
  * @return Vector B subtracted from vector A.
  */
-static inline FusionVector FusionVectorSubtract(const FusionVector vectorA, const FusionVector vectorB)
+static inline FusionVector fusion_vector_subtract(const FusionVector vectorA, const FusionVector vectorB)
 {
     const FusionVector result = {.axis = {
                                      .x = vectorA.axis.x - vectorB.axis.x,

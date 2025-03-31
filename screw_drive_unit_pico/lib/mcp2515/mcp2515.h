@@ -15,9 +15,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "robot_config.h"
 #include "dev_config.h"
-
-// static uint8_t FLASH_CAN_ID[2];
 
 // ## Configuration Registers */
 #define CANSTAT 0x0E

@@ -1,59 +1,36 @@
-/*
- * icm.h
- *
- *  Created on: Dec 22, 2020
- *      Author: Mert Kilic
- */
-
 #ifndef _ICM42688_H_
 #define _ICM42688_H_
 
 #include <stdint.h>
 #include <stdio.h>
 
-#include "dev_config.h"
+#include "common_utils.h"
 #include "first_order_filter.h"
 
-typedef struct
-{
-    data16 x;
-    data16 y;
-    data16 z;
-} sensor_axis_t;
+#include "dev_config.h"
 
-typedef struct
-{
-    sensor_axis_t gyro;
-    sensor_axis_t accel;
-    uint8_t temperature;
-} sensor_imu_t;
+#define ACCEL_X_LOWPASS_TAU       150
+#define ACCEL_X_LOWPASS_SAMPLE_HZ 200
+#define ACCEL_Y_LOWPASS_TAU       150
+#define ACCEL_Y_LOWPASS_SAMPLE_HZ 200
+#define ACCEL_Z_LOWPASS_TAU       150
+#define ACCEL_Z_LOWPASS_SAMPLE_HZ 200
+#define GYRO_X_LOWPASS_TAU        150
+#define GYRO_X_LOWPASS_SAMPLE_HZ  200
+#define GYRO_Y_LOWPASS_TAU        150
+#define GYRO_Y_LOWPASS_SAMPLE_HZ  200
+#define GYRO_Z_LOWPASS_TAU        150
+#define GYRO_Z_LOWPASS_SAMPLE_HZ  200
+#define TEMP_LOWPASS_TAU          150
+#define TEMP_LOWPASS_SAMPLE_HZ    200
 
-typedef struct
-{
-    first_order_filter_object_t accel[3];
-    first_order_filter_object_t gyro[3];
-    first_order_filter_object_t temp;
-} imu_filter_t;
-
-#define ACCEL_X_LOWPASS_TAU         0.15f
-#define ACCEL_X_LOWPASS_SAMPLE_TIME 0.005f
-#define ACCEL_Y_LOWPASS_TAU         0.15f
-#define ACCEL_Y_LOWPASS_SAMPLE_TIME 0.005f
-#define ACCEL_Z_LOWPASS_TAU         0.15f
-#define ACCEL_Z_LOWPASS_SAMPLE_TIME 0.005f
-#define GYRO_X_LOWPASS_TAU          0.15f
-#define GYRO_X_LOWPASS_SAMPLE_TIME  0.005f
-#define GYRO_Y_LOWPASS_TAU          0.15f
-#define GYRO_Y_LOWPASS_SAMPLE_TIME  0.005f
-#define GYRO_Z_LOWPASS_TAU          0.15f
-#define GYRO_Z_LOWPASS_SAMPLE_TIME  0.005f
-#define TEMP_LOWPASS_TAU            0.15f
-#define TEMP_LOWPASS_SAMPLE_TIME    0.005f
+#define ACCEL_FULL_SCALE_RANGE 2.0// [g]
+#define GYRO_FULL_SCALE_RANGE 250.0// [dps]
 
 #define ICM42688_ADDRESS 0x68 //AP_AD0 grounded
 
 #define REG_DEVICE_CONFIG 0x11
-#define DRIVE_CONFIG 0x13
+#define REG_DRIVE_CONFIG 0x13
 #define temp_data1 0x1D
 #define temp_data0 0x1E
 #define REG_POWER_MGMT 0x4E
@@ -85,10 +62,31 @@ typedef struct
 #define REG_FIFO_CONFIGURATION 0x5F
 #define REG_FIFO_DATA 0x30
 
-void icm42688_init(void);
+typedef struct
+{
+    first_order_filter_object_t accel[3];
+    first_order_filter_object_t gyro[3];
+    first_order_filter_object_t temperature;
+} imu_filter_t;
+
+typedef struct
+{
+    data16_t gyro[3];
+    data16_t accel[3];
+    uint8_t temperature;
+} sensor_imu_t;
+
+typedef struct
+{
+    float gyro[3];
+    float accel[3];
+    float temperature;
+} sensor_imu_float_t;
+
+void icm42688_init(imu_filter_t *imu_filter);
 void icm_who_am_i(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
-void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data,
-                            sensor_imu_t *imu_filtered_data);
+void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data, imu_filter_t *imu_filter);
+void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu_filtered_data);
 
-#endif /* INC_ICM_H_ */
+#endif

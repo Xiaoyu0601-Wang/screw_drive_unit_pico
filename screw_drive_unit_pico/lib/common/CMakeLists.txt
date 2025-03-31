@@ -3,6 +3,7 @@
 aux_source_directory(. DIR_common_SRCS)
 
 include_directories(../config)
+include_directories(../../.)
 
 # 生成链接库
 add_library(first_order_filter first_order_filter.c)

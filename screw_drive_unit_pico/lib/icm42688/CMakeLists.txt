@@ -3,6 +3,7 @@
 aux_source_directory(. DIR_icm42688_SRCS)
 
 include_directories(../config)
+include_directories(../../.)
 include_directories(../common)
 
 # 生成链接库

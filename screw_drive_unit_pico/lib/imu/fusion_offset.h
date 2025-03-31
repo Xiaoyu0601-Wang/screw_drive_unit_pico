@@ -1,17 +1,10 @@
-/**
- * @file FusionOffset.h
- * @author Seb Madgwick
- * @brief Gyroscope offset correction algorithm for run-time calibration of the
- * gyroscope offset.
- */
-
 #ifndef _FUSION_OFFSET_H_
 #define _FUSION_OFFSET_H_
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionMath.h"
+#include "math_utils.h"
 
 //------------------------------------------------------------------------------
 // Definitions
@@ -26,14 +19,13 @@ typedef struct
     unsigned int timeout;
     unsigned int timer;
     FusionVector gyroscopeOffset;
-} FusionOffset;
+} fusion_offset_t;
 
 //------------------------------------------------------------------------------
 // Function declarations
 
-void FusionOffsetInitialise(FusionOffset *const offset, const unsigned int sampleRate);
-
-FusionVector FusionOffsetUpdate(FusionOffset *const offset, FusionVector gyroscope);
+void fusion_offset_init(fusion_offset_t *const offset, const uint16_t sampleRate);
+FusionVector fusion_offset_update(fusion_offset_t *const offset, FusionVector gyroscope);
 
 #endif
 
