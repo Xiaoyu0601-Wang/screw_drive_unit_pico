@@ -21,7 +21,7 @@
 #define GYRO_Y_LOWPASS_SAMPLE_HZ  200
 #define GYRO_Z_LOWPASS_TAU        150
 #define GYRO_Z_LOWPASS_SAMPLE_HZ  200
-#define TEMP_LOWPASS_TAU          150
+#define TEMP_LOWPASS_TAU          200
 #define TEMP_LOWPASS_SAMPLE_HZ    200
 
 #define ACCEL_FULL_SCALE_RANGE 250.0// [dps]
