@@ -24,8 +24,8 @@
 #define TEMP_LOWPASS_TAU          150
 #define TEMP_LOWPASS_SAMPLE_HZ    200
 
-#define ACCEL_FULL_SCALE_RANGE 250.0// [dps]
-#define GYRO_FULL_SCALE_RANGE 2.0// [g]
+#define ACCEL_FULL_SCALE_RANGE 2.0// [g]
+#define GYRO_FULL_SCALE_RANGE 250.0// [dps]
 
 #define ICM42688_ADDRESS 0x68 //AP_AD0 grounded
 
