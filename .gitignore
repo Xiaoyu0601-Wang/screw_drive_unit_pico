@@ -1,4 +1,8 @@
-/screw_drive_unit_pico/build
+# Folders
+/pico-examples
+/pico-sdk
+/picotool
+/screw_drive_unit_pico_code/build
 
 # Prerequisites
 *.d

@@ -1,0 +1,15 @@
+repositories:
+  pico-sdk:
+    type: git
+    url: https://github.com/raspberrypi/pico-sdk.git
+    version: master
+
+  pico-examples:
+    type: git
+    url: https://github.com/raspberrypi/pico-examples.git
+    version: master
+
+  picotool:
+    type: git
+    url: https://github.com/raspberrypi/picotool.git
+    version: master
