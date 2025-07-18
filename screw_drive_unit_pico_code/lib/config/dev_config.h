@@ -29,11 +29,14 @@
 #ifndef _DEV_CONFIG_H_
 #define _DEV_CONFIG_H_
 
+#include "pico/stdlib.h"
 #include "stdio.h"
 
+// Pico W devices use a GPIO on the WIFI chip for the LED,
+// so when building for Pico W, CYW43_WL_GPIO_LED_PIN will be defined
+#ifdef CYW43_WL_GPIO_LED_PIN
 #include "pico/cyw43_arch.h"
-#include "pico/stdlib.h"
-#include "pico/unique_id.h"
+#endif
 
 #include "hardware/clocks.h"
 #include "hardware/flash.h"
@@ -44,6 +47,7 @@
 #include "hardware/structs/clocks.h"
 #include "hardware/structs/pll.h"
 #include "hardware/uart.h"
+#include "pico/unique_id.h"
 
 #define UART_DEBUG_PORT uart0
 #define UART_PORT uart1
