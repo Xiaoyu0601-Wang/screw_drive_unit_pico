@@ -1,7 +1,7 @@
 # 并将名称保存到 DIR_Config_SRCS 变量
 aux_source_directory(. DIR_config_SRCS)
 
-set(PICO_CYW43_SUPPORTED TRUE)
+# set(PICO_CYW43_SUPPORTED TRUE)
 
 # 生成链接库
 add_library(config ${DIR_config_SRCS})

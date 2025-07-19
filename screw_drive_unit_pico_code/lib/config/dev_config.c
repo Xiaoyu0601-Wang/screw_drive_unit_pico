@@ -41,23 +41,47 @@ UBYTE DEV_Digital_Read(UWORD Pin) { return gpio_get(Pin); }
 /**
  * LED
  **/
+void dev_led_write(bool led_status)
+{
 #if defined(PICO_DEFAULT_LED_PIN)
-// A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
-// so we can use normal GPIO functionality to turn the led on and off
-void dev_gpio_led_write(bool led_status) { gpio_set_dir(PICO_DEFAULT_LED_PIN, led_status); }
+    // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
+    // so we can use normal GPIO functionality to turn the led on and off
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, led_status);
 #elif defined(CYW43_WL_GPIO_LED_PIN)
-// For Pico W devices we need to initialise the driver etc
-void dev_wifi_led_write(void) { cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status); }
+    // For Pico W devices we need to initialise the driver etc
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status);
 #endif
+}
 
+// #if defined(PICO_DEFAULT_LED_PIN)
+// // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
+// // so we can use normal GPIO functionality to turn the led on and off
+// void dev_gpio_led_write(bool led_status) { gpio_set_dir(PICO_DEFAULT_LED_PIN, led_status); }
+// #elif defined(CYW43_WL_GPIO_LED_PIN)
+// // For Pico W devices we need to initialise the driver etc
+// void dev_wifi_led_write(void) { cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_status); }
+// #endif
+
+bool dev_led_read(void)
+{
 #if defined(PICO_DEFAULT_LED_PIN)
-// A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
-// so we can use normal GPIO functionality to turn the led on and off
-bool dev_gpio_led_read(void) { return gpio_get(PICO_DEFAULT_LED_PIN); }
+    // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
+    // so we can use normal GPIO functionality to turn the led on and off
+    return gpio_get(PICO_DEFAULT_LED_PIN);
 #elif defined(CYW43_WL_GPIO_LED_PIN)
-// For Pico W devices we need to initialise the driver etc
-bool dev_wifi_led_read(void) { return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN); }
+    // For Pico W devices we need to initialise the driver etc
+    return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN);
 #endif
+}
+
+// #if defined(PICO_DEFAULT_LED_PIN)
+// // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
+// // so we can use normal GPIO functionality to turn the led on and off
+// bool dev_gpio_led_read(void) { return gpio_get(PICO_DEFAULT_LED_PIN); }
+// #elif defined(CYW43_WL_GPIO_LED_PIN)
+// // For Pico W devices we need to initialise the driver etc
+// bool dev_wifi_led_read(void) { return cyw43_arch_gpio_get(CYW43_WL_GPIO_LED_PIN); }
+// #endif
 
 void DEV_LED_Config(void)
 {
@@ -65,11 +89,11 @@ void DEV_LED_Config(void)
     // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
     // so we can use normal GPIO functionality to turn the led on and off
     gpio_init(PICO_DEFAULT_LED_PIN);
-    dev_gpio_led_write(false);
+    dev_led_write(false);
 #elif defined(CYW43_WL_GPIO_LED_PIN)
     // For Pico W devices we need to initialise the driver etc
     cyw43_arch_init();
-    dev_wifi_led_write(false);
+    dev_led_write(false);
 #endif
 }
 

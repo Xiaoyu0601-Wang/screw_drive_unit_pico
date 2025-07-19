@@ -58,7 +58,7 @@ bool protocol_update(unit_status_t *const unit_status)
             {
                 unit_status->led_enable = false;
                 unit_status->led_status = true;
-                dev_wifi_led_write(true);
+                dev_led_write(true);
             }
             break;
         case 0x04: /* LED: Set Status */
@@ -101,7 +101,7 @@ bool protocol_update(unit_status_t *const unit_status)
 
 void uart_rx_irq(void) {}
 
-bool protocol_init(unit_status_t * unit_status)
+bool protocol_init(unit_status_t *unit_status)
 {
     unit_status->flashData[0] = 0x00;
     unit_status->flashData[1] = 0x01;

@@ -3,18 +3,18 @@
 #include "robot_config.h"
 #include "robot_parameters.h"
 
+#include "controller.h"
 #include "dynamixel.h"
+#include "fusion.h"
 #include "icm42688.h"
 #include "mcp2515.h"
 #include "protocol.h"
-#include "controller.h"
-#include "fusion.h"
 
-#define LED_SAMPLE_HZ  3
-#define CAN_SAMPLE_HZ  99
+#define LED_SAMPLE_HZ 3
+#define CAN_SAMPLE_HZ 99
 #define CTRL_SAMPLE_HZ 51
-#define IMU_SAMPLE_HZ  200
-#define IMU_PERIOD_SECOND 1.0f / (float) IMU_SAMPLE_HZ
+#define IMU_SAMPLE_HZ 200
+#define IMU_PERIOD_SECOND 1.0f / (float)IMU_SAMPLE_HZ
 
 unit_status_t unit_status = {
     .led_enable = true,
@@ -31,7 +31,7 @@ bool led_timer_callback(struct repeating_timer *t)
     if (unit_status.led_enable == true)
     {
         unit_status.led_status = !unit_status.led_status;
-        dev_wifi_led_write(unit_status.led_status);
+        dev_led_write(unit_status.led_status);
     }
 
     return true;
@@ -63,12 +63,16 @@ bool imu_timer_callback(struct repeating_timer *t)
     icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
     // convert data type
-    FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
-                                        .y = unit_status.imu_filtered_data.gyro[1],
-                                        .z = unit_status.imu_filtered_data.gyro[2],}};
-    FusionVector accelerometer = {.axis = { .x = unit_status.imu_filtered_data.accel[0],
-                                            .y = unit_status.imu_filtered_data.accel[1],
-                                            .z = unit_status.imu_filtered_data.accel[2],}};
+    FusionVector gyroscope = {.axis = {
+                                  .x = unit_status.imu_filtered_data.gyro[0],
+                                  .y = unit_status.imu_filtered_data.gyro[1],
+                                  .z = unit_status.imu_filtered_data.gyro[2],
+                              }};
+    FusionVector accelerometer = {.axis = {
+                                      .x = unit_status.imu_filtered_data.accel[0],
+                                      .y = unit_status.imu_filtered_data.accel[1],
+                                      .z = unit_status.imu_filtered_data.accel[2],
+                                  }};
 
     // sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
