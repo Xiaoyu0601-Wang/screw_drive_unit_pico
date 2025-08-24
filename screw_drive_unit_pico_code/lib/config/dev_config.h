@@ -125,6 +125,7 @@ void DEV_KEY_Config(UWORD Pin);
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
 UBYTE DEV_Digital_Read(UWORD Pin);
 
+void dev_led_config(void);
 void dev_led_write(bool led_status);
 bool dev_led_read(void);
 

@@ -88,7 +88,6 @@ int main(void)
     dev_module_init(uart_rx_irq);
     dev_delay_ms(10);
     icm42688_init(&unit_status.imu_filter);
-    // mcp2515_init();
 
     protocol_init(&unit_status);
     dev_delay_ms(5);
