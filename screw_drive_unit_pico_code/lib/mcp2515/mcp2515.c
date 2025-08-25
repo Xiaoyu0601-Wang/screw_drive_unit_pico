@@ -14,37 +14,37 @@
 
 static void MCP2515_WriteByte(uint8_t Addr)
 {
-    DEV_Digital_Write(MCP2515_CS_PIN, 0);
+    dev_digital_write(MCP2515_CS_PIN, 0);
     DEV_SPI_WriteByte(Addr);
-    DEV_Digital_Write(MCP2515_CS_PIN, 1);
+    dev_digital_write(MCP2515_CS_PIN, 1);
 }
 
 static void MCP2515_WriteBytes(uint8_t Addr, uint8_t Data)
 {
-    DEV_Digital_Write(MCP2515_CS_PIN, 0);
+    dev_digital_write(MCP2515_CS_PIN, 0);
     DEV_SPI_WriteByte(CAN_WRITE);
     DEV_SPI_WriteByte(Addr);
     DEV_SPI_WriteByte(Data);
-    DEV_Digital_Write(MCP2515_CS_PIN, 1);
+    dev_digital_write(MCP2515_CS_PIN, 1);
 }
 
 static uint8_t MCP2515_ReadByte(uint8_t Addr)
 {
     uint8_t rdata;
-    DEV_Digital_Write(MCP2515_CS_PIN, 0);
+    dev_digital_write(MCP2515_CS_PIN, 0);
     DEV_SPI_WriteByte(CAN_READ);
     DEV_SPI_WriteByte(Addr);
     rdata = DEV_SPI_ReadByte();
-    DEV_Digital_Write(MCP2515_CS_PIN, 1);
+    dev_digital_write(MCP2515_CS_PIN, 1);
 
     return rdata;
 }
 
 void MCP2515_Reset(void)
 {
-    DEV_Digital_Write(MCP2515_CS_PIN, 0);
+    dev_digital_write(MCP2515_CS_PIN, 0);
     DEV_SPI_WriteByte(CAN_RESET);
-    DEV_Digital_Write(MCP2515_CS_PIN, 1);
+    dev_digital_write(MCP2515_CS_PIN, 1);
 }
 
 uint8_t CAN_16MHZ_RATE[10][3] = {{0xA7, 0XBF, 0x07}, {0x31, 0XA4, 0X04}, {0x18, 0XA4, 0x04}, {0x09, 0XA4, 0x04},

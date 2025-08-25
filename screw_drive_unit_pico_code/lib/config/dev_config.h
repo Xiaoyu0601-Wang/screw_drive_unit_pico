@@ -49,8 +49,8 @@
 #include "hardware/uart.h"
 #include "pico/unique_id.h"
 
-#define UART_DEBUG_PORT uart0
-#define UART_PORT uart1
+#define UART_CAN_PORT uart0
+#define UART_RS485_PORT uart1
 #define SPI_PORT spi0
 #define SPI_IMU_PORT spi1
 #define I2C_PORT i2c0
@@ -61,11 +61,13 @@
 // const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE +
 // FLASH_TARGET_OFFSET);
 
-static bool led_status = false;
-static bool led_enable = true;
+// static bool led_status = false;
+// static bool led_enable = true;
 static pico_unique_board_id_t board_id;
-// static uint ecs_slice_num;
-// static uint slice_num;
+extern uint8_t ecs_slice_num1;
+extern uint8_t ecs_channel_num1;
+extern uint8_t ecs_slice_num2;
+extern uint8_t ecs_channel_num2;
 
 /**
  * data
@@ -79,16 +81,8 @@ static pico_unique_board_id_t board_id;
  **/
 #define LED_PIN 25
 
-#define LCD_RST_PIN 12
-#define LCD_DC_PIN 8
-#define LCD_BL_PIN 13
-
-#define LCD_CS_PIN 9
-#define LCD_CLK_PIN 10
-#define LCD_MOSI_PIN 11
-
-#define LCD_SCL_PIN 7
-#define LCD_SDA_PIN 6
+#define PWM_ECS1_PIN 10
+#define PWM_ECS2_PIN 11
 
 #define SPI_CAN_CLK_PIN 6
 #define SPI_CAN_MOSI_PIN 7
@@ -110,20 +104,18 @@ static pico_unique_board_id_t board_id;
 #define DATA_BITS 8
 #define STOP_BITS 1
 #define PARITY UART_PARITY_NONE
-#define UART_TX_PIN 8
-#define UART_RX_PIN 9
+#define UART_RS485_TX_PIN 8
+#define UART_RS485_RX_PIN 9
 
-#define UART_DEBUG_TX_PIN 0
-#define UART_DEBUG_RX_PIN 1
+#define UART_CAN_TX_PIN 12
+#define UART_CAN_RX_PIN 13
 
 /*------------------------------------------------------------------------------------------------------*/
-void DEV_Digital_Write(UWORD Pin, UBYTE Value);
-UBYTE DEV_Digital_Read(UWORD Pin);
+void dev_digital_write(uint8_t pin, bool value);
+bool dev_digital_read(uint8_t pin);
 
-void DEV_GPIO_Mode(UWORD Pin, UWORD Mode);
+void dev_gpio_mode(uint8_t pin, bool mode);
 void DEV_KEY_Config(UWORD Pin);
-void DEV_Digital_Write(UWORD Pin, UBYTE Value);
-UBYTE DEV_Digital_Read(UWORD Pin);
 
 void dev_led_config(void);
 void dev_led_write(bool led_status);
@@ -147,7 +139,7 @@ void dev_i2c_read_byte(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint8_t *data
 void dev_i2c_read_nbyte(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len);
 
 bool DEV_ECS_SetPWM(uint8_t motorID, int8_t pwm);
-void DEV_SET_PWM(uint8_t Value);
+// void DEV_SET_PWM(uint8_t Value);
 
 UBYTE dev_module_init(void (*uart_rx_irq)(void));
 void DEV_Module_Exit(void);

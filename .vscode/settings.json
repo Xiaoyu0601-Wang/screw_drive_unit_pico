@@ -9,5 +9,6 @@
         "robot_config.h": "c",
         "mcp2515.h": "c",
         "dev_config.h": "c"
-    }
+    },
+    "cmake.sourceDirectory": "/home/michael/Documents/code/screw_drive_unit_pico/pico-examples/dma"
 }
