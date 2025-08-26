@@ -2,7 +2,7 @@
 
 const uint8_t *flash_target_contents = (const uint8_t *)(XIP_BASE + FLASH_TARGET_OFFSET);
 
-bool protocol_update(unit_status_t *const unit_status)
+bool protocol_update(unit_status_t *unit_status)
 {
     // MCP2515_Receive(unit_status->unitID, unit_status->msg_can_rx);
 
@@ -98,8 +98,6 @@ bool protocol_update(unit_status_t *const unit_status)
 
     return true;
 }
-
-void uart_rx_irq(void) {}
 
 bool protocol_init(unit_status_t *unit_status)
 {

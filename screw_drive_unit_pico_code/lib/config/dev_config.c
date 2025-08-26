@@ -212,7 +212,7 @@ void DEV_GPIO_Init(void)
 function:	Module Initialize, the library and initialize the pins, SPI
 protocol parameter: Info:
 ******************************************************************************/
-UBYTE dev_module_init(void (*uart_rx_irq)(void))
+UBYTE dev_module_init(void (*uart0_irq_function)(void))
 {
     stdio_init_all();
 
@@ -222,31 +222,34 @@ UBYTE dev_module_init(void (*uart_rx_irq)(void))
     // Re init interface now that clk_peri has changed
     stdio_init_all();
 
+    // // GPIO Config
+    // DEV_GPIO_Init();
+
     // LED Config
     dev_led_config();
 
     // SPI Config
-    spi_init(SPI_PORT, 10000 * 1000); // 10MHz
-    gpio_set_function(SPI_CAN_CLK_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_CAN_MOSI_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_CAN_MISO_PIN, GPIO_FUNC_SPI);
+    // spi_init(SPI_PORT, 10000 * 1000); // 10MHz
+    // gpio_set_function(SPI_CAN_CLK_PIN, GPIO_FUNC_SPI);
+    // gpio_set_function(SPI_CAN_MOSI_PIN, GPIO_FUNC_SPI);
+    // gpio_set_function(SPI_CAN_MISO_PIN, GPIO_FUNC_SPI);
 
-    spi_init(SPI_IMU_PORT, 20000 * 1000); // 20MHz
-    gpio_set_function(SPI_IMU_CLK_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_IMU_MOSI_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_IMU_MISO_PIN, GPIO_FUNC_SPI);
+    // spi_init(SPI_IMU_PORT, 20000 * 1000); // 20MHz
+    // gpio_set_function(SPI_IMU_CLK_PIN, GPIO_FUNC_SPI);
+    // gpio_set_function(SPI_IMU_MOSI_PIN, GPIO_FUNC_SPI);
+    // gpio_set_function(SPI_IMU_MISO_PIN, GPIO_FUNC_SPI);
 
     // UART2RS485 Config
-    uart_init(UART_RS485_PORT, BAUD_RATE); // Set up our UART with a basic baud rate.
-    gpio_set_function(UART_RS485_TX_PIN, UART_FUNCSEL_NUM(UART_RS485_PORT, UART_RS485_TX_PIN));
-    gpio_set_function(UART_RS485_RX_PIN, UART_FUNCSEL_NUM(UART_RS485_PORT, UART_RS485_RX_PIN));
-    uart_set_hw_flow(UART_RS485_PORT, false, false);                // Set UART flow control CTS/RTS, we
-                                                                    // don't want these, so turn them off
-    uart_set_format(UART_RS485_PORT, DATA_BITS, STOP_BITS, PARITY); // Set our data format
-    uart_set_fifo_enabled(UART_RS485_PORT,
-                          false); // Turn off FIFO's - we want to do this character by character
-    // Set up a RX interrupt
-    // Set up and enable the interrupt handlers
+    // uart_init(UART_RS485_PORT, BAUD_RATE); // Set up our UART with a basic baud rate.
+    // gpio_set_function(UART_RS485_TX_PIN, UART_FUNCSEL_NUM(UART_RS485_PORT, UART_RS485_TX_PIN));
+    // gpio_set_function(UART_RS485_RX_PIN, UART_FUNCSEL_NUM(UART_RS485_PORT, UART_RS485_RX_PIN));
+    // uart_set_hw_flow(UART_RS485_PORT, false, false);                // Set UART flow control CTS/RTS, we
+    //                                                                 // don't want these, so turn them off
+    // uart_set_format(UART_RS485_PORT, DATA_BITS, STOP_BITS, PARITY); // Set our data format
+    // uart_set_fifo_enabled(UART_RS485_PORT,
+    //                       false); // Turn off FIFO's - we want to do this character by character
+    // // Set up a RX interrupt
+    // // Set up and enable the interrupt handlers
     // irq_set_exclusive_handler(UART_IRQ, uart_rx_irq);
     // irq_set_enabled(UART_IRQ, true);
     // // Now enable the UART to send interrupts - RX only
@@ -256,19 +259,13 @@ UBYTE dev_module_init(void (*uart_rx_irq)(void))
     uart_init(UART_CAN_PORT, BAUD_RATE); // Set up our UART with a basic baud rate.
     gpio_set_function(UART_CAN_TX_PIN, UART_FUNCSEL_NUM(UART_CAN_PORT, UART_CAN_TX_PIN));
     gpio_set_function(UART_CAN_RX_PIN, UART_FUNCSEL_NUM(UART_CAN_PORT, UART_CAN_RX_PIN));
-    uart_set_hw_flow(UART_CAN_PORT, false, false);                // Set UART flow control CTS/RTS, we
-                                                                  // don't want these, so turn them off
+    uart_set_hw_flow(UART_CAN_PORT, false, false);                // Disable UART flow control CTS/RTS
     uart_set_format(UART_CAN_PORT, DATA_BITS, STOP_BITS, PARITY); // Set our data format
     uart_set_fifo_enabled(UART_CAN_PORT, true);
-    // Set up a RX interrupt
-    // Set up and enable the interrupt handlers
-    // irq_set_exclusive_handler(UART_IRQ, uart_rx_irq);
-    // irq_set_enabled(UART_IRQ, true);
-    // // Now enable the UART to send interrupts - RX only
-    // uart_set_irq_enables(UART_PORT, true, false);
-
-    // GPIO Config
-    DEV_GPIO_Init();
+    irq_set_exclusive_handler(UART_CAN_IRQ,
+                              uart0_irq_function); // Set up a RX interrupt and enable the interrupt handlers
+    irq_set_enabled(UART_CAN_IRQ, true);
+    uart_set_irq_enables(UART_CAN_PORT, true, false); // Now enable the UART to send interrupts - RX only
 
     // PWM Config
     // gpio_set_function(LCD_BL_PIN, GPIO_FUNC_PWM);
@@ -295,12 +292,12 @@ UBYTE dev_module_init(void (*uart_rx_irq)(void))
     pwm_set_enabled(ecs_slice_num1, true);                      // Set the PWM running
     pwm_set_enabled(ecs_slice_num2, true);                      // Set the PWM running
 
-    // I2C Config
-    i2c_init(I2C_IMU_PORT, 500 * 1000);
-    gpio_set_function(ICM42688_SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(ICM42688_SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(ICM42688_SDA_PIN);
-    gpio_pull_up(ICM42688_SCL_PIN);
+    // // I2C Config
+    // i2c_init(I2C_IMU_PORT, 500 * 1000);
+    // gpio_set_function(ICM42688_SDA_PIN, GPIO_FUNC_I2C);
+    // gpio_set_function(ICM42688_SCL_PIN, GPIO_FUNC_I2C);
+    // gpio_pull_up(ICM42688_SDA_PIN);
+    // gpio_pull_up(ICM42688_SCL_PIN);
 
     printf("dev_module_init is finished \r\n");
     return 0;

@@ -50,11 +50,18 @@
 #include "pico/unique_id.h"
 
 #define UART_CAN_PORT uart0
+#define UART_CAN_IRQ UART0_IRQ
 #define UART_RS485_PORT uart1
+#define UART_RS485_IRQ UART1_IRQ
 #define SPI_PORT spi0
 #define SPI_IMU_PORT spi1
 #define I2C_PORT i2c0
 #define I2C_IMU_PORT i2c0
+
+#define BAUD_RATE 115200
+#define DATA_BITS 8
+#define STOP_BITS 1
+#define PARITY UART_PARITY_NONE
 
 #define FLASH_TARGET_OFFSET (256 * 1024)
 
@@ -79,37 +86,31 @@ extern uint8_t ecs_channel_num2;
 /**
  * GPIOI config
  **/
-#define LED_PIN 25
+#define UART_RS485_TX_PIN 4
+#define UART_RS485_RX_PIN 5
 
-#define PWM_ECS1_PIN 10
-#define PWM_ECS2_PIN 11
-
-#define SPI_CAN_CLK_PIN 6
-#define SPI_CAN_MOSI_PIN 7
-#define SPI_CAN_MISO_PIN 4
-#define MCP2515_CS_PIN 5
+#define SPI_CAN_MISO_PIN 0
+#define MCP2515_CS_PIN 1
+#define SPI_CAN_CLK_PIN 2
+#define SPI_CAN_MOSI_PIN 3
 #define CAN_CS_PIN MCP2515_CS_PIN
 
+#define SPI_IMU_MISO_PIN 8
+#define ICM42688_CS_PIN 9
 #define SPI_IMU_CLK_PIN 10
 #define SPI_IMU_MOSI_PIN 11
-#define SPI_IMU_MISO_PIN 12
-#define ICM42688_CS_PIN 13
 #define IMU_CS_PIN ICM42688_CS_PIN
-
-#define ICM42688_SDA_PIN 16
-#define ICM42688_SCL_PIN 17
-
-#define UART_IRQ UART1_IRQ
-#define BAUD_RATE 115200
-#define DATA_BITS 8
-#define STOP_BITS 1
-#define PARITY UART_PARITY_NONE
-#define UART_RS485_TX_PIN 8
-#define UART_RS485_RX_PIN 9
 
 #define UART_CAN_TX_PIN 12
 #define UART_CAN_RX_PIN 13
 
+#define PWM_ECS1_PIN 18
+#define PWM_ECS2_PIN 19
+
+#define ICM42688_SDA_PIN 20
+#define ICM42688_SCL_PIN 21
+
+#define LED_PIN 25
 /*------------------------------------------------------------------------------------------------------*/
 void dev_digital_write(uint8_t pin, bool value);
 bool dev_digital_read(uint8_t pin);

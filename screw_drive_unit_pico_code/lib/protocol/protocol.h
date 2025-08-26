@@ -8,14 +8,13 @@
 
 #include "dev_config.h"
 #include "dynamixel.h"
-#include "mcp2515.h"
 #include "icm42688.h"
+#include "mcp2515.h"
 
 #define HEAD_UNIT_ID 1
 #define TAIL_UNIT_ID 2
 
-bool protocol_init(unit_status_t * unit_status);
-bool protocol_update(unit_status_t *const unit_status);
-void uart_rx_irq(void);
+bool protocol_init(unit_status_t *unit_status);
+bool protocol_update(unit_status_t *unit_status);
 
 #endif

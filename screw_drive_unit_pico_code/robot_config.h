@@ -8,11 +8,15 @@
 
 #include "icm42688.h"
 
+#define BUF_SIZE 64
+
 typedef struct //_UnitStatus
 {
     uint32_t unit_id; // Unit CAN ID
-    uint8_t msg_can_tx[8];
-    uint8_t msg_can_rx[8];
+    uint8_t msg_can_tx[BUF_SIZE];
+    uint8_t msg_can_rx[BUF_SIZE];
+    uint8_t head;
+    uint8_t tail;
     uint8_t flashData[8];
     sensor_imu_t imu_raw_data;
     sensor_imu_float_t imu_filtered_data;
