@@ -87,20 +87,17 @@ void uart2can_receive_irq(void)
 {
     while (uart_is_readable(UART_CAN_PORT))
     {
-        uint8_t ch = uart_getc(UART_CAN_PORT);
+        uint8_t msg = uart_getc(UART_CAN_PORT);
 
         // Write to circular buffer
-        uint8_t next_head = (unit_status.head + 1) % BUF_SIZE;
-        if (next_head != unit_status.tail)
-        { // Buffer is not full
-            unit_status.msg_can_rx[unit_status.head] = ch;
-            unit_status.head = next_head;
-        }
-        else
+        uint8_t next_head = (unit_status.head + 1) % CAN_BUF_SIZE;
+        if (next_head == unit_status.tail)
         {
-            // Buffer is full, can choose to discard data or overwrite
-            // Here we discard the latest data
+            // buffer is full, overwrite old data
+            unit_status.tail = (unit_status.tail + 1) % CAN_BUF_SIZE;
         }
+        unit_status.msg_can_rx[unit_status.head] = msg;
+        unit_status.head = next_head;
     }
 }
 

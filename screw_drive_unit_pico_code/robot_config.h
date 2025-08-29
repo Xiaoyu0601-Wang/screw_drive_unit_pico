@@ -8,7 +8,9 @@
 
 #include "icm42688.h"
 
-#define BUF_SIZE 64
+#define CAN_BUF_SIZE 64
+#define CAN_FRAME_HEAD 0xba
+#define CAN_FRAME_TAIL 0xab
 
 typedef struct //_UnitStatus
 {

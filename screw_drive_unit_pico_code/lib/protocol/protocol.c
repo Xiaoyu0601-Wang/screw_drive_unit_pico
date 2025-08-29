@@ -4,7 +4,16 @@ const uint8_t *flash_target_contents = (const uint8_t *)(XIP_BASE + FLASH_TARGET
 
 bool protocol_update(unit_status_t *unit_status)
 {
-    // MCP2515_Receive(unit_status->unitID, unit_status->msg_can_rx);
+    if (unit_status->head == unit_status->tail)
+    {
+        return false; // buffer is empty
+    }
+
+    // {
+    //     uint8_t ch = unit_status->msg_can_rx[unit_status->tail];
+    //     unit_status->tail = (unit_status->tail + 1) % CAN_BUF_SIZE;
+    //     return ch;
+    // }
 
     if ((unit_status->msg_can_rx[0] == 0xFF) && (unit_status->msg_can_rx[1] == 0xFD))
     {
