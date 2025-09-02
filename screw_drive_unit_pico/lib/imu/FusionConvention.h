@@ -15,7 +15,7 @@
  */
 typedef enum
 {
-    FusionConventionNwu, /* North-West-Up */
+    FusionConventionNwu, /* North(x)-West(y)-Up(z) */
     FusionConventionEnu, /* East-North-Up */
     FusionConventionNed, /* North-East-Down */
 } FusionConvention;

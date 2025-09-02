@@ -24,6 +24,12 @@ unit_status_t unit_status = {
 };
 fusion_ahrs_t ahrs;
 
+typedef struct {
+    float roll;
+    float pitch;
+    float yaw;
+} EulerAngles;
+
 const FusionVector gyro_offset = {0.0f, 0.0f, 0.0f};
 
 bool led_timer_callback(struct repeating_timer *t)
@@ -55,10 +61,45 @@ bool ctrl_timer_callback(struct repeating_timer *t)
     return true;
 }
 
+void icm_read_sensor_change(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_raw_data_change)
+{
+   for (uint8_t i=0; i<3; i++)
+     {imu_raw_data_change->accel[i]=(float)imu_raw_data->accel[i].data*ACCEL_FULL_SCALE_RANGE / 32768.0f;
+     imu_raw_data_change->gyro[i]=(float)imu_raw_data->gyro[i].data*GYRO_FULL_SCALE_RANGE / 32768.0f;}
+    imu_raw_data_change->temperature=(float)imu_raw_data->temperature;
+}
+EulerAngles quaternionToEuler(FusionQuaternion q) 
+    {
+        EulerAngles angles;
+        float w = q.element.w;
+        float x = q.element.x;
+        float y = q.element.y;
+        float z = q.element.z;
+         // 计算 roll（绕 x 轴）
+        float sinr_cosp = 2.0f * (w * x + y * z);
+        float cosr_cosp = 1.0f - 2.0f * (x * x + y * y);
+        angles.roll = atan2f(sinr_cosp, cosr_cosp);
+
+    // 计算 pitch（绕 y 轴）
+        float sinp = 2.0f * (w * y - z * x);
+        if (fabsf(sinp) >= 1.0f)
+            angles.pitch = copysignf(M_PI / 2.0f, sinp); // 使用 ±90 度
+        else
+            angles.pitch = asinf(sinp);
+
+    // 计算 yaw（绕 z 轴）
+        float siny_cosp = 2.0f * (w * z + x * y);
+        float cosy_cosp = 1.0f - 2.0f * (y * y + z * z);
+        angles.yaw = atan2f(siny_cosp, cosy_cosp);
+
+        return angles;
+    };
+
 bool imu_timer_callback(struct repeating_timer *t)
 {
     // read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
+    icm_read_sensor_change(&unit_status.imu_raw_data, &unit_status.imu_raw_data_change);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
     icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
@@ -73,9 +114,43 @@ bool imu_timer_callback(struct repeating_timer *t)
     // sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-
+    EulerAngles angles = quaternionToEuler(ahrs.quaternion);
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+            unit_status.imu_raw_data_change.accel[0],
+            unit_status.imu_raw_data_change.accel[1],
+            unit_status.imu_raw_data_change.accel[2],
+            unit_status.imu_raw_data_change.gyro[0],
+            unit_status.imu_raw_data_change.gyro[1],
+            unit_status.imu_raw_data_change.gyro[2],
+            unit_status.imu_raw_data.temperature);
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+            unit_status.imu_filtered_data.accel[0],
+            unit_status.imu_filtered_data.accel[1],
+            unit_status.imu_filtered_data.accel[2],
+            unit_status.imu_filtered_data.gyro[0],
+            unit_status.imu_filtered_data.gyro[1],
+            unit_status.imu_filtered_data.gyro[2],
+            unit_status.imu_filtered_data.temperature);
+    // printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+    //         accelerometer.axis.x,
+    //         accelerometer.axis.y,
+    //         accelerometer.axis.z,
+    //         gyroscope.axis.x,
+    //         gyroscope.axis.y,
+    //         gyroscope.axis.z,
+    //         unit_status.imu_filtered_data.temperature);
+    printf("%.6f,%.6f,%.6f,%.6f\n",
+            ahrs.quaternion.element.w,
+            ahrs.quaternion.element.x,
+            ahrs.quaternion.element.y,
+            ahrs.quaternion.element.z);
+    printf("%.2f,%.2f,%.2f\n",
+            angles.roll* (180.0f / M_PI),
+            angles.pitch* (180.0f / M_PI),
+            angles.yaw* (180.0f / M_PI));  
     return true;
 }
+
 
 int main(void)
 {

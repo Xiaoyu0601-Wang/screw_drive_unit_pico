@@ -58,24 +58,24 @@ FusionVector fusion_offset_update(fusion_offset_t *const offset, FusionVector gy
     // Subtract offset from gyroscope measurement
     gyroscope = fusion_vector_subtract(gyroscope, offset->gyroscopeOffset);
 
-    // // Reset timer if gyroscope not stationary
-    // if ((fabsf(gyroscope.axis.x) > THRESHOLD) || (fabsf(gyroscope.axis.y) > THRESHOLD) ||
-    //     (fabsf(gyroscope.axis.z) > THRESHOLD))
-    // {
-    //     offset->timer = 0;
-    //     return gyroscope;
-    // }
+    // Reset timer if gyroscope not stationary
+    if ((fabsf(gyroscope.axis.x) > THRESHOLD) || (fabsf(gyroscope.axis.y) > THRESHOLD) ||
+        (fabsf(gyroscope.axis.z) > THRESHOLD))
+    {
+        offset->timer = 0;
+        return gyroscope;
+    }
 
-    // // Increment timer while gyroscope stationary
-    // if (offset->timer < offset->timeout)
-    // {
-    //     offset->timer++;
-    //     return gyroscope;
-    // }
+    // Increment timer while gyroscope stationary
+    if (offset->timer < offset->timeout)
+    {
+        offset->timer++;
+        return gyroscope;
+    }
 
-    // // Adjust offset if timer has elapsed
-    // offset->gyroscopeOffset =
-    //     FusionVectorAdd(offset->gyroscopeOffset, FusionVectorMultiplyScalar(gyroscope, offset->filterCoefficient));
+    // Adjust offset if timer has elapsed
+    offset->gyroscopeOffset =
+        FusionVectorAdd(offset->gyroscopeOffset, FusionVectorMultiplyScalar(gyroscope, offset->filterCoefficient));
     return gyroscope;
 }
 

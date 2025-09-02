@@ -8,6 +8,9 @@
         "stdlib.h": "c",
         "robot_config.h": "c",
         "mcp2515.h": "c",
-        "dev_config.h": "c"
+        "dev_config.h": "c",
+        "fstream": "c",
+        "sstream": "c",
+        "core": "c"
     }
 }

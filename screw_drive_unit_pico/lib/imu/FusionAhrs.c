@@ -47,10 +47,10 @@ void fusion_ahrs_init(fusion_ahrs_t *const ahrs, uint16_t sample_rate)
 {
     fusion_offset_init(&ahrs->offset, sample_rate);
     const FusionAhrsSettings settings = {
-        .convention = FusionConventionNwu,
+        .convention = FusionConventionNwu,//Define the coordinate system
         .sample_rate = sample_rate,
         .sample_period = 1.0f / (float) sample_rate,
-        .gain = 0.5f,
+        .gain = 0.1f,
         .gyroscopeRange = 0.0f,
         .accelerationRejection = 90.0f,
         .magneticRejection = 90.0f,
@@ -90,7 +90,7 @@ void fusion_ahrs_reset(fusion_ahrs_t *const ahrs)
 void fusionAhrs_set_settings(fusion_ahrs_t *const ahrs, const FusionAhrsSettings *const settings)
 {
     ahrs->settings.convention = settings->convention;
-     ahrs->settings.sample_rate = settings->sample_rate;
+    ahrs->settings.sample_rate = settings->sample_rate;
     ahrs->settings.gain = settings->gain;
     ahrs->settings.gyroscopeRange = settings->gyroscopeRange == 0.0f ? FLT_MAX : 0.98f * settings->gyroscopeRange;
     ahrs->settings.accelerationRejection =
