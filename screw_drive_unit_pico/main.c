@@ -66,34 +66,36 @@ void icm_read_sensor_change(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_r
    for (uint8_t i=0; i<3; i++)
      {imu_raw_data_change->accel[i]=(float)imu_raw_data->accel[i].data*ACCEL_FULL_SCALE_RANGE / 32768.0f;
      imu_raw_data_change->gyro[i]=(float)imu_raw_data->gyro[i].data*GYRO_FULL_SCALE_RANGE / 32768.0f;}
-    imu_raw_data_change->temperature=(float)imu_raw_data->temperature;
+    int16_t raw_temp = imu_raw_data->temperature;
+    imu_raw_data_change->temperature = (raw_temp / 132.48f) + 25.0f;
 }
 EulerAngles quaternionToEuler(FusionQuaternion q) 
-    {
-        EulerAngles angles;
-        float w = q.element.w;
-        float x = q.element.x;
-        float y = q.element.y;
-        float z = q.element.z;
-         // 计算 roll（绕 x 轴）
-        float sinr_cosp = 2.0f * (w * x + y * z);
-        float cosr_cosp = 1.0f - 2.0f * (x * x + y * y);
-        angles.roll = atan2f(sinr_cosp, cosr_cosp);
+{
+    EulerAngles angles;
+    float w = q.element.w;
+    float x = q.element.x;
+    float y = q.element.y;
+    float z = q.element.z;
+    
+    // 计算 roll（绕 x 轴）—— NWU 与 NED 一致，无需修改
+    float sinr_cosp = 2.0f * (w * x + y * z);
+    float cosr_cosp = 1.0f - 2.0f * (x * x + y * y);
+    angles.roll = atan2f(sinr_cosp, cosr_cosp);
 
-    // 计算 pitch（绕 y 轴）
-        float sinp = 2.0f * (w * y - z * x);
-        if (fabsf(sinp) >= 1.0f)
-            angles.pitch = copysignf(M_PI / 2.0f, sinp); // 使用 ±90 度
-        else
-            angles.pitch = asinf(sinp);
+    // 计算 pitch（绕 y 轴）—— NWU 与 NED 一致，无需修改
+    float sinp = 2.0f * (w * y - z * x);
+    if (fabsf(sinp) >= 1.0f)
+        angles.pitch = copysignf(M_PI / 2.0f, sinp); 
+    else
+        angles.pitch = asinf(sinp);
 
-    // 计算 yaw（绕 z 轴）
-        float siny_cosp = 2.0f * (w * z + x * y);
-        float cosy_cosp = 1.0f - 2.0f * (y * y + z * z);
-        angles.yaw = atan2f(siny_cosp, cosy_cosp);
+    // 计算 yaw（绕 z 轴）—— 核心修正：NWU 需翻转符号
+    float siny_cosp = 2.0f * (w * z + x * y);
+    float cosy_cosp = 1.0f - 2.0f * (y * y + z * z);
+    angles.yaw = -atan2f(siny_cosp, cosy_cosp); // 加负号，适配 NWU 右手定则
 
-        return angles;
-    };
+    return angles;
+}
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
@@ -115,15 +117,15 @@ bool imu_timer_callback(struct repeating_timer *t)
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
     EulerAngles angles = quaternionToEuler(ahrs.quaternion);
-    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
             unit_status.imu_raw_data_change.accel[0],
             unit_status.imu_raw_data_change.accel[1],
             unit_status.imu_raw_data_change.accel[2],
             unit_status.imu_raw_data_change.gyro[0],
             unit_status.imu_raw_data_change.gyro[1],
             unit_status.imu_raw_data_change.gyro[2],
-            unit_status.imu_raw_data.temperature);
-    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d\n",
+            unit_status.imu_raw_data_change.temperature);
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
             unit_status.imu_filtered_data.accel[0],
             unit_status.imu_filtered_data.accel[1],
             unit_status.imu_filtered_data.accel[2],

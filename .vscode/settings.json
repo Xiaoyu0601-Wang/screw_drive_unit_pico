@@ -11,6 +11,22 @@
         "dev_config.h": "c",
         "fstream": "c",
         "sstream": "c",
-        "core": "c"
+        "core": "c",
+        "debug.h": "c",
+        "icm42688.h": "c",
+        "i2c.h": "c",
+        "bit": "c",
+        "charconv": "c",
+        "chrono": "c",
+        "compare": "c",
+        "cstddef": "c",
+        "string": "c",
+        "optional": "c",
+        "format": "c",
+        "limits": "c",
+        "memory": "c",
+        "new": "c",
+        "functional": "c",
+        "stdbool.h": "c"
     }
 }
