@@ -26,6 +26,12 @@ unit_status_t unit_status = {
 
 fusion_ahrs_t ahrs;
 
+typedef struct {
+    float roll;
+    float pitch;
+    float yaw;
+} EulerAngles;
+
 const FusionVector gyro_offset = {0.0f, 0.0f, 0.0f};
 
 bool led_timer_callback(struct repeating_timer *t)
