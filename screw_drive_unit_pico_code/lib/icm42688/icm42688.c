@@ -107,4 +107,5 @@ void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu
         imu_filtered_data->gyro[i] = (float)imu_filter->gyro[i].previous_output *
                                      GYRO_FULL_SCALE_RANGE / 32768.0;
     }
+    imu_filtered_data->temperature = (float)imu_filter->temperature.previous_output / 132.48f + 25.0f;
 }

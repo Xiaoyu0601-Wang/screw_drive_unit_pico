@@ -57,10 +57,20 @@ bool ctrl_timer_callback(struct repeating_timer *t)
     return true;
 }
 
+void icm_read_sensor_change(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_raw_data_change)
+{
+   for (uint8_t i=0; i<3; i++)
+     {imu_raw_data_change->accel[i]=(float)imu_raw_data->accel[i].data*ACCEL_FULL_SCALE_RANGE / 32768.0f;
+     imu_raw_data_change->gyro[i]=(float)imu_raw_data->gyro[i].data*GYRO_FULL_SCALE_RANGE / 32768.0f;}
+    int16_t raw_temp = imu_raw_data->temperature;
+    imu_raw_data_change->temperature = (raw_temp / 132.48f) + 25.0f;
+}
+
 bool imu_timer_callback(struct repeating_timer *t)
 {
     // Read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
+    icm_read_sensor_change(&unit_status.imu_raw_data, &unit_status.imu_raw_data_change);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
     icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
@@ -79,7 +89,22 @@ bool imu_timer_callback(struct repeating_timer *t)
     // Sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+            unit_status.imu_raw_data_change.accel[0],
+            unit_status.imu_raw_data_change.accel[1],
+            unit_status.imu_raw_data_change.accel[2],
+            unit_status.imu_raw_data_change.gyro[0],
+            unit_status.imu_raw_data_change.gyro[1],
+            unit_status.imu_raw_data_change.gyro[2],
+            unit_status.imu_raw_data_change.temperature);
+    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+            unit_status.imu_filtered_data.accel[0],
+            unit_status.imu_filtered_data.accel[1],
+            unit_status.imu_filtered_data.accel[2],
+            unit_status.imu_filtered_data.gyro[0],
+            unit_status.imu_filtered_data.gyro[1],
+            unit_status.imu_filtered_data.gyro[2],
+            unit_status.imu_filtered_data.temperature);
     return true;
 }
 
