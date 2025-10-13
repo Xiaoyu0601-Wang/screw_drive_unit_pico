@@ -80,22 +80,6 @@ bool imu_timer_callback(struct repeating_timer *t)
     // Sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
-            unit_status.imu_raw_data_change.accel[0],
-            unit_status.imu_raw_data_change.accel[1],
-            unit_status.imu_raw_data_change.accel[2],
-            unit_status.imu_raw_data_change.gyro[0],
-            unit_status.imu_raw_data_change.gyro[1],
-            unit_status.imu_raw_data_change.gyro[2],
-            unit_status.imu_raw_data_change.temperature);
-    printf("%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
-            unit_status.imu_filtered_data.accel[0],
-            unit_status.imu_filtered_data.accel[1],
-            unit_status.imu_filtered_data.accel[2],
-            unit_status.imu_filtered_data.gyro[0],
-            unit_status.imu_filtered_data.gyro[1],
-            unit_status.imu_filtered_data.gyro[2],
-            unit_status.imu_filtered_data.temperature);
     return true;
 }
 
