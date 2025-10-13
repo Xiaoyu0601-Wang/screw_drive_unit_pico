@@ -98,3 +98,4 @@ void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu
 void icm_read_sensor_change(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_raw_data_change);
 EulerAngles quaternionToEuler(FusionQuaternion q);
 #endif
+
