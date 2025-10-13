@@ -109,3 +109,12 @@ void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu
     }
     imu_filtered_data->temperature = (float)imu_filter->temperature.previous_output / 132.48f + 25.0f;
 }
+
+void icm_read_sensor_change(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_raw_data_change)
+{
+   for (uint8_t i=0; i<3; i++)
+     {imu_raw_data_change->accel[i]=(float)imu_raw_data->accel[i].data*ACCEL_FULL_SCALE_RANGE / 32768.0f;
+     imu_raw_data_change->gyro[i]=(float)imu_raw_data->gyro[i].data*GYRO_FULL_SCALE_RANGE / 32768.0f;}
+    int16_t raw_temp = imu_raw_data->temperature;
+    imu_raw_data_change->temperature = (raw_temp / 132.48f) + 25.0f;
+}
