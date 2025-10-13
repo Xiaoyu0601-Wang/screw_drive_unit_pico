@@ -88,6 +88,6 @@ void icm_who_am_i(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
 void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data, imu_filter_t *imu_filter);
 void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu_filtered_data);
-
+void unit_conversion(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_raw_data_unitchange)
 #endif
 

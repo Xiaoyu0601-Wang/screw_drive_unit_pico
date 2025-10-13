@@ -61,6 +61,7 @@ bool imu_timer_callback(struct repeating_timer *t)
 {
     // Read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
+    unit_conversion(&unit_status.imu_raw_data, &unit_status.imu_raw_data_unitchange);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
     icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
@@ -75,11 +76,9 @@ bool imu_timer_callback(struct repeating_timer *t)
                                       .y = unit_status.imu_filtered_data.accel[1],
                                       .z = unit_status.imu_filtered_data.accel[2],
                                   }};
-
     // Sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-
     return true;
 }
 
