@@ -108,3 +108,31 @@ void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu
                                      GYRO_FULL_SCALE_RANGE / 32768.0;
     }
 }
+
+EulerAngles quaternionToEuler(FusionQuaternion q) 
+{
+    EulerAngles angles;
+    float w = q.element.w;
+    float x = q.element.x;
+    float y = q.element.y;
+    float z = q.element.z;
+    
+    // 计算 roll（绕 x 轴）—— NWU 与 NED 一致，无需修改
+    float sinr_cosp = 2.0f * (w * x + y * z);
+    float cosr_cosp = 1.0f - 2.0f * (x * x + y * y);
+    angles.roll = atan2f(sinr_cosp, cosr_cosp);
+
+    // 计算 pitch（绕 y 轴）—— NWU 与 NED 一致，无需修改
+    float sinp = 2.0f * (w * y - z * x);
+    if (fabsf(sinp) >= 1.0f)
+        angles.pitch = copysignf(M_PI / 2.0f, sinp); 
+    else
+        angles.pitch = asinf(sinp);
+
+    // 计算 yaw（绕 z 轴）—— 核心修正：NWU 需翻转符号
+    float siny_cosp = 2.0f * (w * z + x * y);
+    float cosy_cosp = 1.0f - 2.0f * (y * y + z * z);
+    angles.yaw = -atan2f(siny_cosp, cosy_cosp); // 加负号，适配 NWU 右手定则
+
+    return angles;
+}

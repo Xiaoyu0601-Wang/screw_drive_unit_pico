@@ -59,27 +59,22 @@ bool ctrl_timer_callback(struct repeating_timer *t)
 
 bool imu_timer_callback(struct repeating_timer *t)
 {
-    // Read imu data
+    // read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
     icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
-    // Convert data type
-    FusionVector gyroscope = {.axis = {
-                                  .x = unit_status.imu_filtered_data.gyro[0],
-                                  .y = unit_status.imu_filtered_data.gyro[1],
-                                  .z = unit_status.imu_filtered_data.gyro[2],
-                              }};
-    FusionVector accelerometer = {.axis = {
-                                      .x = unit_status.imu_filtered_data.accel[0],
-                                      .y = unit_status.imu_filtered_data.accel[1],
-                                      .z = unit_status.imu_filtered_data.accel[2],
-                                  }};
-
-    // Sensor fusion
+    // convert data type
+    FusionVector gyroscope = {.axis = { .x = unit_status.imu_filtered_data.gyro[0],
+                                        .y = unit_status.imu_filtered_data.gyro[1],
+                                        .z = unit_status.imu_filtered_data.gyro[2],}};
+    FusionVector accelerometer = {.axis = { .x = unit_status.imu_filtered_data.accel[0],
+                                            .y = unit_status.imu_filtered_data.accel[1],
+                                            .z = unit_status.imu_filtered_data.accel[2],}};
+    // sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
-
+    EulerAngles angles = quaternionToEuler(ahrs.quaternion);
     return true;
 }
 
