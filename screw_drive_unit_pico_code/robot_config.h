@@ -21,7 +21,6 @@ typedef struct //_UnitStatus
     uint8_t tail;
     uint8_t flashData[8];
     sensor_imu_t imu_raw_data;
-    sensor_imu_float_t imu_raw_data_change;
     sensor_imu_float_t imu_filtered_data;
     imu_filter_t imu_filter;
     uint8_t cmd_motor[2];

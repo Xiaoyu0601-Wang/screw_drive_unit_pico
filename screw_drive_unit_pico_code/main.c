@@ -61,7 +61,6 @@ bool imu_timer_callback(struct repeating_timer *t)
 {
     // read imu data
     icm_read_sensor(&unit_status.imu_raw_data);
-    icm_read_sensor_change(&unit_status.imu_raw_data, &unit_status.imu_raw_data_change);
     icm_filter_sensor_data(&unit_status.imu_raw_data, &unit_status.imu_filter);
     icm_filtered_int_to_float(&unit_status.imu_filter, &unit_status.imu_filtered_data);
 
@@ -72,7 +71,6 @@ bool imu_timer_callback(struct repeating_timer *t)
     FusionVector accelerometer = {.axis = { .x = unit_status.imu_filtered_data.accel[0],
                                             .y = unit_status.imu_filtered_data.accel[1],
                                             .z = unit_status.imu_filtered_data.accel[2],}};
-
     // sensor fusion
     gyroscope = fusion_offset_update(&ahrs.offset, gyroscope);
     fusion_ahrs_update_no_magnetometer(&ahrs, gyroscope, accelerometer, IMU_PERIOD_SECOND);
