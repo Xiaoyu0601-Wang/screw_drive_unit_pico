@@ -8,6 +8,7 @@
 #include "first_order_filter.h"
 
 #include "dev_config.h"
+#include "math_utils.h"
 
 #define ACCEL_X_LOWPASS_TAU       150
 #define ACCEL_X_LOWPASS_SAMPLE_HZ 200
@@ -83,10 +84,17 @@ typedef struct
     float temperature;
 } sensor_imu_float_t;
 
+typedef struct {
+    float roll;
+    float pitch;
+    float yaw;
+} EulerAngles;
+
 void icm42688_init(imu_filter_t *imu_filter);
 void icm_who_am_i(void);
 void icm_read_sensor(sensor_imu_t *imu_raw_data);
 void icm_filter_sensor_data(sensor_imu_t *const imu_raw_data, imu_filter_t *imu_filter);
 void icm_filtered_int_to_float(imu_filter_t *imu_filter, sensor_imu_float_t *imu_filtered_data);
-
+void icm_read_sensor_change(sensor_imu_t *imu_raw_data,sensor_imu_float_t *imu_raw_data_change);
+EulerAngles quaternionToEuler(FusionQuaternion q);
 #endif

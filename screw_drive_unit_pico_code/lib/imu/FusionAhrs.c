@@ -47,7 +47,7 @@ void fusion_ahrs_init(fusion_ahrs_t *const ahrs, uint16_t sample_rate)
 {
     fusion_offset_init(&ahrs->offset, sample_rate);
     const FusionAhrsSettings settings = {
-        .convention = FusionConventionNwu,//Define the coordinate system
+        .convention = FusionConventionNwu,
         .sample_rate = sample_rate,
         .sample_period = 1.0f / (float) sample_rate,
         .gain = 0.5f,
